@@ -1,0 +1,2430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIBON · Intelligence pour le commerce indépendant</title>
+  <meta name="description" content="BIBON donne au commerce indépendant les outils data que les grandes enseignes utilisent depuis 20 ans.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:  #dedede;
+      --bg1: #e8e8e8;
+      --bg2: #d4d4d4;
+      --b0:  rgba(0,0,0,.1);
+      --b1:  rgba(0,0,0,.2);
+      --b2:  rgba(0,0,0,.32);
+
+      --cherry: #e11d48;
+      --amber:  #f59e0b;
+      --teal:   #14b8a6;
+      --green:  #10b981;
+
+      --t1: #000000;
+      --t2: rgba(0,0,0,.7);
+      --t3: rgba(0,0,0,.48);
+      --t4: rgba(0,0,0,.34);
+      --t5: rgba(0,0,0,.2);
+
+      --mono: 'Space Mono','Courier New',monospace;
+      --sans: 'Inter',system-ui,-apple-system,sans-serif;
+
+      --r:  3px;
+      --rm: 6px;
+      --ease: cubic-bezier(.4,0,.2,1);
+      --col-dur: .52s;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      background-image:radial-gradient(circle,rgba(0,0,0,.1) 1px,transparent 1px);
+      background-size:24px 24px;
+      color: var(--t1);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* film grain */
+    body::after {
+      content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+      opacity:.06; mix-blend-mode:multiply;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size:180px;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position:fixed; top:0; left:0; right:0; z-index:500;
+      height:48px; display:flex; align-items:center;
+      background:rgba(222,222,222,.80);
+      backdrop-filter:blur(14px) saturate(1.4);
+      -webkit-backdrop-filter:blur(14px) saturate(1.4);
+      border-bottom:1px solid var(--b0);
+    }
+    .nav__inner { display:flex; align-items:center; justify-content:space-between; padding:0 24px; width:100%; }
+    .nav__logo {
+      font-family:var(--sans); font-size:15px; font-weight:900;
+      color:var(--t1); text-decoration:none; letter-spacing:-.03em;
+      display:flex; align-items:center; gap:10px;
+    }
+    .nav__logo-tag { font-family:var(--mono); font-size:9px; color:var(--t4); letter-spacing:.06em; font-weight:400; white-space:nowrap; }
+    .nav__right { display:flex; align-items:center; gap:4px; }
+    .nav__pill {
+      font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+      color:var(--t3); padding:5px 10px; border-radius:var(--r);
+      background:none; border:1px solid var(--b0); cursor:pointer;
+      transition:color .16s,border-color .16s; text-decoration:none;
+    }
+    .nav__pill:hover { color:var(--t1); border-color:var(--b1); }
+    .nav__pill--cta { color:var(--teal); border-color:rgba(20,184,166,.3); }
+    .nav__pill--cta:hover { background:var(--teal); color:#000; border-color:var(--teal); }
+    .nav__burger { display:none; background:none; border:none; cursor:pointer; color:var(--t3); font-size:20px; padding:4px; }
+
+    /* ── HERO BAND ── */
+    .hero-band {
+      position:fixed; top:48px; left:0; right:0; z-index:490;
+      height:108px;
+      background:rgba(222,222,222,.80);
+      backdrop-filter:blur(14px) saturate(1.4);
+      -webkit-backdrop-filter:blur(14px) saturate(1.4);
+      border-bottom:1px solid var(--b0);
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+    }
+    .hero-acro {
+      font-size:13px; font-weight:400; color:var(--t1);
+      white-space:nowrap; text-align:center;
+      display:flex; align-items:baseline; justify-content:center;
+      overflow:hidden;
+    }
+    /* Segments texte — width mesurée par JS au load, transition vers 0 au hover */
+    .hero-acro .htxt {
+      display:inline-block; overflow:hidden; white-space:nowrap;
+      vertical-align:baseline; opacity:1;
+      transition:width .9s cubic-bezier(.4,0,.2,1), opacity .6s ease;
+    }
+    .hero-band:hover .htxt { width:0 !important; opacity:0; }
+    /* Lettres BIBON — ne bougent jamais, restent en place */
+    .hero-acro .hbl {
+      display:inline-block; color:var(--t1); font-weight:400;
+      vertical-align:baseline;
+    }
+    /* Faux espace avant les lettres qui démarrent un mot (b-esoins, i-ndépendants, b-ons) */
+    .hero-acro .hbl.ws {
+      margin-left: 0.35em;
+      transition: margin-left .9s cubic-bezier(.4,0,.2,1);
+    }
+    .hero-band:hover .hbl.ws { margin-left: 0; }
+    .hero-countdown {
+      display:flex; align-items:center; gap:20px;
+    }
+    .hcd-unit {
+      display:flex; flex-direction:column; align-items:center; gap:2px;
+    }
+    .hcd-val {
+      font-family:var(--mono); font-size:18px; font-weight:700; color:var(--t1);
+      letter-spacing:-.04em; line-height:1;
+    }
+    .hcd-lbl {
+      font-family:var(--mono); font-size:7px; font-weight:700; color:var(--t5);
+      letter-spacing:.14em; text-transform:uppercase;
+    }
+    .hcd-sep {
+      font-family:var(--mono); font-size:16px; color:var(--b1); font-weight:300;
+      padding-bottom:8px; line-height:1;
+    }
+
+    /* ── PAGE BODY — conteneur flex column sous nav+hero ── */
+    .page-body {
+      position:fixed;
+      top:calc(48px + 108px); left:0; right:0; bottom:0;
+      display:flex; flex-direction:column;
+    }
+
+    /* ── COLUMNS WRAP ── */
+    .cols-wrap {
+      display:flex;
+      flex:1 1 0; min-height:0;
+      overflow:hidden;
+      margin-top:0;
+    }
+
+    /* ── COLUMN BASE ── */
+    .col {
+      flex:1 1 0;
+      position:relative;
+      overflow:hidden;
+      border-right:1px solid var(--b0);
+      transition:flex var(--col-dur) var(--ease), background-color .22s ease;
+      cursor:pointer;
+    }
+    .col:last-child { border-right:none; }
+
+    /* top accent stripe per column */
+    .col--why::before  { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--cherry); z-index:2; }
+    .col--how::before  { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--amber);  z-index:2; }
+    .col--what::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--teal);   z-index:2; }
+
+    /* Hover : fond coloré faded + expansion 20% */
+    .cols-wrap:not(.has-active) .col--why:hover   { flex:1.2; background-color:rgba(225,29,72,.05); }
+    .cols-wrap:not(.has-active) .col--how:hover   { flex:1.2; background-color:rgba(245,158,11,.05); }
+    .cols-wrap:not(.has-active) .col--what:hover  { flex:1.2; background-color:rgba(20,184,166,.05); }
+
+    .cols-wrap.has-active .col { flex:0 0 52px; cursor:pointer; }
+    .cols-wrap.has-active .col--active { flex:1; overflow-y:auto; overflow-x:hidden; cursor:default; scroll-behavior:smooth; }
+    .cols-wrap.has-active .col--why.col--active   { background-color:rgba(225,29,72,.06); }
+    .cols-wrap.has-active .col--how.col--active   { background-color:rgba(245,158,11,.06); }
+    .cols-wrap.has-active .col--what.col--active  { background-color:rgba(20,184,166,.06); }
+
+    .col--active::-webkit-scrollbar { width:3px; }
+    .col--active::-webkit-scrollbar-track { background:transparent; }
+    .col--active::-webkit-scrollbar-thumb { background:var(--b1); border-radius:2px; }
+
+    /* ── PREVIEW ── */
+    .col-preview {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      padding:24px 20px 22px;
+      transition:opacity .26s var(--ease);
+    }
+    .cols-wrap.has-active .col-preview { opacity:0; pointer-events:none; }
+
+    .col-preview__top {
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .col-n { font-family:var(--mono); font-size:9px; font-weight:700; color:var(--t4); letter-spacing:.1em; }
+    .col-hint {
+      font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.06em; color:var(--t4);
+      opacity:0; transition:opacity .18s;
+    }
+    .col:hover .col-hint { opacity:1; }
+    .col--why:hover  .col-hint { color:var(--cherry); }
+    .col--how:hover  .col-hint { color:var(--amber); }
+    .col--what:hover .col-hint { color:var(--teal); }
+
+    .col-preview__title {
+      font-family:var(--sans);
+      font-size:clamp(28px,3.6vw,52px);
+      font-weight:900; line-height:.95; letter-spacing:-.04em;
+      color:var(--t1);
+      flex:0 0 auto; padding-top:10px; padding-bottom:14px;
+      overflow:hidden; word-break:break-word;
+    }
+
+    .col-preview__bottom { flex-shrink:0; margin-top:20px; }
+
+    .col-preview__divider { height:1px; background:var(--b0); margin:16px 0 14px; }
+
+    .col-preview__sub {
+      font-family:var(--mono); font-size:10px; font-weight:700;
+      letter-spacing:.1em; text-transform:uppercase; margin-bottom:12px;
+      display:flex; align-items:baseline; gap:6px; flex-wrap:wrap;
+    }
+    .col--why  .col-preview__sub { color:var(--cherry); }
+    .col--how  .col-preview__sub { color:var(--amber); }
+    .col--what .col-preview__sub { color:var(--teal); }
+    .col-preview__sub-tag {
+      font-weight:400; font-size:9px; letter-spacing:.06em;
+      opacity:.6; text-transform:lowercase;
+    }
+
+    .col-stats { display:flex; flex-direction:column; gap:9px; margin-bottom:14px; }
+    .col-stat__val {
+      font-family:var(--mono); font-size:30px; font-weight:700;
+      line-height:1; letter-spacing:-.04em; display:block;
+    }
+    .col--why  .col-stat__val { color:var(--cherry); }
+    .col--how  .col-stat__val { color:var(--amber); }
+    .col--what .col-stat__val { color:var(--teal); }
+    .col-stat__lbl { font-size:10px; font-weight:500; color:var(--t3); display:block; margin-top:1px; }
+
+    .col-bars { display:flex; flex-direction:column; gap:3px; margin-bottom:13px; }
+    .col-bar { height:2px; background:var(--b0); position:relative; }
+    .col-bar__fill { position:absolute; top:0; left:0; height:100%; }
+    .col--why  .col-bar__fill { background:var(--cherry); }
+    .col--how  .col-bar__fill { background:var(--amber); }
+    .col--what .col-bar__fill { background:var(--teal); }
+
+    .col-open {
+      display:flex; align-items:center; gap:5px;
+      font-family:var(--mono); font-size:9px; color:var(--t5); letter-spacing:.07em;
+    }
+    .col-open-dot { width:4px; height:4px; border-radius:50%; animation:pulse 2s infinite; }
+    .col--why  .col-open-dot { background:var(--cherry); }
+    .col--how  .col-open-dot { background:var(--amber); }
+    .col--what .col-open-dot { background:var(--teal); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.14} }
+
+    /* ── STRIP ── */
+    .col-strip {
+      position:absolute; inset:0;
+      display:none; flex-direction:column;
+      align-items:center; padding:16px 0; gap:0;
+    }
+    .cols-wrap.has-active .col-strip { display:flex; }
+    .cols-wrap.has-active .col--active .col-strip { display:none; }
+
+    .col-strip__num { font-family:var(--mono); font-size:8px; font-weight:700; color:var(--t5); letter-spacing:.08em; margin-bottom:10px; }
+    .col-strip__bar { width:1px; flex:1; transition:opacity .18s; }
+    .col--why  .col-strip__bar { background:var(--cherry); opacity:.3; }
+    .col--how  .col-strip__bar { background:var(--amber);  opacity:.3; }
+    .col--what .col-strip__bar { background:var(--teal);   opacity:.3; }
+    .col--why:hover  .col-strip__bar,
+    .col--how:hover  .col-strip__bar,
+    .col--what:hover .col-strip__bar { opacity:.8; }
+
+    .col-strip__label {
+      font-family:var(--mono); font-size:8px; font-weight:700;
+      letter-spacing:.14em; text-transform:uppercase;
+      writing-mode:vertical-rl; transform:rotate(180deg);
+      color:var(--t4); white-space:nowrap; margin-top:10px; transition:color .16s;
+    }
+    .col--why:hover  .col-strip__label { color:var(--cherry); }
+    .col--how:hover  .col-strip__label { color:var(--amber); }
+    .col--what:hover .col-strip__label { color:var(--teal); }
+
+    /* ── CONTENT ── */
+    .col-content-wrap { display:none; min-height:100%; }
+    .col--active .col-content-wrap { display:block; }
+
+    /* Col head — sticky avec blur sur le contenu qui défile en dessous */
+    .col-head {
+      position:sticky; top:0; z-index:20;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 24px;
+      border-top:2px solid transparent;
+      border-bottom:1px solid var(--b0);
+      backdrop-filter:blur(12px) saturate(1.4);
+      -webkit-backdrop-filter:blur(12px) saturate(1.4);
+    }
+    .col--why  .col-head { background:rgba(222,222,222,.80); border-top-color:var(--cherry); }
+    .col--how  .col-head { background:rgba(222,222,222,.80); border-top-color:var(--amber);  }
+    .col--what .col-head { background:rgba(222,222,222,.80); border-top-color:var(--teal);   }
+    .col-head__left { display:flex; align-items:center; gap:10px; }
+    .col-head__bar { width:3px; height:14px; flex-shrink:0; border-radius:1px; }
+    .col--why  .col-head__bar { background:var(--cherry); }
+    .col--how  .col-head__bar { background:var(--amber); }
+    .col--what .col-head__bar { background:var(--teal); }
+    .col-head__num { font-family:var(--mono); font-size:9px; color:var(--t4); letter-spacing:.1em; }
+    .col-head__title { font-size:12px; font-weight:700; color:var(--t2); }
+    .col-head__close {
+      font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.08em;
+      color:var(--t4); background:none; border:1px solid var(--b0); border-radius:var(--r);
+      padding:4px 9px; cursor:pointer; transition:color .16s,border-color .16s;
+    }
+    .col-head__close:hover { color:var(--t1); border-color:var(--b1); }
+
+    .col-content { padding:36px 44px 60px; max-width:none; }
+
+    /* ── LAYOUT SPLIT (2 cols side by side) ── */
+    .layout-split {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:28px; align-items:start;
+    }
+    .layout-split--6040 { grid-template-columns:1.2fr 1fr; }
+    .layout-split--4060 { grid-template-columns:1fr 1.2fr; }
+
+    /* ── TYPOGRAPHY ── */
+    .sect { margin-bottom:44px; }
+    .sect:last-child { margin-bottom:0; }
+
+    .slabel {
+      font-family:var(--mono); font-size:9px; font-weight:700;
+      letter-spacing:.14em; text-transform:uppercase; color:var(--t4);
+      margin-bottom:16px; display:flex; align-items:center; gap:7px;
+    }
+    .slabel::before { content:'//'; color:var(--t5); margin-right:1px; }
+    .slabel--why  { color:var(--cherry); } .slabel--why::before  { color:rgba(225,29,72,.4); }
+    .slabel--how  { color:var(--amber);  } .slabel--how::before  { color:rgba(245,158,11,.4); }
+    .slabel--what { color:var(--teal);   } .slabel--what::before { color:rgba(20,184,166,.4); }
+
+    .h2 { font-size:clamp(22px,2.8vw,36px); font-weight:800; letter-spacing:-.04em; color:var(--t1); line-height:1.05; margin-bottom:14px; }
+    .h3 { font-size:clamp(14px,1.7vw,19px); font-weight:700; letter-spacing:-.025em; color:var(--t1); line-height:1.3; margin-bottom:10px; }
+
+    .body-txt { font-size:13.5px; color:var(--t2); line-height:1.78; font-weight:400; }
+    .body-txt p { margin-bottom:11px; }
+    .body-txt p:last-child { margin-bottom:0; }
+    .body-txt strong { color:var(--t1); font-weight:700; }
+
+    .rule { height:1px; background:var(--b0); margin:36px 0; }
+
+    /* ── MODULE (the key sub-container) ── */
+    .mod {
+      border:1px solid var(--b0); background:var(--bg1);
+      border-radius:var(--r); overflow:hidden; margin-bottom:8px;
+    }
+    .mod:last-child { margin-bottom:0; }
+    .mod--cherry { border-top:2px solid var(--cherry); }
+    .mod--amber  { border-top:2px solid var(--amber); }
+    .mod--teal   { border-top:2px solid var(--teal); }
+    .mod--flat   { border-top:none; }
+
+    .mod__hd {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:8px 14px; border-bottom:1px solid var(--b0); background:var(--bg2);
+    }
+    .mod__label {
+      font-family:var(--mono); font-size:8px; font-weight:700;
+      letter-spacing:.12em; text-transform:uppercase; color:var(--t4);
+    }
+    .mod--cherry .mod__label { color:rgba(225,29,72,.7); }
+    .mod--amber  .mod__label { color:rgba(245,158,11,.7); }
+    .mod--teal   .mod__label { color:rgba(20,184,166,.7); }
+    .mod__meta { font-family:var(--mono); font-size:8px; color:var(--t5); }
+    .mod__body { padding:16px 14px; }
+
+    /* ── CONVICTION ── */
+    .conviction {
+      border-left:3px solid var(--cherry);
+      padding:24px 26px; background:var(--bg1);
+      border-radius:0 var(--r) var(--r) 0; margin-bottom:32px;
+    }
+    .conviction__body { display:flex; align-items:flex-start; gap:18px; }
+    .conviction__avatar {
+      width:108px; height:108px; flex-shrink:0;
+      border-radius:50%; overflow:hidden;
+      border:3px solid var(--cherry);
+      margin-top:2px;
+    }
+    .conviction__avatar img { width:calc(100% + 4px); height:calc(100% + 4px); object-fit:cover; margin:-2px; }
+    .conviction__text { flex:1; }
+    .conviction p {
+      font-size:clamp(14px,1.7vw,17px); color:var(--t1);
+      font-weight:500; line-height:1.75; font-style:italic;
+      margin-bottom:14px;
+    }
+    .conviction__author {
+      display:flex; align-items:center; justify-content:flex-end; gap:6px;
+    }
+    .conviction__name {
+      font-family:var(--mono); font-size:10px; font-weight:700;
+      color:var(--t3); letter-spacing:.06em;
+    }
+    .conviction__role {
+      font-family:var(--mono); font-size:9px; font-weight:400;
+      color:var(--cherry); letter-spacing:.04em;
+    }
+
+    /* ── STAT GRID ── */
+    .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .stat-mod {
+      border:1px solid var(--b0); background:var(--bg1);
+      border-radius:var(--r); padding:18px 16px;
+      display:flex; flex-direction:column;
+    }
+    .stat-mod__val {
+      font-family:var(--mono); font-size:clamp(36px,4.5vw,52px);
+      font-weight:700; letter-spacing:-.05em; color:var(--cherry); line-height:1; margin-bottom:8px;
+    }
+    .stat-mod__lbl { font-size:11.5px; color:var(--t3); line-height:1.5; font-weight:400; flex:1; }
+    .stat-mod__src { font-family:var(--mono); font-size:8px; color:var(--t5); margin-top:10px; letter-spacing:.04em; }
+
+    /* ── OBJ BARS ── */
+    .obj-rows { display:flex; flex-direction:column; gap:7px; }
+    .obj-row { display:grid; grid-template-columns:1fr 44px 28px; align-items:center; gap:9px; }
+    .obj-lbl { font-size:11px; color:var(--t2); font-weight:400; }
+    .obj-track { height:2px; background:var(--bg2); position:relative; }
+    .obj-fill { position:absolute; top:0; left:0; height:100%; background:var(--cherry); }
+    .obj-pct { font-family:var(--mono); font-size:9px; font-weight:700; color:var(--cherry); text-align:right; }
+
+    /* ── DONUT ── */
+    .donut-row { display:grid; grid-template-columns:auto 1fr; gap:18px; align-items:center; }
+    .donut-cap { font-size:13px; color:var(--t2); font-weight:400; line-height:1.6; }
+    .donut-cap strong { color:var(--cherry); display:block; font-size:15px; font-weight:700; margin-bottom:4px; }
+    .donut-src { margin-top:10px; font-family:var(--mono); font-size:8.5px; color:var(--t4); letter-spacing:.04em; }
+
+    /* ── ARG BLOCKS ── */
+    .arg {
+      border:1px solid var(--b0); background:var(--bg1);
+      border-radius:var(--r); padding:20px 18px; margin-bottom:8px;
+    }
+    .arg:last-child { margin-bottom:0; }
+    .arg--cherry { border-top:2px solid var(--cherry); }
+    .arg--teal   { border-top:2px solid var(--teal); }
+    .arg__label {
+      font-family:var(--mono); font-size:8px; font-weight:700;
+      letter-spacing:.12em; text-transform:uppercase; margin-bottom:9px;
+    }
+    .arg--cherry .arg__label { color:var(--cherry); }
+    .arg--teal   .arg__label { color:var(--teal); }
+    .arg         .arg__label { color:var(--t4); }
+    .arg__title { font-size:clamp(13px,1.5vw,16px); font-weight:700; color:var(--t1); margin-bottom:11px; line-height:1.4; }
+    .arg__body { font-size:13px; color:var(--t2); line-height:1.75; font-weight:400; }
+    .arg__body p { margin-bottom:10px; }
+    .arg__body p:last-child { margin-bottom:0; }
+    .arg__body strong { color:var(--t1); font-weight:700; }
+
+    /* ── LOOP ── */
+    .loop {
+      display:flex; align-items:center; gap:4px; flex-wrap:wrap;
+      padding:12px 16px; background:var(--bg1);
+      border:1px solid var(--b0); border-top:2px solid var(--amber);
+      border-radius:var(--r); margin-bottom:24px;
+    }
+    .loop-step {
+      font-family:var(--mono); font-size:10px; font-weight:700; color:var(--amber);
+      padding:3px 8px; background:rgba(245,158,11,.08); border:1px solid rgba(245,158,11,.2);
+      border-radius:2px; white-space:nowrap; letter-spacing:.05em;
+    }
+    .loop-step--end { border-color:rgba(245,158,11,.4); background:rgba(245,158,11,.14); }
+    .loop-arr { color:var(--t4); font-size:11px; flex-shrink:0; }
+    .loop-note { flex:1; min-width:100px; font-size:11px; color:var(--t3); border-left:1px solid var(--b0); padding-left:11px; line-height:1.55; margin-left:4px; }
+
+    /* ── HOW STEPS ── */
+    .how-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:24px; }
+    .how-step {
+      padding:16px 15px; border-radius:var(--r);
+      background:var(--bg1); border:1px solid var(--b0); border-top:2px solid rgba(245,158,11,.25);
+      transition:border-color .16s;
+    }
+    .how-step:hover { border-top-color:var(--amber); border-color:var(--b1); }
+    .how-step__n { font-family:var(--mono); font-size:8px; font-weight:700; letter-spacing:.12em; color:var(--amber); margin-bottom:8px; }
+    .how-step__icon { width:26px; height:26px; background:rgba(245,158,11,.08); border:1px solid rgba(245,158,11,.16); border-radius:var(--r); color:var(--amber); font-size:12px; display:flex; align-items:center; justify-content:center; margin-bottom:8px; }
+    .how-step__title { font-size:12px; font-weight:700; color:var(--t1); margin-bottom:5px; }
+    .how-step__desc { font-size:11px; color:var(--t3); line-height:1.6; font-weight:400; }
+
+    /* ── FOUNDER ── */
+    .founder-grid { display:grid; grid-template-columns:260px 1fr; gap:20px; align-items:stretch; }
+    .founder-card {
+      background:var(--bg1); border:1px solid var(--b0);
+      border-top:2px solid var(--amber); border-radius:var(--r); padding:20px 16px;
+    }
+    .founder-init {
+      width:42px; height:42px; border-radius:var(--r);
+      background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:18px; font-weight:900; color:var(--amber); margin-bottom:11px;
+    }
+    .founder-name { font-size:13px; font-weight:800; color:var(--t1); margin-bottom:10px; letter-spacing:-.02em; }
+    .founder-role { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+    .founder-role__item { font-size:10px; color:var(--t2); font-weight:600; line-height:1.4; padding-bottom:8px; border-bottom:1px solid var(--b0); }
+    .founder-role__item:last-child { border-bottom:none; padding-bottom:0; }
+    .founder-div { height:1px; background:var(--b0); margin-bottom:11px; }
+    .founder-brands { display:flex; flex-wrap:wrap; gap:4px; }
+    .fbrand {
+      font-family:var(--mono); font-size:7px; font-weight:700;
+      letter-spacing:.06em; text-transform:uppercase;
+      padding:2px 6px; border-radius:2px;
+    }
+    .fbrand--s { background:rgba(20,184,166,.06); border:1px solid rgba(20,184,166,.15); color:var(--teal); }
+    .fbrand--l { background:rgba(245,158,11,.06); border:1px solid rgba(245,158,11,.15); color:var(--amber); }
+
+    /* ── TICKER ── */
+    .ticker-label { font-family:var(--mono); font-size:9px; color:var(--t4); letter-spacing:.1em; text-transform:uppercase; margin:28px 0 8px; }
+    .ticker-wrap { overflow:hidden; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; width:100vw; margin-bottom:24px; padding:7px 0; border-top:1px solid var(--b0); border-bottom:1px solid var(--b0); }
+    .ticker { display:flex; gap:36px; width:max-content; animation:ticker 26s linear infinite; }
+    .ticker:hover { animation-play-state:paused; }
+    @keyframes ticker { to { transform:translateX(-50%); } }
+    .tbrand { display:flex; align-items:center; }
+    .tbrand img { height:24px; width:auto; opacity:1; filter:none; transition:opacity .2s; cursor:default; }
+    .tbrand img:hover { opacity:.7; }
+    .tsep { color:#d1d5db; font-size:11px; }
+
+    /* ── COMMISSION ── */
+    .comm-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .comm-card { border-radius:var(--r); padding:20px 18px; background:var(--bg1); border:1px solid var(--b0); }
+    .comm-card--others { border-top:2px solid var(--cherry); }
+    .comm-card--bibon  { border-top:2px solid var(--amber); }
+    .comm-card__val { font-family:var(--mono); font-size:clamp(36px,4.5vw,52px); font-weight:700; letter-spacing:-.05em; line-height:1; margin-bottom:4px; }
+    .comm-card--others .comm-card__val { color:var(--cherry); }
+    .comm-card--bibon  .comm-card__val { color:var(--amber); }
+    .comm-card__sub { font-family:var(--mono); font-size:9px; color:var(--t3); font-weight:700; margin-bottom:10px; letter-spacing:.04em; }
+    .comm-card__note { font-size:12px; color:var(--t3); line-height:1.6; font-weight:400; }
+    .comm-card__note strong { color:var(--t1); font-weight:700; }
+
+    /* ── INVOICE ── */
+    .invoice { background:var(--bg1); border:1px solid var(--b0); border-top:2px solid var(--amber); border-radius:var(--r); overflow:hidden; }
+    .inv-hd { background:var(--bg2); border-bottom:1px solid var(--b0); padding:9px 16px; display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+    .inv-hd__l { display:flex; align-items:center; gap:7px; }
+    .inv-live { width:4px; height:4px; border-radius:50%; background:var(--green); animation:pulse 1.6s infinite; flex-shrink:0; }
+    .inv-title { font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--amber); }
+    .inv-sub { font-family:var(--mono); font-size:9px; color:var(--t4); }
+    .inv-badge { font-family:var(--mono); font-size:7px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:2px 7px; border-radius:2px; background:rgba(16,185,129,.07); border:1px solid rgba(16,185,129,.16); color:var(--green); }
+    .inv-table { width:100%; border-collapse:collapse; font-size:11px; }
+    .inv-table th { padding:7px 14px; text-align:left; font-family:var(--mono); font-size:7.5px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--t5); border-bottom:1px solid var(--b0); background:var(--bg2); }
+    .inv-table td { padding:8px 14px; color:var(--t2); font-weight:400; border-bottom:1px solid rgba(255,255,255,.025); }
+    .inv-table tr:last-child td { border-bottom:none; }
+    .inv-teal { color:var(--teal); font-weight:700; font-family:var(--mono); }
+    .inv-dim { color:var(--t4); font-family:var(--mono); font-size:10px; }
+    .inv-ft { padding:8px 16px; display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; background:var(--bg2); border-top:1px solid var(--b0); }
+    .inv-ft__total { font-family:var(--mono); font-size:10px; font-weight:700; color:var(--t1); }
+    .inv-ft__total span { color:var(--teal); }
+    .inv-send { display:inline-flex; align-items:center; gap:4px; font-family:var(--mono); font-size:8px; font-weight:700; padding:4px 9px; border-radius:2px; background:rgba(16,185,129,.07); border:1px solid rgba(16,185,129,.15); color:var(--green); }
+    .inv-note { font-family:var(--mono); font-size:8px; color:var(--t4); padding:8px 16px; border-top:1px solid var(--b0); line-height:1.6; letter-spacing:.03em; }
+
+    /* ── DASHBOARD ── */
+    .pdash { background:var(--bg1); border:1px solid rgba(20,184,166,.16); border-top:2px solid var(--teal); border-radius:var(--r); overflow:hidden; margin-bottom:8px; }
+    .pdash-hd { display:flex; align-items:center; justify-content:space-between; padding:8px 13px; border-bottom:1px solid rgba(20,184,166,.1); background:var(--bg2); }
+    .pdash-hd__l { display:flex; align-items:center; gap:6px; }
+    .pdash-live { width:4px; height:4px; border-radius:50%; background:var(--teal); animation:pulse 1.6s infinite; flex-shrink:0; }
+    .pdash-hd__t { font-family:var(--mono); font-size:8px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--teal); }
+    .pdash-hd__r { display:flex; align-items:center; gap:8px; }
+    .pdash-hd__name { font-family:var(--mono); font-size:8px; color:var(--t3); }
+    .pdash-hd__dt { font-family:var(--mono); font-size:8px; color:var(--t4); background:var(--bg1); border:1px solid var(--b0); border-radius:2px; padding:1px 5px; }
+    .pdash-body { padding:10px 12px; display:flex; flex-direction:column; gap:8px; }
+    .pdash-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
+    .pdash-kpi { background:var(--bg2); border:1px solid var(--b0); border-radius:var(--r); padding:8px 9px; }
+    .pdash-kpi__v { font-family:var(--mono); font-size:16px; font-weight:700; letter-spacing:-.03em; color:var(--t1); line-height:1; }
+    .pdash-kpi__v--t { color:var(--teal); }
+    .pdash-kpi__l { font-family:var(--mono); font-size:6.5px; font-weight:700; color:var(--t4); margin-top:3px; text-transform:uppercase; letter-spacing:.08em; }
+    .pdash-kpi__tr { font-family:var(--mono); font-size:7.5px; font-weight:700; color:var(--teal); margin-top:3px; }
+    .pdash-stitle { font-family:var(--mono); font-size:7px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--t4); margin-bottom:6px; }
+    .pdash-spark { background:var(--bg2); border:1px solid var(--b0); border-radius:var(--r); padding:9px 10px; }
+    .pdash-spark-pk { margin-top:3px; font-family:var(--mono); font-size:7.5px; font-weight:700; color:var(--teal); display:flex; align-items:center; gap:3px; }
+    .pdash-spark-pk::before { content:'▲'; font-size:5px; }
+    .pdash-r2 { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+    .pdash-inner { background:var(--bg2); border:1px solid var(--b0); border-radius:var(--r); padding:9px 10px; }
+    .pdash-tier { display:grid; grid-template-columns:38px 1fr 24px; align-items:center; gap:6px; margin-bottom:5px; }
+    .pdash-tier:last-child { margin-bottom:0; }
+    .pdash-tier__n { font-family:var(--mono); font-size:7px; font-weight:700; color:var(--t3); text-align:right; }
+    .pdash-tier__tr { height:2px; background:var(--bg); position:relative; }
+    .pdash-tier__f { position:absolute; top:0; left:0; height:100%; }
+    .pdash-tier__f--br { background:#cd7f32; }
+    .pdash-tier__f--si { background:#a8a9ad; }
+    .pdash-tier__f--go { background:#d4af37; }
+    .pdash-tier__f--pl { background:var(--teal); }
+    .pdash-tier__pct { font-family:var(--mono); font-size:7px; font-weight:700; color:var(--t4); }
+    .pdash-lot { display:flex; align-items:center; justify-content:space-between; gap:5px; padding:4px 0; border-bottom:1px solid var(--b0); }
+    .pdash-lot:last-child { border-bottom:none; }
+    .pdash-lot__n { font-size:10px; font-weight:600; color:var(--t2); }
+    .pdash-lot__s { font-family:var(--mono); font-size:8px; font-weight:700; color:var(--teal); background:rgba(20,184,166,.07); border:1px solid rgba(20,184,166,.13); border-radius:2px; padding:1px 5px; }
+    .pdash-scan { background:rgba(20,184,166,.04); border:1px solid rgba(20,184,166,.1); border-radius:2px; padding:5px 10px; display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:7.5px; font-weight:700; color:var(--t3); }
+    .pdash-scan-dot { width:4px; height:4px; border-radius:50%; background:var(--teal); animation:pulse 1.6s infinite; flex-shrink:0; }
+
+    /* ── PHONE MOCKUP ── */
+    .phone-pair { display:flex; gap:18px; align-items:flex-start; }
+    .phone-label { font-family:var(--mono); font-size:8px; color:var(--t4); letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }
+    .phone { width:180px; flex-shrink:0; border:1.5px solid var(--b1); border-radius:22px; background:#0a0a0a; overflow:hidden; position:relative; }
+    .phone::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:50px; height:13px; background:var(--bg2); border-radius:0 0 8px 8px; z-index:2; }
+    .phone-inner { padding:20px 10px 10px; }
+    .phone-nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .phone-nav__brand { font-size:13px; font-weight:900; color:var(--t1); letter-spacing:-.04em; }
+    .phone-nav__icon { width:22px; height:22px; border-radius:var(--r); background:rgba(16,185,129,.1); display:flex; align-items:center; justify-content:center; color:var(--green); font-size:11px; }
+    .phone-wallet { background:rgba(16,185,129,.07); border:1px solid rgba(16,185,129,.15); border-radius:var(--r); padding:9px 8px; margin-bottom:7px; }
+    .phone-wallet__lbl { font-family:var(--mono); font-size:6.5px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--green); margin-bottom:6px; }
+    .phone-lots { display:flex; flex-direction:column; gap:3px; }
+    .phone-lot { display:flex; align-items:center; justify-content:space-between; background:var(--bg1); border:1px solid var(--b0); border-radius:2px; padding:5px 7px; }
+    .phone-lot__info { display:flex; align-items:center; gap:4px; }
+    .phone-lot__icon { font-size:12px; }
+    .phone-lot__name { font-size:8px; font-weight:700; color:var(--t2); }
+    .phone-lot__shop { font-size:6.5px; color:var(--t4); font-weight:400; }
+    .phone-lot__btn { font-family:var(--mono); font-size:6.5px; font-weight:700; color:var(--green); background:rgba(16,185,129,.08); border:1px solid rgba(16,185,129,.16); border-radius:2px; padding:2px 5px; white-space:nowrap; }
+    .phone-map { background:var(--bg1); border:1px solid var(--b0); border-radius:var(--r); padding:8px; }
+    .phone-map__lbl { font-family:var(--mono); font-size:6.5px; color:var(--t4); letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px; display:flex; align-items:center; gap:4px; }
+    .phone-map__lbl::before { content:''; width:3px; height:3px; border-radius:50%; background:var(--green); flex-shrink:0; }
+    .phone-map-dots { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; }
+    .pmdot { border-radius:2px; padding:4px 2px; text-align:center; font-size:6px; font-weight:700; color:var(--t4); }
+    .pmdot--on { background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.2); color:var(--green); }
+    .pmdot--off { background:var(--bg2); border:1px solid var(--b0); }
+
+    /* ── LP DASHBOARD (thème landpage) ── */
+    .lp-kpi { background:var(--bg2); border:1px solid var(--b0); border-radius:var(--r); padding:10px 12px; }
+    .lp-kpi--teal { border-top:2px solid var(--teal); }
+    .lp-kpi--amber { border-top:2px solid var(--amber); }
+    .lp-kpi__lbl { font-family:var(--mono); font-size:6.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--t4); margin-bottom:5px; }
+    .lp-kpi__val { font-family:var(--mono); font-size:20px; font-weight:700; letter-spacing:-.03em; color:var(--t1); line-height:1; }
+    .lp-kpi__trend { font-family:var(--mono); font-size:7px; color:var(--t4); margin-top:4px; }
+    .lp-kpi__trend--teal { color:var(--teal); }
+    .lp-kpi__trend--amber { color:var(--amber); }
+    .lp-panel { background:var(--bg2); border:1px solid var(--b0); border-radius:var(--r); padding:10px 12px; }
+    .lp-panel__title { font-family:var(--mono); font-size:7px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--t4); }
+    .lp-tier { display:grid; grid-template-columns:44px 1fr 90px; align-items:center; gap:6px; }
+    .lp-tier__n { font-family:var(--mono); font-size:8px; font-weight:700; text-align:right; }
+    .lp-tier__bar { height:3px; background:var(--bg); border-radius:2px; position:relative; overflow:hidden; }
+    .lp-tier__pct { font-family:var(--mono); font-size:7px; color:var(--t4); }
+    .lp-prod { display:flex; align-items:center; gap:6px; padding:4px 0; border-bottom:1px solid var(--b0); }
+    .lp-prod:last-child { border-bottom:none; }
+    .lp-prod__rank { font-family:var(--mono); font-size:7px; color:var(--t5); min-width:16px; }
+    .lp-prod__name { font-size:9px; color:var(--t2); flex:1; }
+    .lp-prod__cnt { font-family:var(--mono); font-size:9px; font-weight:700; color:var(--t3); }
+    .lp-rating { display:flex; align-items:center; gap:6px; margin-bottom:3px; }
+    .lp-rating__bar { flex:1; height:4px; background:var(--bg); border-radius:2px; overflow:hidden; }
+    .lp-client { display:flex; align-items:center; gap:6px; padding:4px 0; border-bottom:1px solid var(--b0); }
+    .lp-client:last-child { border-bottom:none; }
+    .lp-client__id { font-size:9px; color:var(--t2); flex:1; }
+    .lp-client__tier { font-family:var(--mono); font-size:7.5px; font-weight:700; }
+    .lp-client__cnt { font-family:var(--mono); font-size:9px; font-weight:700; color:var(--t3); min-width:22px; text-align:right; }
+
+    /* ── PRO DASHBOARD PANELS (legacy dark — kept for compatibility) ── */
+    .pro-kpi { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:var(--r); padding:9px 10px; }
+    .pro-kpi__label { font-family:var(--mono); font-size:6.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:4px; }
+    .pro-kpi__val { font-family:var(--mono); font-size:17px; font-weight:700; letter-spacing:-.03em; color:rgba(255,255,255,.85); line-height:1; }
+    .pro-kpi__val--teal { color:#14b8a6; }
+    .pro-kpi__trend { font-family:var(--mono); font-size:7px; color:#14b8a6; margin-top:4px; }
+    .pro-panel { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:var(--r); padding:9px 10px; }
+    .pro-panel__title { font-family:var(--mono); font-size:7px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:rgba(255,255,255,.3); }
+
+    /* ── SERVICES ── */
+    .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+    .svc-card {
+      padding:16px 15px; border-radius:var(--r); background:var(--bg1); border:1px solid var(--b0);
+      transition:border-color .22s, filter .55s cubic-bezier(.22,1,.36,1), opacity .55s cubic-bezier(.22,1,.36,1);
+    }
+    /* Cards déployées — toujours nettes */
+    .svc-card--live { border-color:rgba(16,185,129,.14); }
+    .svc-card--live:hover { border-color:rgba(16,185,129,.30); }
+    /* Cards non déployées — floutées par défaut, se révèlent au hover */
+    .svc-card--soon {
+      filter: blur(2.5px) saturate(.6);
+      opacity: .55;
+    }
+    .svc-card--soon.svc-revealed,
+    .svc-card--soon:hover {
+      filter: blur(0px) saturate(1);
+      opacity: 1;
+      border-color:rgba(245,158,11,.22);
+    }
+    .svc-status {
+      font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.04em;
+      text-transform:uppercase; display:inline-block; margin-bottom:12px;
+      color:inherit;
+    }
+    .svc-status--live { color:var(--green); }
+    .svc-status--soon { color:var(--amber); }
+    .svc-title { font-size:12px; font-weight:700; color:var(--t1); margin-bottom:4px; }
+    .svc-desc { font-size:11px; color:var(--t3); line-height:1.6; font-weight:400; }
+
+    /* ── CTA ── */
+    .cta-block { margin-top:32px; margin-bottom:48px; padding:28px 24px; background:var(--bg1); border:1px solid var(--b0); border-top:2px solid var(--teal); border-radius:var(--r); text-align:center; }
+    .cta-block__label { font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--teal); margin-bottom:10px; display:flex; align-items:center; justify-content:center; gap:6px; }
+    .cta-block__label::before { content:''; width:4px; height:4px; border-radius:50%; background:var(--teal); animation:pulse 2s infinite; }
+    .cta-block__title { font-size:clamp(20px,2.5vw,32px); font-weight:900; color:var(--t1); letter-spacing:-.04em; line-height:1; margin-bottom:10px; }
+    .cta-block__sub { font-size:13px; color:var(--t3); max-width:320px; margin:0 auto 20px; font-weight:400; line-height:1.65; }
+    .btn { display:inline-flex; align-items:center; gap:7px; font-family:inherit; font-weight:700; font-size:13px; padding:10px 22px; border-radius:var(--r); border:none; cursor:pointer; text-decoration:none; transition:all .16s; }
+    .btn--teal { background:var(--teal); color:#000; }
+    .btn--teal:hover { background:#0d9488; color:#000; transform:translateY(-1px); }
+
+    /* ── DARK OVERRIDES: dashboard & phone stay dark ── */
+    .pdash { background:#111 !important; border-color:rgba(20,184,166,.2) !important; }
+    .pdash-hd { background:#1a1a1a !important; }
+    .pdash-kpi { background:#1a1a1a !important; border-color:rgba(255,255,255,.06) !important; }
+    .pdash-kpi__v { color:#fff !important; }
+    .pdash-kpi__l { color:rgba(255,255,255,.28) !important; }
+    .pdash-kpi__tr { color:#14b8a6 !important; }
+    .pdash-stitle { color:rgba(255,255,255,.25) !important; }
+    .pdash-spark { background:#1a1a1a !important; border-color:rgba(255,255,255,.06) !important; }
+    .pdash-inner { background:#1a1a1a !important; border-color:rgba(255,255,255,.06) !important; }
+    .pdash-tier__tr { background:#080808 !important; }
+    .pdash-tier__n { color:rgba(255,255,255,.35) !important; }
+    .pdash-tier__pct { color:rgba(255,255,255,.3) !important; }
+    .pdash-lot { border-bottom-color:rgba(255,255,255,.05) !important; }
+    .pdash-lot__n { color:rgba(255,255,255,.55) !important; }
+    .pdash-scan { background:rgba(20,184,166,.04) !important; border-color:rgba(20,184,166,.1) !important; color:rgba(255,255,255,.3) !important; }
+    .pdash-hd__name { color:rgba(255,255,255,.38) !important; }
+    .pdash-hd__dt { background:#111 !important; border-color:rgba(255,255,255,.08) !important; color:rgba(255,255,255,.24) !important; }
+    .pdash-spark-pk { color:#14b8a6 !important; }
+    .phone { background:#0c0c0c !important; border-color:rgba(255,255,255,.14) !important; }
+    .phone::before { background:#1a1a1a !important; }
+    .phone-nav__brand { color:#fff !important; }
+    .phone-lot { background:#1a1a1a !important; border-color:rgba(255,255,255,.07) !important; }
+    .phone-lot__name { color:rgba(255,255,255,.7) !important; }
+    .phone-lot__shop { color:rgba(255,255,255,.3) !important; }
+    .phone-map { background:#1a1a1a !important; border-color:rgba(255,255,255,.07) !important; }
+    .phone-map__lbl { color:rgba(255,255,255,.3) !important; }
+    .pmdot--off { background:rgba(255,255,255,.04) !important; border-color:rgba(255,255,255,.08) !important; color:rgba(255,255,255,.25) !important; }
+
+    /* ── FOOTER — barre fixe au bas, unfold au hover ── */
+    .footer {
+      position:static;
+      flex-shrink:0;
+      background:rgba(222,222,222,.88);
+      backdrop-filter:blur(14px) saturate(1.4);
+      -webkit-backdrop-filter:blur(14px) saturate(1.4);
+      border-top:1px solid var(--b0);
+    }
+    /* Grille étendue — collapsée par défaut, révélée quand footer-open */
+    .footer-grid {
+      display:grid; grid-template-columns:1fr 1fr 1.2fr 1fr; gap:32px;
+      padding:0 28px;
+      border-bottom:1px solid var(--b0);
+      max-height:0; overflow:hidden;
+      opacity:0;
+      transition: max-height .85s cubic-bezier(.16,1,.3,1),
+                  opacity .55s ease,
+                  padding-top .85s cubic-bezier(.16,1,.3,1),
+                  padding-bottom .85s cubic-bezier(.16,1,.3,1);
+    }
+    body.footer-open .footer-grid {
+      max-height:200px; /* + padding-top 22px + padding-bottom 16px = 238px total */
+      opacity:1;
+      padding-top:22px; padding-bottom:16px;
+    }
+    .lcol__title { font-family:var(--mono); font-size:8px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--t4); margin-bottom:10px; }
+    .lcol__links { list-style:none; display:flex; flex-direction:column; gap:0; margin:0 -8px; }
+    .lcol__links li { display:block; }
+    .lcol__links a {
+      display:inline-block;
+      font-size:11.5px; color:var(--t3); text-decoration:none; font-weight:400;
+      padding:5px 8px; border-radius:5px;
+      border:1px solid transparent;
+      transition:color .18s, border-color .18s;
+    }
+    .lcol__links a:hover {
+      color:var(--t1);
+      border-color:var(--b1);
+    }
+    .lcol__links span { font-size:11.5px; color:var(--t4); font-weight:400; display:inline-block; padding:5px 8px; }
+    /* Bande du bas — toujours visible */
+    .footer-bottom {
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; gap:10px;
+      padding:0 20px; height:36px;
+    }
+    .footer-logo { display:none; } /* retiré de la bande visible */
+    .footer-copy { font-family:var(--mono); font-size:9px; color:var(--t4); line-height:1.6; }
+    .footer-links { display:flex; gap:2px; flex-wrap:wrap; margin:-2px; }
+    .footer-links a {
+      font-family:var(--mono); font-size:9px; color:var(--t4); text-decoration:none;
+      font-weight:700; letter-spacing:.04em;
+      padding:4px 8px; border-radius:20px;
+      border:1px solid transparent;
+      transition:color .18s, border-color .18s;
+    }
+    .footer-links a:hover {
+      color:var(--t2);
+      border-color:var(--b1);
+    }
+
+    /* ── UNFOLD ANIMATIONS ── */
+    @keyframes slideUpFade {
+      from { opacity:0; transform:translateY(18px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes petalBounce {
+      from { opacity:0; transform:scale(0.05); }
+      70%  { transform:scale(1.07); }
+      to   { opacity:1; transform:scale(1); }
+    }
+    @keyframes textPop {
+      from { opacity:0; transform:scale(0.7); }
+      to   { opacity:1; transform:scale(1); }
+    }
+    @keyframes fadeSlideLeft {
+      from { opacity:0; transform:translateX(-10px); }
+      to   { opacity:1; transform:translateX(0); }
+    }
+
+    /* Chart petals : paused jusqu'à ce que le layout-split soit visible */
+    #objWheel path {
+      transform-origin: 155px 155px;
+      animation: petalBounce 0.55s cubic-bezier(0.34,1.56,0.64,1) both;
+      animation-play-state: paused;
+      transition: fill 0.2s ease;
+    }
+    #objWheel .petal-group:hover .petal-fg { fill: var(--cherry); }
+    #objWheel .petal-group { cursor: pointer; }
+    #objWheel text {
+      transform-origin: 155px 155px;
+      animation: textPop 0.3s ease both;
+      animation-play-state: paused;
+    }
+    .layout-split.v #objWheel path,
+    .layout-split.v #objWheel text { animation-play-state: running; }
+
+    /* Stat cards staggered */
+    .layout-split.v .stat-mod {
+      animation: slideUpFade 0.42s ease both;
+    }
+    .layout-split.v .stat-mod:nth-child(1) { animation-delay:.06s; }
+    .layout-split.v .stat-mod:nth-child(2) { animation-delay:.16s; }
+
+    /* Donut module */
+    .layout-split.v .mod {
+      animation: slideUpFade 0.42s .28s ease both;
+    }
+
+    /* Chart label */
+    .layout-split.v .chart-label {
+      animation: fadeSlideLeft 0.4s .1s ease both;
+    }
+
+    /* Args blocks stagger */
+    .sect .arg.v:nth-of-type(1) { animation: slideUpFade .4s .0s ease both; }
+    .sect .arg.v:nth-of-type(2) { animation: slideUpFade .4s .1s ease both; }
+    .sect .arg.v:nth-of-type(3) { animation: slideUpFade .4s .2s ease both; }
+
+    /* ── MOBILE ── */
+    @media(max-width:768px) {
+      /* Hero band compact sur mobile */
+      .hero-band { height:auto; padding:12px 16px 10px; gap:10px; }
+      /* Phrase : passe en texte normal qui se wrap, fold désactivé */
+      .hero-acro {
+        font-size:11px; white-space:normal;
+        text-align:center; line-height:1.5;
+      }
+      .hero-acro .htxt {
+        display:inline; width:auto !important; overflow:visible;
+        opacity:1 !important;
+      }
+      .hero-acro .hbl.ws { margin-left:0.35em; transition:none; }
+      .hero-band:hover .htxt { width:auto !important; opacity:1 !important; }
+      .hero-band:hover .hbl.ws { margin-left:0.35em; }
+      .hcd-val { font-size:14px; }
+      .hero-countdown { gap:12px; }
+
+      /* Colonnes en accordéon vertical */
+      .cols-wrap {
+        flex-direction:column; height:auto; overflow:visible;
+        margin-top:calc(48px + 96px) !important;
+      }
+      .col {
+        flex:none; width:100%;
+        border-right:none; border-bottom:1px solid var(--b0);
+        overflow:visible;
+      }
+      .col:last-child { border-bottom:none; }
+      .cols-wrap.has-active .col,
+      .cols-wrap.has-active .col--active { flex:none; overflow:visible; }
+
+      /* Preview : position relative, hauteur auto */
+      .col-preview {
+        position:relative; inset:auto;
+        height:auto; min-height:120px;
+        padding:16px 18px 18px;
+        display:flex; flex-direction:column;
+        /* sur mobile la preview reste visible pour les cols inactives */
+        opacity:1 !important; pointer-events:auto !important;
+        transition:none;
+      }
+      /* Quand un col est actif : sa preview se collapse, pas celles des autres */
+      .cols-wrap.has-active .col--active .col-preview {
+        height:0 !important; min-height:0 !important;
+        overflow:hidden !important; padding:0 !important;
+        opacity:0 !important; pointer-events:none !important;
+      }
+      /* Cols inactives quand un col est ouvert : preview compacte + cliquable */
+      .cols-wrap.has-active .col:not(.col--active) .col-preview {
+        min-height:56px; padding:12px 18px;
+        cursor:pointer;
+      }
+      .cols-wrap.has-active .col:not(.col--active) .col-preview__bottom { display:none; }
+      .cols-wrap.has-active .col:not(.col--active) .col-preview__title  { font-size:18px; padding-top:2px; }
+
+      .col-preview__title {
+        font-size:clamp(34px,9vw,52px);
+        padding-top:6px; flex:none;
+      }
+      /* Cacher les barres en preview mobile — trop chargé */
+      .col-bars { display:none; }
+      .col-stats { gap:12px; }
+      .col-preview__bottom { margin-top:8px; }
+
+      /* Strip masqué, content masqué par défaut */
+      .col-strip { display:none !important; }
+      .col-content-wrap { display:none; }
+      .col--active .col-content-wrap { display:block; }
+      .col-content { padding:20px 16px 40px; }
+
+      /* Nav */
+      .nav__right .nav__pill:not(.nav__pill--cta) { display:none; }
+      .nav__burger { display:none; }
+      .nav__pill--cta { font-size:9px; padding:4px 9px; letter-spacing:.04em; }
+
+      /* Grids → 1 colonne sur mobile */
+      .layout-split,
+      .layout-split--6040,
+      .layout-split--4060 { grid-template-columns:1fr; }
+      .how-steps { grid-template-columns:1fr; }
+      .stat-grid { grid-template-columns:1fr 1fr; }
+      .svc-grid { grid-template-columns:1fr 1fr; }
+      .comm-grid { grid-template-columns:1fr; }
+      .founder-grid { grid-template-columns:1fr; }
+      /* Mobile — page-body revient en flux normal */
+      .page-body { position:static; }
+      .footer { border-top:1px solid var(--b0); overflow:visible; }
+      .footer-grid {
+        max-height:none !important; opacity:1 !important;
+        padding:24px 18px 16px !important;
+        grid-template-columns:1fr 1fr; gap:18px;
+        border-bottom:1px solid var(--b0);
+      }
+      .footer-bottom { padding:0 18px; height:auto; padding-top:12px; padding-bottom:14px; }
+      .footer-logo { display:block; }
+
+      /* Dashboard KPIs → 2 col */
+      .pdash-kpis { grid-template-columns:1fr 1fr; }
+      .pdash-r2 { grid-template-columns:1fr; }
+
+      /* Pro dashboard → colonnes réduites */
+      .pro-panel, .pro-kpi { min-width:0; }
+      .pro-grid-kpis { grid-template-columns:1fr 1fr !important; }
+      .pro-grid-row { grid-template-columns:1fr !important; }
+      .footer-grid { grid-template-columns:1fr 1fr !important; }
+
+      /* Ticker label */
+      .ticker-label { margin-top:20px; }
+
+      /* Col head */
+      .col-head { padding:12px 16px; }
+      .col-head__title { font-size:11px; }
+
+      /* Conviction block */
+      .conviction { padding:18px; }
+      .conviction p { font-size:14px; }
+      .conviction__avatar { width:72px; height:72px; }
+
+      /* Texts */
+      .h2 { font-size:clamp(20px,5.5vw,28px); }
+      .h3 { font-size:clamp(14px,3.8vw,18px); }
+    }
+
+    /* ══════════════════════════════════════════════════
+       INTRO ANIMATIONS — cinématique au chargement
+    ══════════════════════════════════════════════════ */
+
+    /* ─── Keyframes ─── */
+    @keyframes iDown {
+      from { transform:translateY(-100%); opacity:0; }
+      to   { transform:translateY(0);     opacity:1; }
+    }
+    @keyframes iUp {
+      from { transform:translateY(52px); opacity:0; }
+      to   { transform:translateY(0);    opacity:1; }
+    }
+    @keyframes iUpSm {
+      from { transform:translateY(16px); opacity:0; }
+      to   { transform:translateY(0);    opacity:1; }
+    }
+    @keyframes iFade {
+      from { opacity:0; }
+      to   { opacity:1; }
+    }
+    @keyframes iColIn {
+      from { transform:translateY(80px) scale(.985); opacity:0; }
+      to   { transform:translateY(0)    scale(1);    opacity:1; }
+    }
+    @keyframes iStripe {
+      from { transform:scaleX(0); }
+      to   { transform:scaleX(1); }
+    }
+    @keyframes iClip {
+      from { clip-path:inset(0 100% 0 0); }
+      to   { clip-path:inset(0 0%   0 0); }
+    }
+    @keyframes iBarFill {
+      from { transform:scaleX(0); }
+      to   { transform:scaleX(1); }
+    }
+    @keyframes iVeil {
+      0%   { opacity:1; }
+      100% { opacity:0; visibility:hidden; }
+    }
+
+    /* ─── Veil — fond qui se dissout au premier instant ─── */
+    .intro-veil {
+      position:fixed; inset:0; z-index:10000;
+      background:var(--bg);
+      animation:iVeil .40s .05s cubic-bezier(.4,0,1,1) both;
+      pointer-events:none;
+    }
+
+    /* ─── Nav — slide depuis le haut ─── */
+    .nav { animation:iDown .58s cubic-bezier(.22,1,.36,1) both; }
+
+    /* ─── Hero band — monte depuis le bas du nav ─── */
+    .hero-band { animation:iUp .62s .20s cubic-bezier(.22,1,.36,1) both; }
+
+    /* ─── Hero phrase — wipe gauche → droite ─── */
+    .hero-acro { animation:iClip .95s .46s cubic-bezier(.4,0,.2,1) both; }
+
+    /* ─── Countdown — cascade ─── */
+    .hero-countdown>*:nth-child(1){animation:iUpSm .42s .52s ease both;}
+    .hero-countdown>*:nth-child(2){animation:iFade .28s .60s ease both;}
+    .hero-countdown>*:nth-child(3){animation:iUpSm .42s .60s ease both;}
+    .hero-countdown>*:nth-child(4){animation:iFade .28s .68s ease both;}
+    .hero-countdown>*:nth-child(5){animation:iUpSm .42s .68s ease both;}
+    .hero-countdown>*:nth-child(6){animation:iFade .28s .76s ease both;}
+    .hero-countdown>*:nth-child(7){animation:iUpSm .42s .76s ease both;}
+
+    /* ─── Colonnes — slide up en cascade ─── */
+    .col--why  { animation:iColIn .88s .56s cubic-bezier(.22,1,.36,1) both; }
+    .col--how  { animation:iColIn .88s .70s cubic-bezier(.22,1,.36,1) both; }
+    .col--what { animation:iColIn .88s .84s cubic-bezier(.22,1,.36,1) both; }
+
+    /* ─── Stripes colorées — scaleX depuis la gauche ─── */
+    .col--why::before,.col--how::before,.col--what::before { transform-origin:left center; }
+    .col--why::before  { animation:iStripe .72s .82s cubic-bezier(.22,1,.36,1) both; }
+    .col--how::before  { animation:iStripe .72s .96s cubic-bezier(.22,1,.36,1) both; }
+    .col--what::before { animation:iStripe .72s 1.10s cubic-bezier(.22,1,.36,1) both; }
+
+    /* ─── Preview WHY ─── */
+    .col--why .col-n                        { animation:iFade  .38s .88s ease both; }
+    .col--why .col-hint                     { animation:iFade  .28s .96s ease both; }
+    .col--why .col-preview__title           { animation:iUp    .58s .90s cubic-bezier(.22,1,.36,1) both; }
+    .col--why .col-preview__divider         { animation:iFade  .32s 1.08s ease both; }
+    .col--why .col-preview__sub             { animation:iUpSm  .36s 1.12s ease both; }
+    .col--why .col-stats>div:nth-child(1)   { animation:iUpSm  .34s 1.18s ease both; }
+    .col--why .col-stats>div:nth-child(2)   { animation:iUpSm  .34s 1.26s ease both; }
+    .col--why .col-bar__fill                { transform-origin:left; }
+    .col--why .col-open                     { animation:iFade  .28s 1.40s ease both; }
+
+    /* ─── Preview HOW ─── */
+    .col--how .col-n                        { animation:iFade  .38s 1.02s ease both; }
+    .col--how .col-hint                     { animation:iFade  .28s 1.10s ease both; }
+    .col--how .col-preview__title           { animation:iUp    .58s 1.04s cubic-bezier(.22,1,.36,1) both; }
+    .col--how .col-preview__divider         { animation:iFade  .32s 1.22s ease both; }
+    .col--how .col-preview__sub             { animation:iUpSm  .36s 1.26s ease both; }
+    .col--how .col-stats>div:nth-child(1)   { animation:iUpSm  .34s 1.32s ease both; }
+    .col--how .col-stats>div:nth-child(2)   { animation:iUpSm  .34s 1.40s ease both; }
+    .col--how .col-bar__fill                { transform-origin:left; }
+    .col--how .col-open                     { animation:iFade  .28s 1.54s ease both; }
+
+    /* ─── Preview WHAT ─── */
+    .col--what .col-n                       { animation:iFade  .38s 1.16s ease both; }
+    .col--what .col-hint                    { animation:iFade  .28s 1.24s ease both; }
+    .col--what .col-preview__title          { animation:iUp    .58s 1.18s cubic-bezier(.22,1,.36,1) both; }
+    .col--what .col-preview__divider        { animation:iFade  .32s 1.36s ease both; }
+    .col--what .col-preview__sub            { animation:iUpSm  .36s 1.40s ease both; }
+    .col--what .col-stats>div:nth-child(1)  { animation:iUpSm  .34s 1.46s ease both; }
+    .col--what .col-stats>div:nth-child(2)  { animation:iUpSm  .34s 1.54s ease both; }
+    .col--what .col-bar__fill               { transform-origin:left; }
+    .col--what .col-open                    { animation:iFade  .28s 1.68s ease both; }
+
+    /* ─── Reduced motion ─── */
+    @media(prefers-reduced-motion:reduce){
+      .intro-veil,.nav,.hero-band,.hero-acro,
+      .hero-countdown>*,.col--why,.col--how,.col--what,
+      .col--why::before,.col--how::before,.col--what::before,
+      .col--why .col-n,.col--why .col-hint,.col--why .col-preview__title,
+      .col--why .col-preview__divider,.col--why .col-preview__sub,
+      .col--why .col-stats>div,.col--why .col-bar__fill,.col--why .col-open,
+      .col--how .col-n,.col--how .col-hint,.col--how .col-preview__title,
+      .col--how .col-preview__divider,.col--how .col-preview__sub,
+      .col--how .col-stats>div,.col--how .col-bar__fill,.col--how .col-open,
+      .col--what .col-n,.col--what .col-hint,.col--what .col-preview__title,
+      .col--what .col-preview__divider,.col--what .col-preview__sub,
+      .col--what .col-stats>div,.col--what .col-bar__fill,.col--what .col-open
+      { animation:none !important; }
+    }
+
+    /* ── DASHBOARD ENTRANCE ── */
+    @keyframes dashIn {
+      from { opacity:0; transform:translateY(18px) scale(.98); }
+      to   { opacity:1; transform:translateY(0) scale(1); }
+    }
+    @keyframes dashFade {
+      from { opacity:0; }
+      to   { opacity:1; }
+    }
+    @keyframes radarDraw {
+      from { opacity:0; transform:scale(.4); }
+      to   { opacity:1; transform:scale(1); }
+    }
+    .dash-anim .lp-kpi:nth-child(1) { animation:dashIn .55s .04s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .lp-kpi:nth-child(2) { animation:dashIn .55s .10s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .lp-kpi:nth-child(3) { animation:dashIn .55s .16s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .lp-kpi:nth-child(4) { animation:dashIn .55s .22s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .lp-kpi:nth-child(5) { animation:dashIn .55s .28s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .pro-grid-row:nth-of-type(1) > * { animation:dashIn .60s .34s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .pro-grid-row:nth-of-type(2) > *:nth-child(1) { animation:dashIn .55s .44s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .pro-grid-row:nth-of-type(2) > *:nth-child(2) { animation:dashIn .55s .52s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .pro-grid-row:nth-of-type(2) > *:nth-child(3) { animation:dashIn .55s .60s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .pro-grid-row:nth-of-type(3) > *:nth-child(1) { animation:dashIn .55s .56s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .pro-grid-row:nth-of-type(3) > *:nth-child(2) { animation:dashIn .55s .64s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .pro-grid-row:nth-of-type(3) > *:nth-child(3) { animation:dashIn .55s .72s cubic-bezier(.22,1,.36,1) both; }
+    /* Radar SVG polygon draw */
+    .dash-anim .lp-panel svg polygon:last-of-type { transform-origin:center; animation:radarDraw .9s .80s cubic-bezier(.22,1,.36,1) both; }
+    .dash-anim .lp-panel svg circle { animation:dashFade .5s .95s ease both; }
+
+    /* ── SCROLL REVEAL ── */
+    .r { opacity:0; transform:translateY(12px); transition:opacity .44s var(--ease),transform .44s var(--ease); }
+    .r.v { opacity:1; transform:none; }
+  </style>
+</head>
+<body>
+
+<!-- Veil d'intro — se dissout au chargement -->
+<div class="intro-veil" aria-hidden="true"></div>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="#" class="nav__logo">
+      BIBON
+      <span class="nav__logo-tag">/ Commerce indépendant</span>
+    </a>
+    <div class="nav__right">
+      <button class="nav__pill" onclick="activateCol('why')">[ 01 ] PROBLÉMATIQUE</button>
+      <button class="nav__pill" onclick="activateCol('how')">[ 02 ] MÉTHODE</button>
+      <button class="nav__pill" onclick="activateCol('what')">[ 03 ] SOLUTION</button>
+      <a href="mailto:hello@bibon.app" class="nav__pill nav__pill--cta">→ Rejoindre</a>
+      <button class="nav__burger" id="burger" aria-label="Menu"><ion-icon name="menu-outline"></ion-icon></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO BAND ══ -->
+<div class="hero-band">
+  <div class="hero-acro">
+    <span class="htxt">La donnée au service des</span><span class="hbl ws">b</span><span class="htxt">esoins des commerces</span><span class="hbl ws">i</span><span class="htxt">ndépendants. Des</span><span class="hbl ws">b</span><span class="htxt">ons en cadeaux p</span><span class="hbl">o</span><span class="htxt">ur ceux qui choisisse</span><span class="hbl">n</span><span class="htxt">t le local.</span>
+  </div>
+  <div class="hero-countdown">
+    <div class="hcd-unit"><span class="hcd-val" id="cd-days">--</span><span class="hcd-lbl">Jours</span></div>
+    <span class="hcd-sep">:</span>
+    <div class="hcd-unit"><span class="hcd-val" id="cd-hours">--</span><span class="hcd-lbl">Heures</span></div>
+    <span class="hcd-sep">:</span>
+    <div class="hcd-unit"><span class="hcd-val" id="cd-mins">--</span><span class="hcd-lbl">Minutes</span></div>
+    <span class="hcd-sep">:</span>
+    <div class="hcd-unit"><span class="hcd-val" id="cd-secs">--</span><span class="hcd-lbl">Secondes</span></div>
+  </div>
+</div>
+
+<!-- ══ PAGE BODY — flex column, compresse cols-wrap quand footer s'ouvre ══ -->
+<div class="page-body">
+
+<!-- ══ THREE COLUMNS ══ -->
+<main class="cols-wrap" id="cols-wrap">
+
+  <!-- ══════════ COL WHY ══════════ -->
+  <div class="col col--why" id="col-why">
+
+    <!-- PREVIEW -->
+    <div class="col-preview" onclick="activateCol('why')">
+      <div class="col-preview__top">
+        <span class="col-n">01 / PROBLÉMATIQUE</span>
+        <span class="col-hint">→ ouvrir</span>
+      </div>
+      <div class="col-preview__title">PROBLÉ&shy;MATIQUE</div>
+      <div class="col-preview__bottom">
+        <div class="col-preview__divider"></div>
+        <p class="col-preview__sub">La conviction <span class="col-preview__sub-tag">local</span></p>
+        <div class="col-stats">
+          <div><span class="col-stat__val" data-val="73" data-sfx="%">0%</span><span class="col-stat__lbl">sans plan d'acquisition</span></div>
+          <div><span class="col-stat__val" data-val="81" data-sfx="%">0%</span><span class="col-stat__lbl">sans suivi ROI</span></div>
+        </div>
+        <div class="col-bars">
+          <div class="col-bar"><div class="col-bar__fill" data-w="73" style="width:0"></div></div>
+          <div class="col-bar"><div class="col-bar__fill" data-w="81" style="width:0"></div></div>
+          <div class="col-bar"><div class="col-bar__fill" data-w="34" style="width:0"></div></div>
+        </div>
+        <div class="col-open"><span class="col-open-dot"></span>Cliquer pour déplier</div>
+      </div>
+    </div>
+
+    <!-- STRIP -->
+    <div class="col-strip" onclick="activateCol('why')">
+      <span class="col-strip__num">01</span>
+      <div class="col-strip__bar"></div>
+      <span class="col-strip__label">PROBLÉMATIQUE — La conviction</span>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="col-content-wrap">
+      <div class="col-head">
+        <div class="col-head__left">
+          <div class="col-head__bar"></div>
+          <span class="col-head__num">[ 01 ]</span>
+          <span class="col-head__title">PROBLÉMATIQUE — La conviction</span>
+        </div>
+        <button class="col-head__close" onclick="deactivateCol(event)">[ ESC ×]</button>
+      </div>
+      <div class="col-content">
+
+        <!-- Conviction -->
+        <div class="sect">
+          <div class="conviction r">
+            <div class="conviction__body">
+              <div class="conviction__avatar">
+                <img src="Profilepicture.png" alt="Hadrien Lonjaret">
+              </div>
+              <div class="conviction__text">
+                <p>« Derrière chaque vitrine indépendante, il y a une vision unique qui ne demande qu'à s'exprimer. Nous bâtissons les outils pour qu'ils puissent enfin rivaliser avec les géants. »</p>
+                <div class="conviction__author">
+                  <span class="conviction__name">Hadrien Lonjaret</span>
+                  <span class="conviction__role">· Founder of BIBON</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Constat -->
+        <div class="sect">
+          <div class="slabel slabel--why r">01 — Constat · Clermont-Ferrand</div>
+          <h2 class="h2 r">Les chiffres que<br>personne ne regarde.</h2>
+          <!-- Layout split : stats + donut gauche | chart droit -->
+          <div class="layout-split layout-split--4060 r" style="margin-bottom:8px">
+
+            <!-- Gauche : stats + donut -->
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <p class="body-txt" style="font-size:13px;margin-bottom:6px;line-height:1.5">Ces données ne sont pas des hypothèses. Ce sont les réponses de commerçants de votre ville.</p>
+              <p style="font-size:11px;color:var(--cherry);font-weight:600;margin-bottom:18px;line-height:1.5">Bibon a mené l'enquête et interrogé 960 commerces de Clermont-Ferrand afin d'en comprendre ces principaux manquements.</p>
+              <div class="stat-grid">
+                <div class="stat-mod">
+                  <div class="stat-mod__val">73%</div>
+                  <div class="stat-mod__lbl">n'ont pas de plan d'acquisition structuré — ils attendent que les clients viennent</div>
+                  <div class="stat-mod__src">CCI Auvergne · 2024</div>
+                </div>
+                <div class="stat-mod">
+                  <div class="stat-mod__val">81%</div>
+                  <div class="stat-mod__lbl">ne suivent pas le ROI par produit — aucune vision sur ce qui génère réellement</div>
+                  <div class="stat-mod__src">Enquête interne BIBON · 2025</div>
+                </div>
+                <div class="stat-mod">
+                  <div class="stat-mod__val">6%</div>
+                  <div class="stat-mod__lbl">font une veille concurrentielle active — moins de 3% renouvellent leur offre sur données de marché</div>
+                  <div class="stat-mod__src">Enquête interne BIBON · 2025</div>
+                </div>
+                <div class="stat-mod">
+                  <div class="stat-mod__val">67%</div>
+                  <div class="stat-mod__lbl">ont constaté une baisse de CA sur les 12 derniers mois — sans pouvoir en identifier la cause précise</div>
+                  <div class="stat-mod__src">Enquête interne BIBON · 2025</div>
+                </div>
+              </div>
+
+              <!-- Donut module (dans col gauche) -->
+              <div class="mod">
+                <div class="mod__hd">
+                  <span class="mod__label">Programmes de fidélité · taux d'adoption</span>
+                  <span class="mod__meta">2024</span>
+                </div>
+                <div class="mod__body">
+                  <div class="donut-row">
+                    <svg viewBox="0 0 110 110" width="110" height="110" aria-hidden="true">
+                      <circle cx="55" cy="11" r="2.5" fill="#e11d48"/>
+                      <circle cx="62.64" cy="11.67" r="2.5" fill="#e11d48"/>
+                      <circle cx="70.05" cy="13.65" r="2.5" fill="#e11d48"/>
+                      <circle cx="77" cy="16.9" r="2.5" fill="#e11d48"/>
+                      <circle cx="83.29" cy="21.3" r="2.5" fill="#e11d48"/>
+                      <circle cx="88.7" cy="26.71" r="2.5" fill="#e11d48"/>
+                      <circle cx="93.1" cy="33" r="2.5" fill="#e11d48"/>
+                      <circle cx="96.35" cy="39.95" r="2.5" fill="#e11d48"/>
+                      <circle cx="98.33" cy="47.36" r="2.5" fill="#e11d48"/>
+                      <circle cx="99" cy="55" r="2.5" fill="#e11d48"/>
+                      <circle cx="98.33" cy="62.64" r="2.5" fill="#e11d48"/>
+                      <circle cx="96.35" cy="70.05" r="2.5" fill="#e11d48"/>
+                      <circle cx="93.1" cy="77" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="88.7" cy="83.29" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="83.29" cy="88.7" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="77" cy="93.1" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="70.05" cy="96.35" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="62.64" cy="98.33" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="55" cy="99" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="47.36" cy="98.33" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="39.95" cy="96.35" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="33" cy="93.1" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="26.71" cy="88.7" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="21.3" cy="83.29" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="16.9" cy="77" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="13.65" cy="70.05" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="11.67" cy="62.64" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="11" cy="55" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="11.67" cy="47.36" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="13.65" cy="39.95" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="16.9" cy="33" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="21.3" cy="26.71" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="26.71" cy="21.3" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="33" cy="16.9" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="39.95" cy="13.65" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <circle cx="47.36" cy="11.67" r="2.5" fill="rgba(0,0,0,.14)"/>
+                      <text x="55" y="50" text-anchor="middle" font-family="'Space Mono',monospace" font-size="19" font-weight="700" fill="#000">34%</text>
+                      <text x="55" y="64" text-anchor="middle" font-family="'Space Mono',monospace" font-size="7" fill="rgba(0,0,0,.42)" font-weight="700" letter-spacing="0.8">FIDÉLITÉ</text>
+                    </svg>
+                    <div>
+                      <div class="donut-cap">
+                        <strong>34% ont un programme de fidélité.</strong>
+                        Parmi eux, seulement 22% peuvent quantifier leurs résultats — les 78% restants opèrent à l'aveugle.
+                      </div>
+                      <div class="donut-src">Source : Observatoire du commerce indépendant 2024</div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- /donut mod -->
+            </div><!-- /col gauche -->
+
+            <!-- Droite : radial chart -->
+            <div>
+              <div class="chart-label" style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t4);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">
+                <span>// Objectifs prioritaires déclarés · commerçants Clermont</span>
+                <span>n=247</span>
+              </div>
+              <svg id="objWheel" viewBox="0 0 310 310" style="width:70%;height:auto;display:block;margin:0 auto;"></svg>
+            </div><!-- /col droite -->
+
+          </div><!-- /layout-split -->
+
+          <script>
+          (function(){
+            const NS  = 'http://www.w3.org/2000/svg';
+            const svg = document.getElementById('objWheel');
+            const CX = 155, CY = 155;
+            const MAX_R   = 146;
+            const INNER_R = 16;
+            const MAX_VAL = 26;
+            const SLICE_DEG = 45;   /* 360 / 8 */
+            const GAP_DEG   = 3;    /* espace vide de chaque côté → 6° de vide entre segments */
+            const MIN_FILL  = 16;
+            const CR_O      = 12;   /* arrondi coins extérieurs */
+            const CR_I      = 5;    /* arrondi coins intérieurs (base des pétales) */
+
+            const data = [
+              { label:'Attirer',    sub:'nouveaux clients', value:26, angle:-67.5  },
+              { label:'Fidéliser',  sub:'les clients',      value:21, angle:-22.5  },
+              { label:'CA',         sub:'/ marge',          value:18, angle: 22.5  },
+              { label:'Notoriété',  sub:'',                 value:13, angle: 67.5  },
+              { label:'Renforcer',  sub:'son image',        value: 9, angle:112.5  },
+              { label:'Comprendre', sub:'',                 value: 7, angle:157.5  },
+              { label:'Alléger',    sub:'',                 value: 4, angle:-157.5 },
+              { label:'Structurer', sub:'',                 value: 2, angle:-112.5 },
+            ];
+
+            const d2r = a => a * Math.PI / 180;
+            const pt  = (r, a) => [CX + r * Math.cos(a), CY + r * Math.sin(a)];
+
+            /* Construit un segment en anneau avec gap angulaire et coins arrondis 4 coins */
+            function buildSegment(innerR, outerR, centerDeg) {
+              const half = SLICE_DEG / 2 - GAP_DEG;
+              const sA = d2r(centerDeg - half);
+              const eA = d2r(centerDeg + half);
+
+              /* arrondi angulaire coins extérieurs */
+              const crAO = Math.min(CR_O / outerR, (eA - sA) * 0.36);
+              /* arrondi angulaire coins intérieurs */
+              const crAI = Math.min(CR_I / innerR, (eA - sA) * 0.38);
+
+              const [ox1, oy1]   = pt(outerR, sA);
+              const [ox2, oy2]   = pt(outerR, eA);
+              const [ox1r, oy1r] = pt(outerR, sA + crAO);
+              const [ox2r, oy2r] = pt(outerR, eA - crAO);
+              const [os1x, os1y] = pt(outerR - CR_O, sA);
+              const [os2x, os2y] = pt(outerR - CR_O, eA);
+
+              const [ix1, iy1]   = pt(innerR, sA);
+              const [ix2, iy2]   = pt(innerR, eA);
+              const [ix1r, iy1r] = pt(innerR, sA + crAI);
+              const [ix2r, iy2r] = pt(innerR, eA - crAI);
+              const [is1x, is1y] = pt(innerR + CR_I, sA);
+              const [is2x, is2y] = pt(innerR + CR_I, eA);
+
+              return [
+                `M ${ix1r} ${iy1r}`,
+                `Q ${ix1} ${iy1} ${is1x} ${is1y}`,
+                `L ${os1x} ${os1y}`,
+                `Q ${ox1} ${oy1} ${ox1r} ${oy1r}`,
+                `A ${outerR} ${outerR} 0 0 1 ${ox2r} ${oy2r}`,
+                `Q ${ox2} ${oy2} ${os2x} ${os2y}`,
+                `L ${is2x} ${is2y}`,
+                `Q ${ix2} ${iy2} ${ix2r} ${iy2r}`,
+                `A ${innerR} ${innerR} 0 0 0 ${ix1r} ${iy1r}`,
+                'Z'
+              ].join(' ');
+            }
+
+            function el(tag, attrs, text) {
+              const e = document.createElementNS(NS, tag);
+              for (const [k,v] of Object.entries(attrs)) e.setAttribute(k, v);
+              if (text !== undefined) e.textContent = text;
+              return e;
+            }
+
+            const TEXT_R = MAX_R * 0.70;
+
+            data.forEach(({ label, sub, value, angle }, i) => {
+              const fillR = INNER_R + MIN_FILL + (value / MAX_VAL) * (MAX_R - INNER_R - MIN_FILL);
+              const petalDelay = `${i * 0.065}s`;
+              const textDelay  = `${data.length * 0.065 + 0.1}s`;
+
+              const g = document.createElementNS(NS, 'g');
+              g.setAttribute('class', 'petal-group');
+
+              const bg = el('path', { d: buildSegment(INNER_R, MAX_R,  angle), fill: '#9e9e9e', class: 'petal-bg' });
+              bg.style.animationDelay = petalDelay;
+              g.appendChild(bg);
+
+              const fg = el('path', { d: buildSegment(INNER_R, fillR, angle), fill: '#f0eeea', class: 'petal-fg' });
+              fg.style.animationDelay = `${i * 0.065 + 0.032}s`;
+              g.appendChild(fg);
+
+              svg.appendChild(g);
+
+              const a  = d2r(angle);
+              const tx = CX + TEXT_R * Math.cos(a);
+              const ty = CY + TEXT_R * Math.sin(a);
+
+              const t1 = el('text', {
+                x: tx, y: ty - (sub && value >= 9 ? 8 : 4),
+                'text-anchor':'middle', 'dominant-baseline':'auto',
+                'font-size': value >= 18 ? '13' : value >= 9 ? '11' : '10',
+                'font-weight':'700', 'font-family':"'Space Mono','Courier New',monospace",
+                fill: '#111111'
+              }, value + '%');
+              t1.style.animationDelay = textDelay;
+              svg.appendChild(t1);
+
+              const t2 = el('text', {
+                x: tx, y: ty + (sub && value >= 9 ? 4 : 5),
+                'text-anchor':'middle', 'dominant-baseline':'auto',
+                'font-size': '8', 'font-weight': '500',
+                'font-family':"'Inter',system-ui,sans-serif",
+                fill: '#333333'
+              }, label);
+              t2.style.animationDelay = textDelay;
+              svg.appendChild(t2);
+
+              if (sub && value >= 9) {
+                const t3 = el('text', {
+                  x: tx, y: ty + 13,
+                  'text-anchor':'middle', 'dominant-baseline':'auto',
+                  'font-size': '6.5', 'font-family':"'Inter',system-ui,sans-serif",
+                  fill: 'rgba(0,0,0,.50)'
+                }, sub);
+                t3.style.animationDelay = textDelay;
+                svg.appendChild(t3);
+              }
+            });
+          })();
+          </script>
+
+        </div><!-- /sect constat -->
+
+        <div class="rule"></div>
+
+        <!-- Arguments -->
+        <div class="sect">
+          <div class="slabel slabel--why r">02 — Arguments fondateurs</div>
+
+          <div class="arg arg--cherry r">
+            <div class="arg__label">L'argument fondateur</div>
+            <div class="arg__title">Ce qui différencie McDonald's et Starbucks d'un commerçant local qui fait un meilleur burger et un meilleur café.</div>
+            <div class="arg__body">
+              <p>Ce n'est pas les économies sur le volume des matières premières, ni les charges réduites sur l'embauche d'étudiants en part-time — ça, c'est ce qui rend leur business model plus rentable.</p>
+              <p>Ce qui leur permet de performer décennie après décennie, c'est que chaque décision qu'ils prennent, alignée sur leurs objectifs, est <strong>rationnelle et appuyée par la data</strong>.</p>
+              <p>C'est cette approche data-driven qui fait que les banquettes sont peu confortables pour que vous ne restiez pas trop longtemps. Que les prises sont supprimées pour que vous ne squattiez pas. Que les prix augmentent et les portions diminuent — parce que leur data montre que la seule métrique qui les intéresse, leurs profits, elle, continue de grimper.</p>
+              <p><strong>BIBON vous donne accès à ça. Mais au service de VOS objectifs.</strong> Que ce soit suivre une tendance ou l'ignorer, maximiser vos revenus, réduire votre charge de travail, vous développer ou simplement perdurer — plus aucune décision cruciale ne sera prise à l'aveugle.</p>
+            </div>
+          </div>
+
+          <div class="arg arg--cherry r">
+            <div class="arg__label">Le périmètre d'intervention</div>
+            <div class="arg__title">BIBON intervient à chaque étape du parcours client.</div>
+            <div class="arg__body">
+              <p>Fidéliser ceux qui viennent, réactiver ceux qui sont partis, attirer ceux qui ne vous connaissent pas encore, et maximiser la valeur de chaque interaction. <strong>Pas par magie. Par optimisation, détail par détail.</strong></p>
+              <p>Si votre commerce tourne bien, tant mieux. Mais pour combien de temps ? Quels sont vos concurrents ? Comment améliorez-vous vos marges quand vos matières premières augmentent ? Un commerce qui performe sans savoir pourquoi est un commerce qui ne verra pas venir le jour où ça s'arrête.</p>
+            </div>
+          </div>
+
+          <div class="arg arg--cherry r">
+            <div class="arg__label">Ce que BIBON n'est pas</div>
+            <div class="arg__title">Et non, BIBON n'est pas un énième Uber.</div>
+            <div class="arg__body">
+              <p>Uber vous offre un livreur trop cher et <strong>apprend à vos clients à ne jamais vous rendre visite</strong> en payant plus cher pour ça. BIBON fait exactement l'inverse — il crée de l'intent, il ramène des gens sur place, il fait vivre le fond de commerce pour lequel vous payez un loyer et dans lequel vous mettez toute votre identité.</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /col-content -->
+    </div><!-- /col-content-wrap -->
+  </div><!-- /col-why -->
+
+
+  <!-- ══════════ COL HOW ══════════ -->
+  <div class="col col--how" id="col-how">
+
+    <!-- PREVIEW -->
+    <div class="col-preview" onclick="activateCol('how')">
+      <div class="col-preview__top">
+        <span class="col-n">02 / MÉTHODE</span>
+        <span class="col-hint">→ ouvrir</span>
+      </div>
+      <div class="col-preview__title">MÉTHODE</div>
+      <div class="col-preview__bottom">
+        <div class="col-preview__divider"></div>
+        <p class="col-preview__sub">L'accompagnement <span class="col-preview__sub-tag">data driven</span></p>
+        <div class="col-stats">
+          <div><span class="col-stat__val" data-val="10" data-sfx="%">0%</span><span class="col-stat__lbl">sur marge · leads générés</span></div>
+          <div><span class="col-stat__val" data-val="0" data-sfx="€">0€</span><span class="col-stat__lbl">installation · abonnement</span></div>
+        </div>
+        <div class="col-bars">
+          <div class="col-bar"><div class="col-bar__fill" data-w="100" style="width:0"></div></div>
+          <div class="col-bar"><div class="col-bar__fill" data-w="60" style="width:0"></div></div>
+        </div>
+        <div class="col-open"><span class="col-open-dot"></span>OBS → ANA → COM → AGI</div>
+      </div>
+    </div>
+
+    <!-- STRIP -->
+    <div class="col-strip" onclick="activateCol('how')">
+      <span class="col-strip__num">02</span>
+      <div class="col-strip__bar"></div>
+      <span class="col-strip__label">MÉTHODE — L'accompagnement</span>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="col-content-wrap">
+      <div class="col-head">
+        <div class="col-head__left">
+          <div class="col-head__bar"></div>
+          <span class="col-head__num">[ 02 ]</span>
+          <span class="col-head__title">MÉTHODE — L'accompagnement</span>
+        </div>
+        <button class="col-head__close" onclick="deactivateCol(event)">[ ESC ×]</button>
+      </div>
+      <div class="col-content">
+
+        <!-- Cycle -->
+        <div class="sect">
+          <div class="slabel slabel--how r">01 — Comment ça marche</div>
+          <h2 class="h2 r">Création et<br>mise en place.</h2>
+          <p class="body-txt r" style="margin-bottom:24px">Deux étapes d'onboarding, et ensuite vous n'avez plus qu'une seule chose à faire.</p>
+
+          <div class="how-steps r" style="grid-template-columns:repeat(2,1fr)">
+            <div class="how-step" style="border-top-color:var(--amber)">
+              <div class="how-step__n">01 — AUDIT &amp; SETUP</div>
+
+              <div class="how-step__title">On étudie votre profil et on crée tout ensemble.</div>
+              <div class="how-step__desc">Forces, faiblesses, positionnement, concurrents. On définit la stratégie de vos lots — puis on configure le compte, le QR code et le dashboard. On s'occupe de tout — vous validez, c'est en ligne.</div>
+            </div>
+            <div class="how-step" style="border-top-color:var(--amber)">
+              <div class="how-step__n">02 — USAGE</div>
+              <div class="how-step__title">Validez les QR codes. Rien de plus.</div>
+              <div class="how-step__desc">Quand un client revient réclamer son lot, vous scannez depuis l'application en 2 secondes. Le reste — data, reporting, documents — se génère automatiquement.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rule"></div>
+
+        <!-- Founder -->
+        <div class="sect">
+          <div class="slabel slabel--how r">02 — Qui est derrière BIBON</div>
+
+          <div class="founder-grid r">
+            <div class="founder-card">
+              <div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:2.5px solid var(--amber);margin-bottom:14px;">
+                <img src="Profilepicture.png" alt="Hadrien Lonjaret" style="width:105%;height:105%;object-fit:cover;margin:-2.5%;">
+              </div>
+              <div class="founder-name">Hadrien Lonjaret</div>
+              <div class="founder-role">
+                <span class="founder-role__item">Chef design produit &amp; directeur design</span>
+                <span class="founder-role__item">Consultant brand ID &amp; sourcing</span>
+                <span class="founder-role__item">Styliste · Webdesigner · Infographiste</span>
+              </div>
+              <div class="founder-div"></div>
+            </div>
+            <div>
+              <h3 class="h3">L'optimisation atomique des chaînes industrielles, appliquée au commerce local.</h3>
+              <div class="body-txt" style="margin-top:12px">
+                <p>8 ans à structurer des produits et leurs process de production et de conception dans des milieux ultra-compétitifs — footwear et industrie musicale. En France, Chine, États-Unis, Italie, Portugal.</p>
+                <p>Ce que j'ai appris dans ces industries, c'est que la performance ne vient pas du talent seul — elle vient des <strong>systèmes</strong>. Des outils qui capturent les bons signaux et permettent d'améliorer en continu.</p>
+                <p>Voir des commerces fermer dans ma ville entre deux allers-retours internationaux m'a convaincu que ces systèmes pouvaient — et devaient — exister pour les indépendants.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="ticker-label">Companies I worked with</div>
+          <div class="ticker-wrap r">
+            <div class="ticker">
+              <span class="tbrand"><img src="logo-lanvin.png"         alt="Lanvin"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-yeezy.png"          alt="Yeezy"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-adidas.png"         alt="Adidas"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-nike.png"           alt="Nike"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-newbalance.png"     alt="New Balance"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-salomon.png"        alt="Salomon"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-farfetch.png"       alt="Farfetch"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-oldorder.png"       alt="Old Order"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-billieeillish.png"  alt="Billie Eilish"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-badbunny.png"       alt="Bad Bunny"></span><span class="tsep"> · </span>
+              <!-- Doublon pour le scroll infini -->
+              <span class="tbrand"><img src="logo-lanvin.png"         alt="Lanvin"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-yeezy.png"          alt="Yeezy"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-adidas.png"         alt="Adidas"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-nike.png"           alt="Nike"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-newbalance.png"     alt="New Balance"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-salomon.png"        alt="Salomon"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-farfetch.png"       alt="Farfetch"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-oldorder.png"       alt="Old Order"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-billieeillish.png"  alt="Billie Eilish"></span><span class="tsep"> · </span>
+              <span class="tbrand"><img src="logo-badbunny.png"       alt="Bad Bunny"></span><span class="tsep"> · </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rule"></div>
+
+        <!-- Commission + Invoice côte à côte -->
+        <div class="sect">
+          <div class="layout-split r" style="align-items:start">
+
+            <!-- Gauche : modèle éco -->
+            <div>
+              <div class="slabel slabel--how">03 — Modèle économique</div>
+              <h2 class="h2" style="margin-bottom:16px">À la performance.<br>Rien d'autre.</h2>
+              <div style="display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;">
+                <div class="comm-card comm-card--bibon" style="min-width:160px;max-width:200px">
+                  <div class="comm-card__val">10%</div>
+                  <div class="comm-card__sub">// De la marge des leads BIBON · uniquement</div>
+                  <div class="comm-card__note">
+                    <strong>0€ installation · 0€ abonnement · 0€ si pas de résultat.</strong><br>
+                    Facturé en frais de consulting communication &amp; image — compte 628.
+                  </div>
+                </div>
+                <div class="body-txt">
+                  <p>BIBON se rémunère <strong>à la performance</strong>, à hauteur de <strong>10% de la marge des leads directement créés par la plateforme</strong>. Si BIBON ne génère rien, BIBON ne facture rien. Votre clientèle existante, vos passages habituels n'engendre aucune commission supplémentaire.</p>
+                  <p>Les lots que vous distribuez constituent des <strong>frais de communication déductibles au compte 623</strong> — entièrement documentés, horodatés, prêts pour votre expert-comptable.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Droite : zéro paperasse, 2 documents -->
+            <div>
+              <div class="slabel slabel--how">04 — Zéro paperasse</div>
+              <h2 class="h2" style="margin-bottom:10px">Tout documenté.<br>Automatiquement.</h2>
+              <div class="body-txt" style="margin-bottom:16px">
+                <p>Deux documents générés chaque mois. Transmis à votre comptable sans un clic.</p>
+              </div>
+
+              <!-- Doc 1 : Suivi des lots -->
+              <p style="font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--t1);margin-bottom:6px;text-transform:uppercase;">SUIVI LOTS · Frais comm. · Avril 2026</p>
+              <div class="invoice" style="margin-bottom:10px">
+                <div class="inv-hd">
+                  <div class="inv-hd__l">
+                    <span class="inv-live"></span>
+                    <span class="inv-sub">Boulangerie du Cours</span>
+                  </div>
+                  <span class="inv-badge">Compte 623</span>
+                </div>
+                <table class="inv-table">
+                  <thead>
+                    <tr><th>Date</th><th>Lot remis</th><th>Valeur lot</th><th>Bénéficiaire</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="inv-dim">06/04</td><td>Café offert</td><td>2,80€</td><td class="inv-teal">Client #0041</td></tr>
+                    <tr><td class="inv-dim">07/04</td><td>Croissant du jour</td><td>1,50€</td><td class="inv-teal">Client #0078</td></tr>
+                    <tr><td class="inv-dim">09/04</td><td>Repas complet</td><td>14,00€</td><td class="inv-teal">Client #0012</td></tr>
+                    <tr><td class="inv-dim">…</td><td style="color:var(--t4)">31 autres lots</td><td style="color:var(--t4)">…</td><td style="color:var(--t4)">…</td></tr>
+                  </tbody>
+                </table>
+                <div class="inv-ft">
+                  <div class="inv-ft__total">34 lots · Total frais comm. : <span>487,50€</span></div>
+                  <div class="inv-send"><ion-icon name="mail-outline"></ion-icon> → comptable@exemple.fr</div>
+                </div>
+                <div class="inv-note">Justificatifs horodatés · PDF &amp; CSV · Frais de communication déductibles</div>
+              </div>
+
+              <!-- Doc 2 : Facture BIBON -->
+              <p style="font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--t1);margin-bottom:6px;text-transform:uppercase;">FACTURE BIBON · Consulting · Avril 2026</p>
+              <div class="invoice">
+                <div class="inv-hd">
+                  <div class="inv-hd__l">
+                    <span class="inv-live" style="background:var(--amber)"></span>
+                    <span class="inv-sub">Émise par BIBON / Hadrien Lonjaret</span>
+                  </div>
+                  <span class="inv-badge">Compte 628</span>
+                </div>
+                <table class="inv-table">
+                  <thead>
+                    <tr><th>Prestation</th><th>Base de calcul</th><th>Taux</th><th>Montant HT</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Consulting communication &amp; image</td><td>Marge leads : <span class="inv-teal">243,75€</span></td><td class="inv-dim">10%</td><td class="inv-teal">24,38€</td></tr>
+                    <tr><td style="color:var(--t4);font-size:10px" colspan="3">Leads BIBON validés en avril 2026 · 34 transactions · Anti-fraude certifié</td><td></td></tr>
+                  </tbody>
+                </table>
+                <div class="inv-ft">
+                  <div class="inv-ft__total">Total HT : <span>24,38€</span> · TVA 20% : 4,88€ · <span>TTC : 29,25€</span></div>
+                  <div class="inv-send"><ion-icon name="mail-outline"></ion-icon> → comptable@exemple.fr</div>
+                </div>
+                <div class="inv-note">Frais de consulting communication &amp; image · Compte 628 · Archivage légal automatique</div>
+              </div>
+            </div>
+
+          </div><!-- /layout-split -->
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /col-how -->
+
+
+  <!-- ══════════ COL WHAT ══════════ -->
+  <div class="col col--what" id="col-what">
+
+    <!-- PREVIEW -->
+    <div class="col-preview" onclick="activateCol('what')">
+      <div class="col-preview__top">
+        <span class="col-n">03 / SOLUTION</span>
+        <span class="col-hint">→ ouvrir</span>
+      </div>
+      <div class="col-preview__title">SOLUTION</div>
+      <div class="col-preview__bottom">
+        <div class="col-preview__divider"></div>
+        <p class="col-preview__sub">La solution <span class="col-preview__sub-tag">progiciel</span></p>
+        <div class="col-stats">
+          <div><span class="col-stat__val" data-val="247" data-sfx="">0</span><span class="col-stat__lbl">scans ce mois</span></div>
+          <div><span class="col-stat__val" data-val="89" data-sfx="%">0%</span><span class="col-stat__lbl">taux de retour</span></div>
+        </div>
+        <div class="col-bars">
+          <div class="col-bar"><div class="col-bar__fill" data-w="89" style="width:0"></div></div>
+          <div class="col-bar"><div class="col-bar__fill" data-w="75" style="width:0"></div></div>
+          <div class="col-bar"><div class="col-bar__fill" data-w="55" style="width:0"></div></div>
+        </div>
+        <div class="col-open"><span class="col-open-dot"></span>App live · Clermont 2026</div>
+      </div>
+    </div>
+
+    <!-- STRIP -->
+    <div class="col-strip" onclick="activateCol('what')">
+      <span class="col-strip__num">03</span>
+      <div class="col-strip__bar"></div>
+      <span class="col-strip__label">SOLUTION — La solution</span>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="col-content-wrap">
+      <div class="col-head">
+        <div class="col-head__left">
+          <div class="col-head__bar"></div>
+          <span class="col-head__num">[ 03 ]</span>
+          <span class="col-head__title">SOLUTION — La solution</span>
+        </div>
+        <button class="col-head__close" onclick="deactivateCol(event)">[ ESC ×]</button>
+      </div>
+      <div class="col-content">
+
+        <!-- App intro -->
+        <div class="sect">
+          <div class="slabel slabel--what r">01 — La solution · App mobile + dashboard</div>
+          <h2 class="h2 r">Une app ultra-simple.<br>Des résultats mesurables.</h2>
+          <div class="body-txt r" style="margin-bottom:24px">
+            <p>Les clients gagnent des produits chez leurs commerçants locaux. Les commerçants gagnent en confiance et en revenus. Pas des points virtuels inutilisables — de vraies récompenses, chez de vraies adresses, avec de vraies données derrière.</p>
+          </div>
+
+          <!-- PRO Dashboard complet — thème landpage -->
+          <div class="r" style="border:1px solid var(--b0);border-top:2px solid var(--teal);border-radius:var(--r);overflow:hidden;background:var(--bg1)">
+
+            <!-- Header -->
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--b0);background:var(--bg2)">
+              <div style="display:flex;align-items:center;gap:8px">
+                <span style="width:6px;height:6px;border-radius:50%;background:var(--teal);display:inline-block;animation:pulse 1.6s infinite"></span>
+                <span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.06em">BIBON PRO</span>
+                <span style="font-family:var(--mono);font-size:8px;color:var(--t4)">· Espace commerçant</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="font-family:var(--mono);font-size:8px;color:var(--t3)">Boulangerie du Cours</span>
+                <span style="font-family:var(--mono);font-size:8px;color:var(--t4);background:var(--bg);padding:2px 7px;border:1px solid var(--b0);border-radius:2px">Avril 2026</span>
+              </div>
+            </div>
+
+            <div id="pro-dash" style="padding:12px;display:flex;flex-direction:column;gap:10px">
+
+              <!-- Ligne 1 : 5 KPIs activité -->
+              <div class="pro-grid-kpis" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px">
+                <div class="lp-kpi lp-kpi--teal">
+                  <div class="lp-kpi__lbl">Scans · mois</div>
+                  <div class="lp-kpi__val dash-num" data-val="247" data-sfx="">0</div>
+                  <div class="lp-kpi__trend lp-kpi__trend--teal">↑ +18% vs mars</div>
+                </div>
+                <div class="lp-kpi lp-kpi--teal">
+                  <div class="lp-kpi__lbl">Taux de retour</div>
+                  <div class="lp-kpi__val dash-num" data-val="89" data-sfx="%">0%</div>
+                  <div class="lp-kpi__trend lp-kpi__trend--teal">↑ +5pts vs mars</div>
+                </div>
+                <div class="lp-kpi">
+                  <div class="lp-kpi__lbl">Lots validés</div>
+                  <div class="lp-kpi__val dash-num" data-val="34" data-sfx="">0</div>
+                  <div class="lp-kpi__trend">↑ +7 vs mars</div>
+                </div>
+                <div class="lp-kpi lp-kpi--amber">
+                  <div class="lp-kpi__lbl">CA généré BIBON</div>
+                  <div class="lp-kpi__val dash-num" data-val="1842" data-sfx="€" data-fmt="space">0€</div>
+                  <div class="lp-kpi__trend lp-kpi__trend--amber">↑ +22% vs mars</div>
+                </div>
+                <div class="lp-kpi lp-kpi--amber">
+                  <div class="lp-kpi__lbl">ROI programme</div>
+                  <div class="lp-kpi__val dash-num" data-val="4.2" data-sfx="×" data-pfx="×" data-dec="1">×0.0</div>
+                  <div class="lp-kpi__trend lp-kpi__trend--amber">↑ +0.8 vs mars</div>
+                </div>
+              </div>
+
+              <!-- Ligne 2 : Activité + Fidélité tiers -->
+              <div class="pro-grid-row" style="display:grid;grid-template-columns:2fr 1fr;gap:6px">
+
+                <!-- Affluence horaire -->
+                <div class="lp-panel">
+                  <div class="lp-panel__title">Activité · Affluence horaire aujourd'hui</div>
+                  <svg viewBox="0 0 420 44" width="100%" height="44" aria-hidden="true" style="margin:6px 0">
+                    <path d="M0,40 L30,35 L60,28 L90,10 L120,3 L150,8 L180,18 L210,27 L240,25 L270,19 L300,29 L330,35 L360,40 L390,41 L420,42"
+                      stroke="var(--teal)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M0,40 L30,35 L60,28 L90,10 L120,3 L150,8 L180,18 L210,27 L240,25 L270,19 L300,29 L330,35 L360,40 L390,41 L420,42 L420,44 L0,44 Z"
+                      fill="rgba(20,184,166,.06)"/>
+                    <circle cx="120" cy="3" r="3" fill="var(--teal)"/>
+                    <line x1="120" y1="3" x2="120" y2="44" stroke="var(--teal)" stroke-width="0.5" stroke-dasharray="2,2" opacity=".3"/>
+                  </svg>
+                  <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:6.5px;color:var(--t5)">
+                    <span>8h</span><span>9h</span><span>10h</span><span>11h</span><span>12h</span><span>13h</span><span>14h</span><span>15h</span><span>16h</span><span>17h</span><span>18h</span><span>19h</span><span>20h</span>
+                  </div>
+                  <div style="font-family:var(--mono);font-size:8px;color:var(--teal);margin-top:5px;font-weight:700">▲ Pic 11h–13h · 42 passages · +31% vs semaine dernière</div>
+                </div>
+
+                <!-- Fidélité tiers -->
+                <div class="lp-panel">
+                  <div class="lp-panel__title">Fidélité · Répartition tiers clients</div>
+                  <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
+                    <div class="lp-tier"><span class="lp-tier__n" style="color:#cd7f32">Bronze</span><div class="lp-tier__bar"><div class="dash-bar" data-w="48" style="width:0;height:100%;background:#cd7f32;border-radius:1px;transition:width 1.4s cubic-bezier(.16,1,.3,1)"></div></div><span class="lp-tier__pct">48% · 119 clients</span></div>
+                    <div class="lp-tier"><span class="lp-tier__n" style="color:#a8a9ad">Silver</span><div class="lp-tier__bar"><div class="dash-bar" data-w="28" style="width:0;height:100%;background:#a8a9ad;border-radius:1px;transition:width 1.4s cubic-bezier(.16,1,.3,1)"></div></div><span class="lp-tier__pct">28% · 69 clients</span></div>
+                    <div class="lp-tier"><span class="lp-tier__n" style="color:#d4af37">Gold</span><div class="lp-tier__bar"><div class="dash-bar" data-w="16" style="width:0;height:100%;background:#d4af37;border-radius:1px;transition:width 1.4s cubic-bezier(.16,1,.3,1)"></div></div><span class="lp-tier__pct">16% · 40 clients</span></div>
+                    <div class="lp-tier"><span class="lp-tier__n" style="color:var(--teal)">Platine</span><div class="lp-tier__bar"><div class="dash-bar" data-w="8" style="width:0;height:100%;background:var(--teal);border-radius:1px;transition:width 1.4s cubic-bezier(.16,1,.3,1)"></div></div><span class="lp-tier__pct">8% · 19 clients</span></div>
+                  </div>
+                  <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--b0);font-family:var(--mono);font-size:7.5px;color:var(--t3)">247 clients actifs ce mois · +23 nouveaux</div>
+                </div>
+              </div>
+
+              <!-- Ligne 3 : Gamble Up + Top produits + Avis -->
+              <div class="pro-grid-row" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+
+                <!-- Gamble Up -->
+                <div class="lp-panel">
+                  <div class="lp-panel__title">Gamble Up · Performances</div>
+                  <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline">
+                      <span style="font-size:10px;color:var(--t2)">Parties jouées</span>
+                      <span class="dash-num" data-val="312" data-sfx="" style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber)">0</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:baseline">
+                      <span style="font-size:10px;color:var(--t2)">Taux de victoire</span>
+                      <span class="dash-num" data-val="34" data-sfx="%" style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--teal)">0%</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:baseline">
+                      <span style="font-size:10px;color:var(--t2)">Lots doublés</span>
+                      <span class="dash-num" data-val="18" data-sfx="" style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--t1)">0</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:baseline">
+                      <span style="font-size:10px;color:var(--t2)">Re-jeu moyen</span>
+                      <span class="dash-num" data-val="2.4" data-sfx="×" data-dec="1" style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--t1)">0.0×</span>
+                    </div>
+                    <div style="margin-top:4px;padding:5px 8px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);border-radius:3px;font-family:var(--mono);font-size:7.5px;color:var(--amber)">↑ Engagement +41% depuis l'activation</div>
+                  </div>
+                </div>
+
+                <!-- Top produits -->
+                <div class="lp-panel">
+                  <div class="lp-panel__title">Top produits · Lots réclamés</div>
+                  <div style="display:flex;flex-direction:column;gap:1px;margin-top:8px">
+                    <div class="lp-prod"><span class="lp-prod__rank">01</span><span class="lp-prod__name">Café offert</span><span class="lp-prod__cnt" style="color:var(--teal)">×12</span></div>
+                    <div class="lp-prod"><span class="lp-prod__rank">02</span><span class="lp-prod__name">Croissant du jour</span><span class="lp-prod__cnt" style="color:var(--teal)">×8</span></div>
+                    <div class="lp-prod"><span class="lp-prod__rank">03</span><span class="lp-prod__name">Formule déjeuner</span><span class="lp-prod__cnt">×6</span></div>
+                    <div class="lp-prod"><span class="lp-prod__rank">04</span><span class="lp-prod__name">Repas complet</span><span class="lp-prod__cnt">×4</span></div>
+                    <div class="lp-prod"><span class="lp-prod__rank">05</span><span class="lp-prod__name">Apéro découverte</span><span class="lp-prod__cnt">×2</span></div>
+                  </div>
+                  <div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--b0);font-family:var(--mono);font-size:7.5px;color:var(--t3)">34 lots validés · 487,50€ frais comm.</div>
+                </div>
+
+                <!-- Avis clients — Radar S→G sur 6 axes -->
+                <div class="lp-panel">
+                  <div class="lp-panel__title">Avis clients · Satisfaction</div>
+                  <!-- Radar chart 6 axes, grille S→F (G=centre) -->
+                  <svg viewBox="0 0 160 155" style="display:block;width:100%;max-width:152px;margin:4px auto 2px" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Grilles hexagonales (S extérieur → F intérieur) -->
+                    <polygon fill="none" stroke="rgba(0,0,0,.07)" stroke-width=".8" points="80,26 125,52 125,104 80,130 35,104 35,52"/>
+                    <polygon fill="none" stroke="rgba(0,0,0,.07)" stroke-width=".8" points="80,33.4 118.6,55.7 118.6,100.3 80,122.6 41.4,100.3 41.4,55.7"/>
+                    <polygon fill="none" stroke="rgba(0,0,0,.07)" stroke-width=".8" points="80,40.9 112.1,59.4 112.1,96.6 80,115.1 47.9,96.6 47.9,59.4"/>
+                    <polygon fill="none" stroke="rgba(0,0,0,.07)" stroke-width=".8" points="80,48.3 105.7,63.1 105.7,92.9 80,107.7 54.3,92.9 54.3,63.1"/>
+                    <polygon fill="none" stroke="rgba(0,0,0,.07)" stroke-width=".8" points="80,55.7 99.3,66.9 99.3,89.1 80,100.3 60.7,89.1 60.7,66.9"/>
+                    <polygon fill="none" stroke="rgba(0,0,0,.07)" stroke-width=".8" points="80,63.1 92.9,70.6 92.9,85.4 80,92.9 67.1,85.4 67.1,70.6"/>
+                    <polygon fill="none" stroke="rgba(0,0,0,.07)" stroke-width=".8" points="80,70.6 86.4,74.3 86.4,81.7 80,85.4 73.6,81.7 73.6,74.3"/>
+                    <!-- Axes (centre → sommet) -->
+                    <line stroke="rgba(0,0,0,.1)" stroke-width=".7" x1="80" y1="78" x2="80" y2="26"/>
+                    <line stroke="rgba(0,0,0,.1)" stroke-width=".7" x1="80" y1="78" x2="125" y2="52"/>
+                    <line stroke="rgba(0,0,0,.1)" stroke-width=".7" x1="80" y1="78" x2="125" y2="104"/>
+                    <line stroke="rgba(0,0,0,.1)" stroke-width=".7" x1="80" y1="78" x2="80" y2="130"/>
+                    <line stroke="rgba(0,0,0,.1)" stroke-width=".7" x1="80" y1="78" x2="35" y2="104"/>
+                    <line stroke="rgba(0,0,0,.1)" stroke-width=".7" x1="80" y1="78" x2="35" y2="52"/>
+                    <!-- Données : Accueil=A, Qualité=S, Rapport=B, Service=A, Programme=S, Réachat=B -->
+                    <polygon fill="rgba(20,184,166,.18)" stroke="#14b8a6" stroke-width="1.4" stroke-linejoin="round"
+                      points="80,33.4 125,52 112.1,96.6 80,122.6 35,104 47.9,59.4"/>
+                    <!-- Points de données -->
+                    <circle fill="#14b8a6" cx="80"    cy="33.4"  r="2.2"/>
+                    <circle fill="#14b8a6" cx="125"   cy="52"    r="2.2"/>
+                    <circle fill="#14b8a6" cx="112.1" cy="96.6"  r="2.2"/>
+                    <circle fill="#14b8a6" cx="80"    cy="122.6" r="2.2"/>
+                    <circle fill="#14b8a6" cx="35"    cy="104"   r="2.2"/>
+                    <circle fill="#14b8a6" cx="47.9"  cy="59.4"  r="2.2"/>
+                    <!-- Lettres de grade le long de l'axe haut-droit -->
+                    <text font-family="'Space Mono',monospace" font-size="4.8" fill="rgba(0,0,0,.28)" x="89.4" y="75.8">F</text>
+                    <text font-family="'Space Mono',monospace" font-size="4.8" fill="rgba(0,0,0,.28)" x="95.9" y="72.1">E</text>
+                    <text font-family="'Space Mono',monospace" font-size="4.8" fill="rgba(0,0,0,.28)" x="102.3" y="68.4">D</text>
+                    <text font-family="'Space Mono',monospace" font-size="4.8" fill="rgba(0,0,0,.28)" x="108.7" y="64.7">C</text>
+                    <text font-family="'Space Mono',monospace" font-size="4.8" fill="rgba(0,0,0,.32)" x="115.1" y="61">B</text>
+                    <text font-family="'Space Mono',monospace" font-size="4.8" fill="rgba(0,0,0,.36)" x="121.6" y="57.2">A</text>
+                    <text font-family="'Space Mono',monospace" font-size="5.5" font-weight="700" fill="rgba(0,0,0,.5)" x="128" y="53">S</text>
+                    <!-- Labels des axes -->
+                    <text font-family="'Space Mono',monospace" font-size="5" font-weight="700" fill="rgba(0,0,0,.38)" letter-spacing=".05em" text-anchor="middle" x="80" y="18">ACCUEIL</text>
+                    <text font-family="'Space Mono',monospace" font-size="5" font-weight="700" fill="rgba(0,0,0,.38)" letter-spacing=".05em" text-anchor="start"  x="128" y="47">QUALITÉ</text>
+                    <text font-family="'Space Mono',monospace" font-size="5" font-weight="700" fill="rgba(0,0,0,.38)" letter-spacing=".05em" text-anchor="start"  x="128" y="109">RAPPORT</text>
+                    <text font-family="'Space Mono',monospace" font-size="5" font-weight="700" fill="rgba(0,0,0,.38)" letter-spacing=".05em" text-anchor="middle" x="80" y="144">SERVICE</text>
+                    <text font-family="'Space Mono',monospace" font-size="5" font-weight="700" fill="rgba(0,0,0,.38)" letter-spacing=".05em" text-anchor="end"    x="32" y="109">PROGRAMME</text>
+                    <text font-family="'Space Mono',monospace" font-size="5" font-weight="700" fill="rgba(0,0,0,.38)" letter-spacing=".05em" text-anchor="end"    x="32" y="47">RÉACHAT</text>
+                  </svg>
+                  <!-- Légende des scores par axe -->
+                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px 4px;margin-top:2px">
+                    <div style="font-family:var(--mono);font-size:6.5px;color:var(--t4)">Accueil <span style="color:var(--teal);font-weight:700">A</span></div>
+                    <div style="font-family:var(--mono);font-size:6.5px;color:var(--t4)">Qualité <span style="color:var(--teal);font-weight:700">S</span></div>
+                    <div style="font-family:var(--mono);font-size:6.5px;color:var(--t4)">Rapport <span style="color:var(--teal);font-weight:700">B</span></div>
+                    <div style="font-family:var(--mono);font-size:6.5px;color:var(--t4)">Service <span style="color:var(--teal);font-weight:700">A</span></div>
+                    <div style="font-family:var(--mono);font-size:6.5px;color:var(--t4)">Programme <span style="color:var(--teal);font-weight:700">S</span></div>
+                    <div style="font-family:var(--mono);font-size:6.5px;color:var(--t4)">Réachat <span style="color:var(--teal);font-weight:700">B</span></div>
+                  </div>
+                  <div style="margin-top:6px;font-size:9px;font-style:italic;color:var(--t3);line-height:1.5">"Super programme, j'adore le Gamble Up !" — Client #0012</div>
+                </div>
+              </div>
+
+              <!-- Ligne 4 : Scans historique + Lots périssables + Top clients -->
+              <div class="pro-grid-row" style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:6px">
+
+                <!-- Historique scans -->
+                <div class="lp-panel">
+                  <div class="lp-panel__title">Scans · Historique récent</div>
+                  <table style="width:100%;margin-top:6px;border-collapse:collapse">
+                    <thead><tr style="font-family:var(--mono);font-size:6.5px;color:var(--t5);border-bottom:1px solid var(--b0)">
+                      <th style="text-align:left;padding:3px 0;font-weight:700">HEURE</th>
+                      <th style="text-align:left;padding:3px 0;font-weight:700">LOT</th>
+                      <th style="text-align:left;padding:3px 0;font-weight:700">TIERS</th>
+                      <th style="text-align:right;padding:3px 0;font-weight:700">STATUT</th>
+                    </tr></thead>
+                    <tbody>
+                      <tr style="border-bottom:1px solid var(--b0)"><td style="padding:4px 0;font-family:var(--mono);font-size:8px;color:var(--t4)">14:32</td><td style="font-size:9px;color:var(--t2)">Café offert</td><td style="font-size:9px;color:#cd7f32">Bronze</td><td style="text-align:right;font-family:var(--mono);font-size:8px;color:var(--teal)">✓ Validé</td></tr>
+                      <tr style="border-bottom:1px solid var(--b0)"><td style="padding:4px 0;font-family:var(--mono);font-size:8px;color:var(--t4)">13:17</td><td style="font-size:9px;color:var(--t2)">Croissant</td><td style="font-size:9px;color:#a8a9ad">Silver</td><td style="text-align:right;font-family:var(--mono);font-size:8px;color:var(--teal)">✓ Validé</td></tr>
+                      <tr style="border-bottom:1px solid var(--b0)"><td style="padding:4px 0;font-family:var(--mono);font-size:8px;color:var(--t4)">12:55</td><td style="font-size:9px;color:var(--t2)">Repas complet</td><td style="font-size:9px;color:#d4af37">Gold</td><td style="text-align:right;font-family:var(--mono);font-size:8px;color:var(--teal)">✓ Validé</td></tr>
+                      <tr style="border-bottom:1px solid var(--b0)"><td style="padding:4px 0;font-family:var(--mono);font-size:8px;color:var(--t4)">11:08</td><td style="font-size:9px;color:var(--t2)">Café offert</td><td style="font-size:9px;color:#cd7f32">Bronze</td><td style="text-align:right;font-family:var(--mono);font-size:8px;color:var(--teal)">✓ Validé</td></tr>
+                      <tr><td style="padding:4px 0;font-family:var(--mono);font-size:8px;color:var(--t4)">10:44</td><td style="font-size:9px;color:var(--t2)">Apéro</td><td style="font-size:9px;color:var(--teal)">Platine</td><td style="text-align:right;font-family:var(--mono);font-size:8px;color:var(--teal)">✓ Validé</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Lots périssables -->
+                <div class="lp-panel">
+                  <div class="lp-panel__title">Lots périssables · Alertes</div>
+                  <div style="display:flex;flex-direction:column;gap:5px;margin-top:8px">
+                    <div style="padding:5px 8px;border-radius:3px;background:rgba(225,29,72,.05);border:1px solid rgba(225,29,72,.15)">
+                      <div style="display:flex;justify-content:space-between;margin-bottom:2px">
+                        <span style="font-size:9px;font-weight:600;color:var(--t1)">Croissant du jour</span>
+                        <span style="font-family:var(--mono);font-size:7.5px;color:var(--cherry);font-weight:700">Exp. ce soir</span>
+                      </div>
+                      <span style="font-family:var(--mono);font-size:7px;color:var(--t4)">3 lots restants · Validité 20h00</span>
+                    </div>
+                    <div style="padding:5px 8px;border-radius:3px;background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.15)">
+                      <div style="display:flex;justify-content:space-between;margin-bottom:2px">
+                        <span style="font-size:9px;font-weight:600;color:var(--t1)">Formule déjeuner</span>
+                        <span style="font-family:var(--mono);font-size:7.5px;color:var(--amber);font-weight:700">J−2</span>
+                      </div>
+                      <span style="font-family:var(--mono);font-size:7px;color:var(--t4)">5 lots · Exp. 09/04</span>
+                    </div>
+                    <div style="padding:5px 8px;border-radius:3px;background:rgba(20,184,166,.05);border:1px solid rgba(20,184,166,.12)">
+                      <div style="display:flex;justify-content:space-between;margin-bottom:2px">
+                        <span style="font-size:9px;font-weight:600;color:var(--t1)">Café offert</span>
+                        <span style="font-family:var(--mono);font-size:7.5px;color:var(--teal);font-weight:700">J−14</span>
+                      </div>
+                      <span style="font-family:var(--mono);font-size:7px;color:var(--t4)">12 lots · Exp. 21/04</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Top clients -->
+                <div class="lp-panel">
+                  <div class="lp-panel__title">Clients · Top passages</div>
+                  <div style="display:flex;flex-direction:column;gap:5px;margin-top:8px">
+                    <div class="lp-client"><span class="lp-client__id">Client #0012</span><span class="lp-client__tier" style="color:var(--teal)">Platine</span><span class="lp-client__cnt">18×</span></div>
+                    <div class="lp-client"><span class="lp-client__id">Client #0041</span><span class="lp-client__tier" style="color:#d4af37">Gold</span><span class="lp-client__cnt">12×</span></div>
+                    <div class="lp-client"><span class="lp-client__id">Client #0078</span><span class="lp-client__tier" style="color:#a8a9ad">Silver</span><span class="lp-client__cnt">9×</span></div>
+                    <div class="lp-client"><span class="lp-client__id">Client #0103</span><span class="lp-client__tier" style="color:#a8a9ad">Silver</span><span class="lp-client__cnt">7×</span></div>
+                    <div class="lp-client"><span class="lp-client__id">Client #0055</span><span class="lp-client__tier" style="color:#cd7f32">Bronze</span><span class="lp-client__cnt">5×</span></div>
+                  </div>
+                  <div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--b0);font-family:var(--mono);font-size:7.5px;color:var(--t3)">247 clients actifs · 23 nouveaux ce mois</div>
+                </div>
+              </div>
+
+              <!-- Status bar -->
+              <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--bg2);border:1px solid var(--b0);border-radius:3px">
+                <span style="width:5px;height:5px;border-radius:50%;background:var(--teal);animation:pulse 1.6s infinite;flex-shrink:0"></span>
+                <span style="font-family:var(--mono);font-size:7.5px;color:var(--t3);font-weight:600">Scanner actif · Dernier scan il y a 4 min · Lot Bronze remis · Validation #247</span>
+                <span style="margin-left:auto;font-family:var(--mono);font-size:7px;color:var(--t4)">QR Code actif · sync auto</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rule"></div>
+
+        <!-- Services roadmap -->
+        <div class="sect">
+          <div class="slabel slabel--what r">02 — Suite de services · Roadmap</div>
+          <h2 class="h2 r">BIBON ne s'arrête<br>pas à la data.</h2>
+          <div class="body-txt r" style="margin-bottom:18px">
+            <p>Parce que connaître son business ne suffit pas si les freins du quotidien restent entiers — BIBON développe une suite de services pensés pour le commerce indépendant.</p>
+          </div>
+
+          <div class="svc-grid r">
+            <div class="svc-card svc-card--live">
+              <span class="svc-status svc-status--live">Déployé</span>
+              <div class="svc-title">Fidélisation gamifiée</div>
+              <div class="svc-desc">Scratch cards, Gamble Up, tiers — un programme de récompenses qui crée de vraies habitudes.</div>
+            </div>
+            <div class="svc-card svc-card--live">
+              <span class="svc-status svc-status--live">Déployé</span>
+              <div class="svc-title">Dashboard analytics temps réel</div>
+              <div class="svc-desc">Affluence, retour, tiers actifs, CA généré — tout en un écran, accessible partout.</div>
+            </div>
+            <div class="svc-card svc-card--soon">
+              <span class="svc-status svc-status--soon">Q4 2026</span>
+              <div class="svc-title">Intégration caisse &amp; TPE</div>
+              <div class="svc-desc">Chaque vente alimente votre intelligence sans effort supplémentaire.</div>
+            </div>
+            <div class="svc-card svc-card--soon">
+              <span class="svc-status svc-status--soon">2027</span>
+              <div class="svc-title">Stocks &amp; commandes auto</div>
+              <div class="svc-desc">Ne plus jamais subir une rupture ni perdre du temps sur un bon de commande.</div>
+            </div>
+            <div class="svc-card svc-card--soon">
+              <span class="svc-status svc-status--soon">2027</span>
+              <div class="svc-title">Image &amp; réseaux automatisés</div>
+              <div class="svc-desc">Posts et stories générés depuis vos données. Votre image en pilote automatique.</div>
+            </div>
+            <div class="svc-card svc-card--soon">
+              <span class="svc-status svc-status--soon">2027</span>
+              <div class="svc-title">Entretien fond de commerce</div>
+              <div class="svc-desc">Réseau de nettoyage professionnel pour partenaires actifs — une salle toujours impeccable.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-block r">
+          <div class="cta-block__label">Pilote · Clermont-Ferrand · Places limitées</div>
+          <div class="cta-block__title">Prêt à travailler ensemble ?</div>
+          <p class="cta-block__sub">Installation gratuite, aucun abonnement, aucun engagement. Les premières places du pilote sont comptées.</p>
+          <a href="mailto:hello@bibon.app" class="btn btn--teal">
+            <ion-icon name="mail-outline"></ion-icon> hello@bibon.app
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /col-what -->
+
+</main>
+
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="lcol">
+      <div class="lcol__title">Légal</div>
+      <ul class="lcol__links">
+        <li><a href="legal.html">Mentions légales</a></li>
+        <li><a href="legal.html">CGU utilisateurs</a></li>
+        <li><a href="legal.html">CGV commerçants</a></li>
+      </ul>
+    </div>
+    <div class="lcol">
+      <div class="lcol__title">Données</div>
+      <ul class="lcol__links">
+        <li><a href="privacy.html">Politique de confidentialité</a></li>
+        <li><a href="privacy.html">Vos droits RGPD</a></li>
+        <li><a href="mailto:privacy@bibon.app">privacy@bibon.app</a></li>
+      </ul>
+    </div>
+    <div class="lcol">
+      <div class="lcol__title">Contact</div>
+      <ul class="lcol__links">
+        <li><a href="mailto:contact@bibon.app">contact@bibon.app</a></li>
+        <li><a href="mailto:hello@bibon.app">hello@bibon.app</a></li>
+        <li><span>SIRET 853 801 488 00026</span></li>
+      </ul>
+    </div>
+    <div class="lcol">
+      <div class="lcol__title">Infrastructure</div>
+      <ul class="lcol__links">
+        <li><span>Supabase Inc. — EU Frankfurt</span></li>
+        <li><span>Hostinger International</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <a href="#" class="footer-logo">BIBON</a>
+    <div class="footer-copy">© 2026 BIBON · Hadrien Lonjaret · 35 Cours Sablon, 63000 Clermont-Ferrand</div>
+    <div class="footer-links">
+      <a href="legal.html">CGU</a>
+      <a href="privacy.html">Confidentialité</a>
+      <a href="mailto:contact@bibon.app">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /page-body -->
+
+
+<script>
+  /* ── HERO TEXT WIDTHS — mesure au load pour transition correcte des espaces ── */
+  window.addEventListener('load', function() {
+    document.querySelectorAll('.hero-acro .htxt').forEach(function(el) {
+      el.style.width = el.offsetWidth + 'px';
+    });
+
+    /* ── COUNT-UP animation sur le countdown — calé sur l'apparition CSS (.52s) ── */
+    setTimeout(function() {
+      var target = new Date('2026-06-16T00:00:00');
+      var diff   = Math.max(0, target - new Date());
+      var days   = Math.floor(diff / 86400000);
+      var hours  = Math.floor((diff % 86400000)  / 3600000);
+      var mins   = Math.floor((diff % 3600000)   / 60000);
+      var secs   = Math.floor((diff % 60000)     / 1000);
+      function pad(n){ return String(n).padStart(2,'0'); }
+      var STEPS = 32, step = 0;
+      var t = setInterval(function(){
+        step++;
+        var p = step / STEPS;
+        var e = 1 - Math.pow(1 - p, 3); /* ease-out cubic */
+        document.getElementById('cd-days').textContent  = pad(Math.round(days  * e));
+        document.getElementById('cd-hours').textContent = pad(Math.round(hours * e));
+        document.getElementById('cd-mins').textContent  = pad(Math.round(mins  * e));
+        document.getElementById('cd-secs').textContent  = pad(Math.round(secs  * e));
+        if(step >= STEPS) clearInterval(t);
+      }, 700 / STEPS);
+    }, 520); /* délai = début animation hcd-unit:nth-child(1) */
+  });
+
+  /* ══ SCORE-UP — valeurs stats + jauges au chargement ══
+     Ease-out expo : progress = 1 - 2^(-8p)
+     Durée longue (~1.8s) pour créer un vrai moment de focus
+  ════════════════════════════════════════════════════════ */
+  (function() {
+    var DURATION = 1800; /* ms — durée totale du count-up */
+    var FPS      = 60;
+    var INTERVAL = 1000 / FPS;
+
+    /* ease-out expo — démarre vite, ralentit sur la fin */
+    function easeOutExpo(t) {
+      return t >= 1 ? 1 : 1 - Math.pow(2, -8 * t);
+    }
+
+    /* anime un élément numérique de 0 → target, avec suffix */
+    function countUp(el, target, suffix, delayMs) {
+      var start = null;
+      var int = null;
+      setTimeout(function() {
+        int = setInterval(function() {
+          if (!start) start = Date.now();
+          var elapsed = Date.now() - start;
+          var progress = Math.min(elapsed / DURATION, 1);
+          var ease = easeOutExpo(progress);
+          var current = Math.round(ease * target);
+          el.textContent = current + suffix;
+          if (progress >= 1) { el.textContent = target + suffix; clearInterval(int); }
+        }, INTERVAL);
+      }, delayMs);
+    }
+
+    /* anime une jauge de 0 → target% en largeur */
+    function fillBar(el, targetW, delayMs) {
+      var start = null;
+      var int = null;
+      el.style.width = '0';
+      setTimeout(function() {
+        int = setInterval(function() {
+          if (!start) start = Date.now();
+          var elapsed = Date.now() - start;
+          var progress = Math.min(elapsed / DURATION, 1);
+          var ease = easeOutExpo(progress);
+          el.style.width = (ease * targetW).toFixed(1) + '%';
+          if (progress >= 1) { el.style.width = targetW + '%'; clearInterval(int); }
+        }, INTERVAL);
+      }, delayMs);
+    }
+
+    /* ─── WHY — stat 1 à 1180ms, stat 2 à 1260ms, bars à 1300ms ─── */
+    /* ─── HOW — stat 1 à 1320ms, stat 2 à 1400ms, bars à 1440ms ─── */
+    /* ─── WHAT — stat 1 à 1460ms, stat 2 à 1540ms, bars à 1580ms ─── */
+    var config = [
+      /* [selector, targetVal, suffix, delayMs] */
+      /* WHY */
+      ['#col-why .col-stats>div:nth-child(1) .col-stat__val', 73,  '%', 1180],
+      ['#col-why .col-stats>div:nth-child(2) .col-stat__val', 81,  '%', 1260],
+      /* HOW */
+      ['#col-how .col-stats>div:nth-child(1) .col-stat__val', 10,  '%', 1320],
+      ['#col-how .col-stats>div:nth-child(2) .col-stat__val', 0,   '€', 1400],
+      /* WHAT */
+      ['#col-what .col-stats>div:nth-child(1) .col-stat__val', 247, '', 1460],
+      ['#col-what .col-stats>div:nth-child(2) .col-stat__val', 89,  '%', 1540]
+    ];
+
+    config.forEach(function(c) {
+      var el = document.querySelector(c[0]);
+      if (el) countUp(el, c[1], c[2], c[3]);
+    });
+
+    /* bars — délai calé sur l'apparition de la stat parente */
+    var barConfig = [
+      /* WHY */
+      ['#col-why .col-bars .col-bar:nth-child(1) .col-bar__fill', 73,  1300],
+      ['#col-why .col-bars .col-bar:nth-child(2) .col-bar__fill', 81,  1380],
+      ['#col-why .col-bars .col-bar:nth-child(3) .col-bar__fill', 34,  1460],
+      /* HOW */
+      ['#col-how .col-bars .col-bar:nth-child(1) .col-bar__fill', 100, 1440],
+      ['#col-how .col-bars .col-bar:nth-child(2) .col-bar__fill', 60,  1520],
+      /* WHAT */
+      ['#col-what .col-bars .col-bar:nth-child(1) .col-bar__fill', 89, 1580],
+      ['#col-what .col-bars .col-bar:nth-child(2) .col-bar__fill', 75, 1660],
+      ['#col-what .col-bars .col-bar:nth-child(3) .col-bar__fill', 55, 1740]
+    ];
+
+    barConfig.forEach(function(c) {
+      var el = document.querySelector(c[0]);
+      if (el) fillBar(el, c[1], c[2]);
+    });
+
+  }());
+
+  /* ── FOOTER UNFOLD — push contenu vers le haut ── */
+  (function() {
+    var footer = document.querySelector('.footer');
+    if (!footer) return;
+    footer.addEventListener('mouseenter', function() {
+      document.body.classList.add('footer-open');
+    });
+    footer.addEventListener('mouseleave', function() {
+      document.body.classList.remove('footer-open');
+    });
+  }());
+
+  /* ── COUNTDOWN ── */
+  (function() {
+    var target = new Date('2026-06-16T00:00:00');
+    function pad(n) { return String(n).padStart(2,'0'); }
+    function tick() {
+      var now  = new Date();
+      var diff = target - now;
+      if (diff < 0) diff = 0;
+      var d = Math.floor(diff / 86400000);
+      var h = Math.floor((diff % 86400000) / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-days').textContent  = pad(d);
+      document.getElementById('cd-hours').textContent = pad(h);
+      document.getElementById('cd-mins').textContent  = pad(m);
+      document.getElementById('cd-secs').textContent  = pad(s);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  var activeCol = null;
+
+  function activateCol(id) {
+    var wrap = document.getElementById('cols-wrap');
+    if (activeCol === id) { deactivateCol(); return; }
+    ['why','how','what'].forEach(function(c) {
+      document.getElementById('col-' + c).classList.remove('col--active');
+    });
+    wrap.classList.add('has-active');
+    var col = document.getElementById('col-' + id);
+    col.classList.add('col--active');
+    activeCol = id;
+    setTimeout(function() {
+      col.querySelectorAll('.r:not(.v)').forEach(function(el) {
+        observer.observe(el);
+      });
+    }, 120);
+
+    /* ── Dashboard animations (col WHAT) ── */
+    if (id === 'what') {
+      var dash = document.getElementById('pro-dash');
+      if (!dash) return;
+
+      /* Réinitialise les valeurs à 0 avant chaque ouverture */
+      dash.querySelectorAll('.dash-num').forEach(function(el) {
+        var sfx = el.dataset.sfx || '';
+        var dec = parseInt(el.dataset.dec || '0');
+        el.textContent = dec > 0 ? '0.' + '0'.repeat(dec) + sfx : '0' + sfx;
+      });
+      dash.querySelectorAll('.dash-bar').forEach(function(el) { el.style.width = '0'; });
+
+      /* Déclenche les animations CSS */
+      dash.classList.remove('dash-anim');
+      void dash.offsetWidth; /* force reflow */
+      dash.classList.add('dash-anim');
+
+      /* ── Count-up ── */
+      var DURATION = 1600;
+      function easeOutExpo(t) { return t >= 1 ? 1 : 1 - Math.pow(2, -8 * t); }
+      function spaceNum(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u202f'); }
+
+      dash.querySelectorAll('.dash-num').forEach(function(el, i) {
+        var target = parseFloat(el.dataset.val);
+        var sfx    = el.dataset.sfx || '';
+        var dec    = parseInt(el.dataset.dec || '0');
+        var fmt    = el.dataset.fmt || '';
+        var delay  = 100 + i * 80;
+        setTimeout(function() {
+          var start = null;
+          var t = setInterval(function() {
+            if (!start) start = Date.now();
+            var p = Math.min((Date.now() - start) / DURATION, 1);
+            var cur = easeOutExpo(p) * target;
+            var txt;
+            if (dec > 0)       txt = cur.toFixed(dec) + sfx;
+            else if (fmt === 'space') txt = spaceNum(cur) + sfx;
+            else                txt = Math.round(cur) + sfx;
+            el.textContent = txt;
+            if (p >= 1) {
+              clearInterval(t);
+              el.textContent = dec > 0 ? target.toFixed(dec) + sfx : (fmt === 'space' ? spaceNum(target) + sfx : Math.round(target) + sfx);
+            }
+          }, 1000 / 60);
+        }, delay);
+      });
+
+      /* ── Remplissage barres tiers ── */
+      dash.querySelectorAll('.dash-bar').forEach(function(el, i) {
+        setTimeout(function() { el.style.width = el.dataset.w + '%'; }, 350 + i * 120);
+      });
+    }
+  }
+
+  function deactivateCol(e) {
+    if (e) e.stopPropagation();
+    document.getElementById('cols-wrap').classList.remove('has-active');
+    document.querySelectorAll('.col').forEach(function(c) { c.classList.remove('col--active'); });
+    activeCol = null;
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('v'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.04, rootMargin: '0px 0px -16px 0px' });
+
+  document.querySelectorAll('.r').forEach(function(el) {
+    if (!el.closest('.col-content-wrap')) observer.observe(el);
+  });
+
+  var burger = document.getElementById('burger');
+  if (burger) {
+    burger.addEventListener('click', function() {
+      document.querySelector('.nav__right').classList.toggle('mob-open');
+    });
+  }
+
+  /* ── SVC cards — révélation permanente au premier hover ── */
+  document.querySelectorAll('.svc-card--soon').forEach(function(card) {
+    card.addEventListener('mouseenter', function() {
+      card.classList.add('svc-revealed');
+    }, { once: true });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') deactivateCol();
+    if (e.key === '1') activateCol('why');
+    if (e.key === '2') activateCol('how');
+    if (e.key === '3') activateCol('what');
+  });
+</script>
+</body>
+</html>
