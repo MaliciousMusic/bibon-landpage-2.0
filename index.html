@@ -219,7 +219,7 @@
       overflow:hidden; word-break:break-word;
     }
 
-    .col-preview__bottom { flex-shrink:0; margin-top:20px; }
+    .col-preview__bottom { flex-shrink:0; margin-top:auto; }
 
     .col-preview__divider { height:1px; background:var(--b0); margin:16px 0 14px; }
 
@@ -854,26 +854,32 @@
     /* ── MOBILE ── */
     @media(max-width:768px) {
       /* Hero band compact sur mobile */
-      .hero-band { height:auto; padding:12px 16px 10px; gap:10px; }
-      /* Phrase : passe en texte normal qui se wrap, fold désactivé */
+      .hero-band { height:auto; padding:10px 16px 10px; gap:8px; }
+      /* Phrase : texte inline qui wrap naturellement */
       .hero-acro {
-        font-size:11px; white-space:normal;
-        text-align:center; line-height:1.5;
+        font-size:10.5px; white-space:normal;
+        text-align:center; line-height:1.55;
+        display:block;
       }
-      .hero-acro .htxt {
+      .hero-acro .htxt,
+      .hero-acro .hbl,
+      .hero-acro .hbl.ws {
         display:inline; width:auto !important; overflow:visible;
-        opacity:1 !important;
+        opacity:1 !important; margin-left:0 !important; transition:none;
       }
-      .hero-acro .hbl.ws { margin-left:0.35em; transition:none; }
+      /* Espace avant les lettres de mot */
+      .hero-acro .hbl.ws::before { content:'\00a0'; }
       .hero-band:hover .htxt { width:auto !important; opacity:1 !important; }
-      .hero-band:hover .hbl.ws { margin-left:0.35em; }
-      .hcd-val { font-size:14px; }
-      .hero-countdown { gap:12px; }
+      /* Saut de ligne entre les deux phrases */
+      .hero-acro .htxt-break { display:block; margin-bottom:2px; }
+      .hcd-val { font-size:13px; }
+      .hcd-lbl { font-size:6px; }
+      .hero-countdown { gap:10px; }
 
       /* Colonnes en accordéon vertical */
       .cols-wrap {
         flex-direction:column; height:auto; overflow:visible;
-        margin-top:calc(48px + 96px) !important;
+        margin-top:0 !important;
       }
       .col {
         flex:none; width:100%;
@@ -937,17 +943,31 @@
       .svc-grid { grid-template-columns:1fr 1fr; }
       .comm-grid { grid-template-columns:1fr; }
       .founder-grid { grid-template-columns:1fr; }
-      /* Mobile — page-body revient en flux normal */
-      .page-body { position:static; }
-      .footer { border-top:1px solid var(--b0); overflow:visible; }
-      .footer-grid {
-        max-height:none !important; opacity:1 !important;
-        padding:24px 18px 16px !important;
-        grid-template-columns:1fr 1fr; gap:18px;
-        border-bottom:1px solid var(--b0);
+      /* Mobile — page-body en flux, mais footer reste fixed */
+      .page-body { position:static; display:block; padding-top:calc(48px + 96px); }
+      .cols-wrap { padding-bottom:52px; }
+
+      /* Footer fixé en bas sur mobile, même mécanique unfold */
+      .footer {
+        position:fixed; bottom:0; left:0; right:0; z-index:480;
+        background:rgba(222,222,222,.92);
+        backdrop-filter:blur(14px) saturate(1.4);
+        -webkit-backdrop-filter:blur(14px) saturate(1.4);
+        border-top:1px solid var(--b0);
       }
-      .footer-bottom { padding:0 18px; height:auto; padding-top:12px; padding-bottom:14px; }
-      .footer-logo { display:block; }
+      .footer-grid {
+        grid-template-columns:1fr 1fr; gap:12px 20px;
+        padding-left:18px !important; padding-right:18px !important;
+      }
+      body.footer-open .footer-grid {
+        max-height:260px;
+        padding-top:18px !important; padding-bottom:14px !important;
+      }
+      .footer-bottom { padding:0 18px; height:36px; }
+      .lcol__title { margin-bottom:7px; }
+      .lcol__links a { font-size:10.5px; padding:3px 6px; }
+      .lcol__links span { font-size:10.5px; padding:3px 6px; }
+      .footer-logo { display:none; }
 
       /* Dashboard KPIs → 2 col */
       .pdash-kpis { grid-template-columns:1fr 1fr; }
@@ -1164,7 +1184,7 @@
 <!-- ══ HERO BAND ══ -->
 <div class="hero-band">
   <div class="hero-acro">
-    <span class="htxt">La donnée au service des</span><span class="hbl ws">b</span><span class="htxt">esoins des commerces</span><span class="hbl ws">i</span><span class="htxt">ndépendants. Des</span><span class="hbl ws">b</span><span class="htxt">ons en cadeaux p</span><span class="hbl">o</span><span class="htxt">ur ceux qui choisisse</span><span class="hbl">n</span><span class="htxt">t le local.</span>
+    <span class="htxt">La donnée au service des</span><span class="hbl ws">b</span><span class="htxt">esoins des commerces</span><span class="hbl ws">i</span><span class="htxt">ndépendants.</span><span class="htxt-break"></span><span class="hbl ws">b</span><span class="htxt">ons en cadeaux p</span><span class="hbl">o</span><span class="htxt">ur ceux qui choisisse</span><span class="hbl">n</span><span class="htxt">t le local.</span>
   </div>
   <div class="hero-countdown">
     <div class="hcd-unit"><span class="hcd-val" id="cd-days">--</span><span class="hcd-lbl">Jours</span></div>
