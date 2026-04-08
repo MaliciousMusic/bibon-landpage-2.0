@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BIBON · Intelligence pour le commerce indépendant</title>
   <meta name="description" content="BIBON donne au commerce indépendant les outils data que les grandes enseignes utilisent depuis 20 ans.">
+  <link rel="dns-prefetch" href="//unpkg.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script type="module" defer src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule defer src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
     html { scroll-behavior: smooth; }
@@ -24,14 +25,14 @@
 
       --cherry: #e11d48;
       --amber:  #f59e0b;
-      --teal:   #14b8a6;
+      --teal:   #0d9488;
       --green:  #10b981;
 
       --t1: #000000;
       --t2: rgba(0,0,0,.7);
       --t3: rgba(0,0,0,.48);
-      --t4: rgba(0,0,0,.34);
-      --t5: rgba(0,0,0,.2);
+      --t4: rgba(0,0,0,.48);
+      --t5: rgba(0,0,0,.34);
 
       --mono: 'Space Mono','Courier New',monospace;
       --sans: 'Inter',system-ui,-apple-system,sans-serif;
@@ -257,7 +258,7 @@
       display:flex; align-items:center; gap:5px;
       font-family:var(--mono); font-size:9px; color:var(--t5); letter-spacing:.07em;
     }
-    .col-open-dot { width:4px; height:4px; border-radius:50%; animation:pulse 2s infinite; }
+    .col-open-dot { width:4px; height:4px; border-radius:50%; animation:pulse 2s infinite; will-change:opacity; }
     .col--why  .col-open-dot { background:var(--cherry); }
     .col--how  .col-open-dot { background:var(--amber); }
     .col--what .col-open-dot { background:var(--teal); }
@@ -520,7 +521,7 @@
     /* ── TICKER ── */
     .ticker-label { font-family:var(--mono); font-size:9px; color:var(--t4); letter-spacing:.1em; text-transform:uppercase; margin:28px 0 8px; }
     .ticker-wrap { overflow:hidden; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; width:100vw; margin-bottom:24px; padding:7px 0; border-top:1px solid var(--b0); border-bottom:1px solid var(--b0); }
-    .ticker { display:flex; gap:36px; width:max-content; animation:ticker 26s linear infinite; }
+    .ticker { display:flex; gap:36px; width:max-content; animation:ticker 26s linear infinite; will-change:transform; transform:translateZ(0); }
     .ticker:hover { animation-play-state:paused; }
     @keyframes ticker { to { transform:translateX(-50%); } }
     .tbrand { display:flex; align-items:center; }
@@ -530,6 +531,7 @@
 
     /* ── COMMISSION ── */
     .comm-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .comm-perf-grid { display:grid; grid-template-columns:auto 1fr; gap:16px; align-items:start; }
     .comm-card { border-radius:var(--r); padding:20px 18px; background:var(--bg1); border:1px solid var(--b0); }
     .comm-card--others { border-top:2px solid var(--cherry); }
     .comm-card--bibon  { border-top:2px solid var(--amber); }
@@ -544,7 +546,7 @@
     .invoice { background:var(--bg1); border:1px solid var(--b0); border-top:2px solid var(--amber); border-radius:var(--r); overflow:hidden; }
     .inv-hd { background:var(--bg2); border-bottom:1px solid var(--b0); padding:9px 16px; display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
     .inv-hd__l { display:flex; align-items:center; gap:7px; }
-    .inv-live { width:4px; height:4px; border-radius:50%; background:var(--green); animation:pulse 1.6s infinite; flex-shrink:0; }
+    .inv-live { width:4px; height:4px; border-radius:50%; background:var(--green); animation:pulse 1.6s infinite; flex-shrink:0; will-change:opacity; }
     .inv-title { font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--amber); }
     .inv-sub { font-family:var(--mono); font-size:9px; color:var(--t4); }
     .inv-badge { font-family:var(--mono); font-size:7px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:2px 7px; border-radius:2px; background:rgba(16,185,129,.07); border:1px solid rgba(16,185,129,.16); color:var(--green); }
@@ -564,7 +566,7 @@
     .pdash { background:var(--bg1); border:1px solid rgba(20,184,166,.16); border-top:2px solid var(--teal); border-radius:var(--r); overflow:hidden; margin-bottom:8px; }
     .pdash-hd { display:flex; align-items:center; justify-content:space-between; padding:8px 13px; border-bottom:1px solid rgba(20,184,166,.1); background:var(--bg2); }
     .pdash-hd__l { display:flex; align-items:center; gap:6px; }
-    .pdash-live { width:4px; height:4px; border-radius:50%; background:var(--teal); animation:pulse 1.6s infinite; flex-shrink:0; }
+    .pdash-live { width:4px; height:4px; border-radius:50%; background:var(--teal); animation:pulse 1.6s infinite; flex-shrink:0; will-change:opacity; }
     .pdash-hd__t { font-family:var(--mono); font-size:8px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--teal); }
     .pdash-hd__r { display:flex; align-items:center; gap:8px; }
     .pdash-hd__name { font-family:var(--mono); font-size:8px; color:var(--t3); }
@@ -597,7 +599,7 @@
     .pdash-lot__n { font-size:10px; font-weight:600; color:var(--t2); }
     .pdash-lot__s { font-family:var(--mono); font-size:8px; font-weight:700; color:var(--teal); background:rgba(20,184,166,.07); border:1px solid rgba(20,184,166,.13); border-radius:2px; padding:1px 5px; }
     .pdash-scan { background:rgba(20,184,166,.04); border:1px solid rgba(20,184,166,.1); border-radius:2px; padding:5px 10px; display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:7.5px; font-weight:700; color:var(--t3); }
-    .pdash-scan-dot { width:4px; height:4px; border-radius:50%; background:var(--teal); animation:pulse 1.6s infinite; flex-shrink:0; }
+    .pdash-scan-dot { width:4px; height:4px; border-radius:50%; background:var(--teal); animation:pulse 1.6s infinite; flex-shrink:0; will-change:opacity; }
 
     /* ── PHONE MOCKUP ── */
     .phone-pair { display:flex; gap:18px; align-items:flex-start; }
@@ -657,7 +659,7 @@
     .pro-kpi { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:var(--r); padding:9px 10px; }
     .pro-kpi__label { font-family:var(--mono); font-size:6.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:4px; }
     .pro-kpi__val { font-family:var(--mono); font-size:17px; font-weight:700; letter-spacing:-.03em; color:rgba(255,255,255,.85); line-height:1; }
-    .pro-kpi__val--teal { color:#14b8a6; }
+    .pro-kpi__val--teal { color:#0d9488; }
     .pro-kpi__trend { font-family:var(--mono); font-size:7px; color:#14b8a6; margin-top:4px; }
     .pro-panel { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:var(--r); padding:9px 10px; }
     .pro-panel__title { font-family:var(--mono); font-size:7px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:rgba(255,255,255,.3); }
@@ -700,7 +702,7 @@
     .cta-block__sub { font-size:13px; color:var(--t3); max-width:320px; margin:0 auto 20px; font-weight:400; line-height:1.65; }
     .btn { display:inline-flex; align-items:center; gap:7px; font-family:inherit; font-weight:700; font-size:13px; padding:10px 22px; border-radius:var(--r); border:none; cursor:pointer; text-decoration:none; transition:all .16s; }
     .btn--teal { background:var(--teal); color:#000; }
-    .btn--teal:hover { background:#0d9488; color:#000; transform:translateY(-1px); }
+    .btn--teal:hover { background:#0a7a70; color:#000; transform:translateY(-1px); }
 
     /* ── DARK OVERRIDES: dashboard & phone stay dark ── */
     .pdash { background:#111 !important; border-color:rgba(20,184,166,.2) !important; }
@@ -780,6 +782,7 @@
     }
     .footer-logo { display:none; } /* retiré de la bande visible */
     .footer-copy { font-family:var(--mono); font-size:9px; color:var(--t4); line-height:1.6; }
+    .footer-copy--short { display:none; }
     .footer-links { display:flex; gap:2px; flex-wrap:wrap; margin:-2px; }
     .footer-links a {
       font-family:var(--mono); font-size:9px; color:var(--t4); text-decoration:none;
@@ -791,6 +794,16 @@
     .footer-links a:hover {
       color:var(--t2);
       border-color:var(--b1);
+    }
+    /* ── Focus visible — navigation clavier ── */
+    :focus-visible {
+      outline: 2px solid var(--teal);
+      outline-offset: 2px;
+    }
+    button:focus-visible, a:focus-visible {
+      outline: 2px solid var(--teal);
+      outline-offset: 3px;
+      border-radius: 2px;
     }
 
     /* ── UNFOLD ANIMATIONS ── */
@@ -943,6 +956,9 @@
       .svc-grid { grid-template-columns:1fr 1fr; }
       .comm-grid { grid-template-columns:1fr; }
       .founder-grid { grid-template-columns:1fr; }
+      .comm-perf-grid { grid-template-columns:1fr; }
+      .footer-copy--full { display:none; }
+      .footer-copy--short { display:block; }
       /* Mobile — page-body en flux, mais footer reste fixed */
       .page-body { position:static; display:block; padding-top:calc(48px + 96px); }
       .cols-wrap { padding-bottom:52px; }
@@ -963,7 +979,7 @@
         max-height:260px;
         padding-top:18px !important; padding-bottom:14px !important;
       }
-      .footer-bottom { padding:0 18px; height:36px; }
+      .footer-bottom { padding:6px 18px; height:auto; flex-direction:column; align-items:flex-start; gap:4px; }
       .lcol__title { margin-bottom:7px; }
       .lcol__links a { font-size:10.5px; padding:3px 6px; }
       .lcol__links span { font-size:10.5px; padding:3px 6px; }
@@ -1207,7 +1223,7 @@
   <div class="col col--why" id="col-why">
 
     <!-- PREVIEW -->
-    <div class="col-preview" onclick="activateCol('why')">
+    <div class="col-preview" onclick="activateCol('why')" role="button" tabindex="0" aria-label="Ouvrir : Problématique">
       <div class="col-preview__top">
         <span class="col-n">01 / PROBLÉMATIQUE</span>
         <span class="col-hint">→ ouvrir</span>
@@ -1253,7 +1269,7 @@
           <div class="conviction r">
             <div class="conviction__body">
               <div class="conviction__avatar">
-                <img src="Profilepicture.png" alt="Hadrien Lonjaret">
+                <img src="Profilepicture.png" alt="Hadrien Lonjaret" loading="lazy">
               </div>
               <div class="conviction__text">
                 <p>« Derrière chaque vitrine indépendante, il y a une vision unique qui ne demande qu'à s'exprimer. Nous bâtissons les outils pour qu'ils puissent enfin rivaliser avec les géants. »</p>
@@ -1366,7 +1382,7 @@
                 <span>// Objectifs prioritaires déclarés · commerçants Clermont</span>
                 <span>n=247</span>
               </div>
-              <svg id="objWheel" viewBox="0 0 310 310" style="width:70%;height:auto;display:block;margin:0 auto;"></svg>
+              <svg id="objWheel" viewBox="0 0 310 310" style="width:70%;height:auto;display:block;margin:0 auto;" aria-hidden="true"></svg>
             </div><!-- /col droite -->
 
           </div><!-- /layout-split -->
@@ -1549,7 +1565,7 @@
   <div class="col col--how" id="col-how">
 
     <!-- PREVIEW -->
-    <div class="col-preview" onclick="activateCol('how')">
+    <div class="col-preview" onclick="activateCol('how')" role="button" tabindex="0" aria-label="Ouvrir : Méthode">
       <div class="col-preview__top">
         <span class="col-n">02 / MÉTHODE</span>
         <span class="col-hint">→ ouvrir</span>
@@ -1619,7 +1635,7 @@
           <div class="founder-grid r">
             <div class="founder-card">
               <div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:2.5px solid var(--amber);margin-bottom:14px;">
-                <img src="Profilepicture.png" alt="Hadrien Lonjaret" style="width:105%;height:105%;object-fit:cover;margin:-2.5%;">
+                <img src="Profilepicture.png" alt="Hadrien Lonjaret" loading="lazy" style="width:105%;height:105%;object-fit:cover;margin:-2.5%;">
               </div>
               <div class="founder-name">Hadrien Lonjaret</div>
               <div class="founder-role">
@@ -1677,7 +1693,7 @@
             <div>
               <div class="slabel slabel--how">03 — Modèle économique</div>
               <h2 class="h2" style="margin-bottom:16px">À la performance.<br>Rien d'autre.</h2>
-              <div style="display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;">
+              <div class="comm-perf-grid">
                 <div class="comm-card comm-card--bibon" style="min-width:160px;max-width:200px">
                   <div class="comm-card__val">10%</div>
                   <div class="comm-card__sub">// De la marge des leads BIBON · uniquement</div>
@@ -1768,7 +1784,7 @@
   <div class="col col--what" id="col-what">
 
     <!-- PREVIEW -->
-    <div class="col-preview" onclick="activateCol('what')">
+    <div class="col-preview" onclick="activateCol('what')" role="button" tabindex="0" aria-label="Ouvrir : Solution">
       <div class="col-preview__top">
         <span class="col-n">03 / SOLUTION</span>
         <span class="col-hint">→ ouvrir</span>
@@ -1941,7 +1957,7 @@
                 <div class="lp-panel">
                   <div class="lp-panel__title">Avis clients · Satisfaction</div>
                   <!-- Radar chart 6 axes, grille S→F (G=centre) -->
-                  <svg viewBox="0 0 160 155" style="display:block;width:100%;max-width:152px;margin:4px auto 2px" xmlns="http://www.w3.org/2000/svg">
+                  <svg viewBox="0 0 160 155" style="display:block;width:100%;max-width:152px;margin:4px auto 2px" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <!-- Grilles hexagonales (S extérieur → F intérieur) -->
                     <polygon fill="none" stroke="rgba(0,0,0,.07)" stroke-width=".8" points="80,26 125,52 125,104 80,130 35,104 35,52"/>
                     <polygon fill="none" stroke="rgba(0,0,0,.07)" stroke-width=".8" points="80,33.4 118.6,55.7 118.6,100.3 80,122.6 41.4,100.3 41.4,55.7"/>
@@ -2169,7 +2185,8 @@
   </div>
   <div class="footer-bottom">
     <a href="/" class="footer-logo">BIBON</a>
-    <div class="footer-copy">© 2026 BIBON · Hadrien Lonjaret · 35 Cours Sablon, 63000 Clermont-Ferrand</div>
+    <div class="footer-copy footer-copy--full">© 2026 BIBON · Hadrien Lonjaret · 35 Cours Sablon, 63000 Clermont-Ferrand</div>
+    <div class="footer-copy footer-copy--short">© 2026 BIBON · H. Lonjaret · 35 Cours Sablon, 63000 CLF</div>
     <div class="footer-links">
       <a href="legal.html">CGU</a>
       <a href="privacy.html">Confidentialité</a>
@@ -2182,10 +2199,28 @@
 
 
 <script>
-  /* ── HERO TEXT WIDTHS — mesure au load pour transition correcte des espaces ── */
-  window.addEventListener('load', function() {
+  /* ── HERO TEXT WIDTHS — mesure après chargement complet des fonts ── */
+  function measureHeroWidths() {
+    /* Reset d'abord pour re-mesurer proprement */
+    document.querySelectorAll('.hero-acro .htxt').forEach(function(el) {
+      el.style.width = '';
+    });
+    /* Forcer un reflow avant de mesurer */
+    void document.body.offsetWidth;
     document.querySelectorAll('.hero-acro .htxt').forEach(function(el) {
       el.style.width = el.offsetWidth + 'px';
+    });
+  }
+
+  /* Attend que les fonts soient réellement appliquées avant de mesurer */
+  document.fonts.ready.then(function() {
+    measureHeroWidths();
+
+    /* Re-mesure au resize (debounced) pour éviter les largeurs périmées */
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(measureHeroWidths, 150);
     });
 
     /* ── COUNT-UP animation sur le countdown — calé sur l'apparition CSS (.52s) ── */
@@ -2428,9 +2463,21 @@
   var burger = document.getElementById('burger');
   if (burger) {
     burger.addEventListener('click', function() {
-      document.querySelector('.nav__right').classList.toggle('mob-open');
+      var isOpen = document.querySelector('.nav__right').classList.toggle('mob-open');
+      burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
+    burger.setAttribute('aria-expanded', 'false');
   }
+
+  /* ── Keyboard support pour col-preview (Enter/Space) ── */
+  document.querySelectorAll('.col-preview[role="button"]').forEach(function(el) {
+    el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
 
   /* ── SVC cards — révélation permanente au premier hover ── */
   document.querySelectorAll('.svc-card--soon').forEach(function(card) {
