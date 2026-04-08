@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Politique de confidentialité — BIBON</title>
+  <meta name="description" content="Politique de confidentialité de BIBON. Comment nous collectons, utilisons et protégeons vos données personnelles.">
+  <meta name="robots" content="index, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:  #dedede;
+      --b0:  rgba(0,0,0,.1);
+      --b1:  rgba(0,0,0,.2);
+      --teal:   #14b8a6;
+      --amber:  #f59e0b;
+      --cherry: #e11d48;
+      --t1: #000000;
+      --t2: rgba(0,0,0,.7);
+      --t3: rgba(0,0,0,.48);
+      --t4: rgba(0,0,0,.34);
+      --mono: 'Space Mono','Courier New',monospace;
+      --sans: 'Inter',system-ui,-apple-system,sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      background-image: radial-gradient(circle,rgba(0,0,0,.1) 1px,transparent 1px);
+      background-size: 24px 24px;
+      color: var(--t1);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+      opacity:.06; mix-blend-mode:multiply;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size:180px;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      height: 48px; display: flex; align-items: center;
+      background: rgba(222,222,222,.80);
+      backdrop-filter: blur(14px) saturate(1.4);
+      -webkit-backdrop-filter: blur(14px) saturate(1.4);
+      border-bottom: 1px solid var(--b0);
+    }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; width: 100%; }
+    .nav__logo {
+      font-family: var(--sans); font-size: 15px; font-weight: 900;
+      color: var(--t1); text-decoration: none; letter-spacing: -.03em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav__logo-tag { font-family: var(--mono); font-size: 9px; color: var(--t4); letter-spacing: .06em; font-weight: 400; white-space: nowrap; }
+    .nav__right { display: flex; align-items: center; gap: 4px; }
+    .nav__pill {
+      font-family: var(--mono); font-size: 9px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 2px; cursor: pointer;
+      text-decoration: none; color: var(--t3);
+      background: transparent; border: none;
+      transition: color .18s, background .18s;
+    }
+    .nav__pill:hover { color: var(--t1); background: rgba(0,0,0,.06); }
+    .nav__pill--cta { color: var(--teal); border: 1px solid rgba(20,184,166,.3); }
+    .nav__pill--cta:hover { background: rgba(20,184,166,.08); color: var(--teal); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-top: 48px;
+      padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--b0);
+    }
+    .back-link {
+      font-family: var(--mono); font-size: 10px; color: var(--t4);
+      text-decoration: none; letter-spacing: .06em;
+      display: inline-block; margin-bottom: 16px;
+    }
+    .back-link:hover { color: var(--t2); }
+    .page-header__label {
+      font-family: var(--mono); font-size: 10px; color: var(--teal);
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .page-header__title {
+      font-size: clamp(28px, 4vw, 48px); font-weight: 900;
+      letter-spacing: -.03em; line-height: 1.1; margin-bottom: 12px;
+    }
+    .page-header__meta {
+      font-family: var(--mono); font-size: 11px; color: var(--t3);
+    }
+
+    /* ── TOC ── */
+    .toc {
+      max-width: 860px; margin: 32px auto 0; padding: 0 24px;
+    }
+    .toc__title {
+      font-family: var(--mono); font-size: 10px; color: var(--t4);
+      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .toc__list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+    .toc__list li a {
+      font-family: var(--mono); font-size: 10px; color: var(--t3);
+      text-decoration: none; padding: 4px 10px;
+      border: 1px solid var(--b1); border-radius: 2px;
+      transition: color .15s, border-color .15s;
+    }
+    .toc__list li a:hover { color: var(--t1); border-color: rgba(0,0,0,.4); }
+
+    /* ── PROSE ── */
+    .prose {
+      max-width: 860px; margin: 40px auto 80px; padding: 0 24px;
+    }
+    .prose h2 {
+      font-size: 22px; font-weight: 900; letter-spacing: -.02em;
+      margin: 56px 0 20px; padding-top: 56px; border-top: 1px solid var(--b1);
+    }
+    .prose h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .prose h3 {
+      font-size: 14px; font-weight: 700; letter-spacing: -.01em;
+      margin: 28px 0 10px; color: var(--t2);
+    }
+    .prose p { font-size: 14px; line-height: 1.75; color: var(--t2); margin-bottom: 14px; }
+    .prose ul { margin: 10px 0 14px 20px; }
+    .prose ul li { font-size: 14px; line-height: 1.75; color: var(--t2); margin-bottom: 6px; }
+    .prose a { color: var(--teal); text-decoration: none; }
+    .prose a:hover { text-decoration: underline; }
+    .prose strong { color: var(--t1); font-weight: 700; }
+
+    .highlight-box {
+      background: rgba(0,0,0,.05); border-left: 3px solid var(--teal);
+      padding: 16px 20px; border-radius: 0 4px 4px 0;
+      margin: 16px 0;
+    }
+    .highlight-box p { margin: 0; font-size: 13px; }
+
+    /* ── TABLES ── */
+    .prose table {
+      width: 100%; border-collapse: collapse;
+      margin: 16px 0 24px; font-size: 13px;
+    }
+    .prose th {
+      font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--t4); font-weight: 700;
+      padding: 8px 12px; text-align: left;
+      border-bottom: 1px solid var(--b1);
+    }
+    .prose td {
+      padding: 10px 12px; color: var(--t2); line-height: 1.6;
+      border-bottom: 1px solid var(--b0); vertical-align: top;
+    }
+    .prose td small { font-size: 11px; color: var(--t4); }
+    .prose tr:last-child td { border-bottom: none; }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--b1);
+      padding: 40px 24px 32px;
+      background: rgba(0,0,0,.03);
+    }
+    .footer-grid {
+      max-width: 860px; margin: 0 auto 32px;
+      display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 32px;
+    }
+    .lcol__title {
+      font-family: var(--mono); font-size: 9px; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--t4); margin-bottom: 12px;
+    }
+    .lcol__links { list-style: none; }
+    .lcol__links li { margin-bottom: 8px; }
+    .lcol__links a, .lcol__links span {
+      font-size: 12px; color: var(--t3); text-decoration: none;
+    }
+    .lcol__links a:hover { color: var(--t1); }
+    .footer-bottom {
+      max-width: 860px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      padding-top: 24px; border-top: 1px solid var(--b0);
+    }
+    .footer-logo {
+      font-family: var(--sans); font-size: 15px; font-weight: 900;
+      letter-spacing: -.03em; color: var(--t1); text-decoration: none;
+    }
+    .footer-copy { font-family: var(--mono); font-size: 9px; color: var(--t4); letter-spacing: .04em; }
+    .footer-links { display: flex; gap: 16px; }
+    .footer-links a { font-family: var(--mono); font-size: 9px; color: var(--t4); text-decoration: none; letter-spacing: .04em; }
+    .footer-links a:hover { color: var(--t2); }
+
+    @media (max-width: 640px) {
+      .nav__right .nav__pill:not(.nav__pill--cta) { display: none; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .prose table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="/" class="nav__logo">
+      BIBON
+      <span class="nav__logo-tag">/ Commerce indépendant</span>
+    </a>
+    <div class="nav__right">
+      <a href="/#" class="nav__pill">[ 01 ] PROBLÉMATIQUE</a>
+      <a href="/#" class="nav__pill">[ 02 ] MÉTHODE</a>
+      <a href="/#" class="nav__pill">[ 03 ] SOLUTION</a>
+      <a href="mailto:hello@bibon.app" class="nav__pill nav__pill--cta">→ Rejoindre</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ PAGE HEADER ══ -->
+<div class="page-header">
+  <a href="/" class="back-link">← Retour à l'accueil</a>
+  <p class="page-header__label">Données</p>
+  <h1 class="page-header__title">Politique de confidentialité</h1>
+  <p class="page-header__meta">
+    Application : <strong>BIBON Local</strong> &nbsp;·&nbsp;
+    Dernière mise à jour : <strong>Mars 2026</strong> &nbsp;·&nbsp;
+    Version : <strong>1.0</strong>
+  </p>
+</div>
+
+<!-- ══ TOC ══ -->
+<div class="toc">
+  <div class="toc__title">Sommaire</div>
+  <ul class="toc__list">
+    <li><a href="#responsable">1. Responsable du traitement</a></li>
+    <li><a href="#donnees">2. Données collectées</a></li>
+    <li><a href="#finalites">3. Finalités et bases légales</a></li>
+    <li><a href="#conservation">4. Durée de conservation</a></li>
+    <li><a href="#destinataires">5. Destinataires</a></li>
+    <li><a href="#sous-traitants">6. Sous-traitants</a></li>
+    <li><a href="#droits">7. Vos droits RGPD</a></li>
+    <li><a href="#cookies">8. Cookies</a></li>
+    <li><a href="#securite">9. Sécurité</a></li>
+    <li><a href="#mineurs">10. Mineurs</a></li>
+    <li><a href="#modifications">11. Modifications</a></li>
+    <li><a href="#contact">12. Contact</a></li>
+  </ul>
+</div>
+
+<!-- ══ PROSE ══ -->
+<div class="prose">
+
+  <div class="highlight-box">
+    <p>
+      <strong>L'essentiel en une phrase :</strong> BIBON collecte uniquement ce qui
+      est strictement nécessaire au fonctionnement du service — ton pseudo, ta ville et
+      l'empreinte de ton appareil. Tes coordonnées GPS sont vérifiées mais jamais stockées.
+      Nous ne vendons, ne louons et ne partageons aucune donnée à des fins publicitaires.
+    </p>
+  </div>
+
+  <h2 id="responsable">1. Responsable du traitement</h2>
+  <p>
+    Le responsable du traitement des données personnelles collectées via l'application
+    BIBON Local est :
+  </p>
+  <p>
+    <strong>BIBON</strong><br>
+    Entreprise individuelle — SIRET 853 801 488 00026<br>
+    35 Cours Sablon, 63000 Clermont-Ferrand<br>
+    Email : <a href="mailto:hello@bibon.app">hello@bibon.app</a>
+  </p>
+
+  <h2 id="donnees">2. Données personnelles collectées</h2>
+
+  <h3>2.1 Données collectées automatiquement lors de l'inscription</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Donnée</th>
+        <th>Description</th>
+        <th>Stockage permanent</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Identifiant utilisateur (UUID)</strong></td>
+        <td>Identifiant aléatoire généré par Supabase Auth lors de la création du compte anonyme.</td>
+        <td>Oui</td>
+      </tr>
+      <tr>
+        <td><strong>Empreinte appareil</strong></td>
+        <td>Hash SHA-256 de caractéristiques non-sensibles de l'appareil (modèle, OS). Sert à garantir un seul compte par appareil et à prévenir les fraudes.</td>
+        <td>Oui</td>
+      </tr>
+      <tr>
+        <td><strong>Ville de résidence</strong></td>
+        <td>Ville choisie lors de l'inscription (actuellement : Clermont-Ferrand). Sert à limiter les lots aux commerces locaux.</td>
+        <td>Oui</td>
+      </tr>
+      <tr>
+        <td><strong>Coordonnées GPS</strong></td>
+        <td>Latitude et longitude collectées lors de l'inscription et lors du scan d'un lot, <strong>uniquement pour valider la zone géographique</strong>. Les coordonnées précises ne sont jamais stockées.</td>
+        <td><strong>Non</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Pays d'enregistrement</strong></td>
+        <td>Code pays détecté lors de l'inscription (ex : FR). Sert à restreindre le service à la France.</td>
+        <td>Oui</td>
+      </tr>
+      <tr>
+        <td><strong>Indicateur VPN</strong></td>
+        <td>Booléen indiquant si un VPN a été détecté lors de l'inscription.</td>
+        <td>Oui</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.2 Données collectées lors de la création du profil (optionnel)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Donnée</th>
+        <th>Description</th>
+        <th>Stockage permanent</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Pseudo</strong></td>
+        <td>Nom d'affichage librement choisi par l'utilisateur (3 à 20 caractères). Non obligatoire pour utiliser l'application de base.</td>
+        <td>Oui</td>
+      </tr>
+      <tr>
+        <td><strong>Identifiant OAuth Apple</strong></td>
+        <td>Identifiant opaque fourni par Apple lors d'une connexion « Sign in with Apple ». BIBON ne reçoit jamais ton adresse email Apple réelle si tu choisis de la masquer.</td>
+        <td>Oui (hash opaque)</td>
+      </tr>
+      <tr>
+        <td><strong>Identifiant OAuth Google</strong></td>
+        <td>Identifiant opaque fourni par Google lors d'une connexion « Sign in with Google ».</td>
+        <td>Oui (hash opaque)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.3 Données d'utilisation du service</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Donnée</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Historique des tirages</strong></td>
+        <td>Résultat des parties jouées (tier gagné, résultat, horodatage). Lié à l'UUID utilisateur.</td>
+      </tr>
+      <tr>
+        <td><strong>Lots (wallet)</strong></td>
+        <td>Lots gagnés et leur statut (en attente, utilisé). Lié à l'UUID utilisateur.</td>
+      </tr>
+      <tr>
+        <td><strong>Scans chez les commerçants</strong></td>
+        <td>Horodatage et commerce concerné lors de l'utilisation d'un lot. Pas de données GPS précises.</td>
+      </tr>
+      <tr>
+        <td><strong>Score réseau</strong></td>
+        <td>Score interne (0-100) de réputation calculé automatiquement pour la prévention des abus.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2.4 Données techniques (rapports de crash)</h3>
+  <p>
+    En cas de plantage de l'application, des données techniques anonymisées sont
+    transmises à <strong>Sentry</strong> (voir section 6). Ces données incluent la trace
+    d'exécution (stack trace), le type d'appareil, la version d'OS et la version de
+    l'application. Elles ne contiennent jamais d'identifiant personnel.
+  </p>
+
+  <h2 id="finalites">3. Finalités et bases légales</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Finalité</th>
+        <th>Base légale (RGPD art. 6)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Fonctionnement du service (compte, tirages, lots, wallet)</td>
+        <td>Exécution du contrat (art. 6.1.b)</td>
+      </tr>
+      <tr>
+        <td>Validation géographique (inscription et utilisation des lots)</td>
+        <td>Exécution du contrat (art. 6.1.b)</td>
+      </tr>
+      <tr>
+        <td>Prévention des fraudes (anti-abus, 1 compte/appareil)</td>
+        <td>Intérêt légitime (art. 6.1.f)</td>
+      </tr>
+      <tr>
+        <td>Amélioration de la stabilité (rapports de crash anonymes)</td>
+        <td>Intérêt légitime (art. 6.1.f)</td>
+      </tr>
+      <tr>
+        <td>Respect des obligations légales</td>
+        <td>Obligation légale (art. 6.1.c)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    BIBON Local ne réalise <strong>aucun profilage à des fins publicitaires</strong> et ne
+    vend, loue ni partage aucune donnée personnelle à des tiers à des fins commerciales.
+  </p>
+
+  <h2 id="conservation">4. Durée de conservation</h2>
+  <p>
+    La suppression du compte entraîne l'effacement de l'ensemble des données personnelles
+    dans un délai de <strong>30 jours</strong>.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Donnée</th>
+        <th>Durée de conservation</th>
+        <th>Justification</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Profil utilisateur</strong><br><small>(UUID, pseudo, ville, pays)</small></td>
+        <td>Durée du compte + 30 jours après suppression</td>
+        <td>Exécution du contrat</td>
+      </tr>
+      <tr>
+        <td><strong>Identifiants OAuth</strong><br><small>(Apple / Google — hash opaque)</small></td>
+        <td>Durée du compte + 30 jours après suppression</td>
+        <td>Maintien de l'authentification</td>
+      </tr>
+      <tr>
+        <td><strong>Empreinte appareil</strong><br><small>(hash SHA-256)</small></td>
+        <td>Durée du compte + 30 jours après suppression</td>
+        <td>Prévention des fraudes (intérêt légitime)</td>
+      </tr>
+      <tr>
+        <td><strong>Historique des tirages</strong><br><small>(résultat, tier, horodatage)</small></td>
+        <td>Durée du compte + 30 jours après suppression</td>
+        <td>Intégrité du jeu et audit interne</td>
+      </tr>
+      <tr>
+        <td><strong>Lots (wallet)</strong><br><small>(lots en cours, lots utilisés)</small></td>
+        <td>Durée du compte + 30 jours après suppression</td>
+        <td>Exécution du contrat</td>
+      </tr>
+      <tr>
+        <td><strong>Scans chez les commerçants</strong><br><small>(horodatage, commerce, statut)</small></td>
+        <td><strong>12 mois</strong> à compter de la date du scan</td>
+        <td>Prévention des abus et audit commerçant</td>
+      </tr>
+      <tr>
+        <td><strong>Score réseau</strong><br><small>(réputation anti-fraude)</small></td>
+        <td>Durée du compte + 30 jours après suppression</td>
+        <td>Prévention des fraudes</td>
+      </tr>
+      <tr>
+        <td><strong>Rapports de crash</strong><br><small>(Sentry — anonymisés)</small></td>
+        <td><strong>90 jours</strong></td>
+        <td>Stabilité de l'application — durée imposée par Sentry</td>
+      </tr>
+      <tr>
+        <td><strong>Coordonnées GPS précises</strong></td>
+        <td><strong>0 jour</strong> — non stockées</td>
+        <td>Validation géographique en temps réel uniquement</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    En cas d'<strong>inactivité prolongée de 24 mois</strong>, BIBON se réserve le droit
+    de supprimer automatiquement le compte et toutes les données associées, après envoi
+    d'une notification préalable si une adresse email est disponible.
+  </p>
+
+  <h2 id="destinataires">5. Destinataires des données</h2>
+  <p>Les données personnelles ne sont accessibles qu'aux personnes suivantes :</p>
+  <ul>
+    <li>L'équipe technique de BIBON (accès limité aux besoins opérationnels)</li>
+    <li>Les commerçants partenaires, uniquement pour les informations relatives aux lots
+      à valider (pas d'identifiant personnel — uniquement le statut du lot et la preuve
+      de présence physique)</li>
+  </ul>
+
+  <h2 id="sous-traitants">6. Sous-traitants et transferts</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Prestataire</th>
+        <th>Rôle</th>
+        <th>Localisation</th>
+        <th>Garanties</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Supabase, Inc.</strong></td>
+        <td>Base de données, authentification, stockage</td>
+        <td>UE — Frankfurt (AWS eu-central-1)</td>
+        <td>DPA signé · Données en Europe</td>
+      </tr>
+      <tr>
+        <td><strong>Functional Software, Inc. (Sentry)</strong></td>
+        <td>Rapports de crash anonymisés</td>
+        <td>États-Unis</td>
+        <td>Clauses contractuelles types (CCT)</td>
+      </tr>
+      <tr>
+        <td><strong>Apple Inc.</strong></td>
+        <td>Sign in with Apple (si utilisé)</td>
+        <td>États-Unis</td>
+        <td>CCT · Bouclier EU–US Privacy</td>
+      </tr>
+      <tr>
+        <td><strong>Google LLC</strong></td>
+        <td>Sign in with Google (si utilisé)</td>
+        <td>États-Unis</td>
+        <td>CCT</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    Les transferts vers des pays hors de l'Union européenne sont encadrés par des
+    <strong>clauses contractuelles types (CCT)</strong> approuvées par la Commission
+    européenne, conformément à l'article 46 du RGPD.
+  </p>
+
+  <h2 id="droits">7. Tes droits (RGPD)</h2>
+  <p>
+    Conformément au RGPD et à la loi « Informatique et Libertés », tu disposes des
+    droits suivants concernant tes données :
+  </p>
+  <ul>
+    <li><strong>Droit d'accès</strong> (art. 15 RGPD) — obtenir une copie de tes données</li>
+    <li><strong>Droit de rectification</strong> (art. 16 RGPD) — corriger des données inexactes</li>
+    <li><strong>Droit à l'effacement</strong> (art. 17 RGPD) — demander la suppression de ton compte et des données associées</li>
+    <li><strong>Droit à la portabilité</strong> (art. 20 RGPD) — recevoir tes données dans un format structuré</li>
+    <li><strong>Droit d'opposition</strong> (art. 21 RGPD) — t'opposer à un traitement basé sur l'intérêt légitime</li>
+    <li><strong>Droit à la limitation</strong> (art. 18 RGPD) — demander la suspension temporaire d'un traitement</li>
+  </ul>
+  <p>
+    Pour exercer ces droits, envoie ta demande à : <a href="mailto:hello@bibon.app">hello@bibon.app</a><br>
+    Délai de réponse : <strong>30 jours maximum</strong>.
+  </p>
+  <p>
+    Si tu estimes que tes droits n'ont pas été respectés, tu peux introduire une réclamation
+    auprès de la <strong>CNIL</strong> : <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">www.cnil.fr/fr/plaintes</a>
+  </p>
+
+  <h2 id="cookies">8. Cookies et traceurs</h2>
+  <p>
+    L'application mobile BIBON Local <strong>n'utilise pas de cookies tiers</strong> ni de
+    traceurs publicitaires. Le stockage local sur l'appareil est utilisé exclusivement pour
+    maintenir la session et stocker des préférences locales. Ces données ne quittent jamais l'appareil.
+  </p>
+  <p>
+    Ce site web (<strong>bibon.app</strong>) n'utilise pas non plus de cookies de suivi.
+  </p>
+
+  <h2 id="securite">9. Sécurité des données</h2>
+  <p>
+    BIBON met en œuvre des mesures techniques et organisationnelles appropriées pour
+    protéger tes données :
+  </p>
+  <ul>
+    <li>Chiffrement des données en transit (TLS 1.3)</li>
+    <li>Chiffrement des données au repos (AES-256) chez Supabase</li>
+    <li>QR codes de validation à durée de vie limitée (30 minutes)</li>
+    <li>Row Level Security (RLS) sur toutes les tables — chaque utilisateur ne peut accéder qu'à ses propres données</li>
+    <li>Stockage des tokens d'authentification dans l'espace sécurisé de l'appareil (iOS Keychain / Android Keystore)</li>
+    <li>Aucun stockage de coordonnées GPS précises en base de données</li>
+  </ul>
+
+  <h2 id="mineurs">10. Mineurs</h2>
+  <p>
+    BIBON Local est un jeu promotionnel destiné aux personnes âgées de <strong>13 ans et plus</strong>
+    (conformément au RGPD art. 8). L'application intègre une barrière d'âge à l'ouverture.
+  </p>
+  <p>
+    Si nous apprenons qu'un compte appartient à une personne de moins de 13 ans, nous le
+    supprimerons dans les meilleurs délais. Pour signaler un tel cas :
+    <a href="mailto:hello@bibon.app">hello@bibon.app</a>.
+  </p>
+
+  <h2 id="modifications">11. Modifications de la politique</h2>
+  <p>
+    BIBON se réserve le droit de modifier la présente politique à tout moment. En cas de
+    modification substantielle, les utilisateurs seront notifiés via l'application.
+    La date de la dernière mise à jour est indiquée en haut de cette page.
+  </p>
+
+  <h2 id="contact">12. Contact</h2>
+  <p>Pour toute question relative à la présente politique ou à l'exercice de tes droits :</p>
+  <p><a href="mailto:hello@bibon.app">hello@bibon.app</a></p>
+
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="lcol">
+      <div class="lcol__title">Légal</div>
+      <ul class="lcol__links">
+        <li><a href="legal.html">Mentions légales</a></li>
+        <li><a href="legal.html">CGU utilisateurs</a></li>
+        <li><a href="legal.html#cgv-pro">CGV commerçants</a></li>
+      </ul>
+    </div>
+    <div class="lcol">
+      <div class="lcol__title">Données</div>
+      <ul class="lcol__links">
+        <li><a href="privacy.html">Politique de confidentialité</a></li>
+        <li><a href="privacy.html">Vos droits RGPD</a></li>
+        <li><a href="mailto:hello@bibon.app">hello@bibon.app</a></li>
+      </ul>
+    </div>
+    <div class="lcol">
+      <div class="lcol__title">Contact</div>
+      <ul class="lcol__links">
+        <li><a href="mailto:hello@bibon.app">hello@bibon.app</a></li>
+        <li><a href="mailto:hello@bibon.app">hello@bibon.app</a></li>
+        <li><span>SIRET 853 801 488 00026</span></li>
+      </ul>
+    </div>
+    <div class="lcol">
+      <div class="lcol__title">Infrastructure</div>
+      <ul class="lcol__links">
+        <li><span>Supabase Inc. — EU Frankfurt</span></li>
+        <li><span>Hostinger International</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <a href="/" class="footer-logo">BIBON</a>
+    <div class="footer-copy">© 2026 BIBON · Hadrien Lonjaret · 35 Cours Sablon, 63000 Clermont-Ferrand</div>
+    <div class="footer-links">
+      <a href="legal.html">CGU</a>
+      <a href="privacy.html">Confidentialité</a>
+      <a href="mailto:hello@bibon.app">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

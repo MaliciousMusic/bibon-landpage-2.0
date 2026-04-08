@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentions légales & CGU — BIBON</title>
+  <meta name="description" content="Mentions légales, conditions générales d'utilisation et CGV commerçants partenaires de BIBON.">
+  <meta name="robots" content="index, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:  #dedede;
+      --b0:  rgba(0,0,0,.1);
+      --b1:  rgba(0,0,0,.2);
+      --teal:   #14b8a6;
+      --amber:  #f59e0b;
+      --cherry: #e11d48;
+      --t1: #000000;
+      --t2: rgba(0,0,0,.7);
+      --t3: rgba(0,0,0,.48);
+      --t4: rgba(0,0,0,.34);
+      --mono: 'Space Mono','Courier New',monospace;
+      --sans: 'Inter',system-ui,-apple-system,sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      background-image: radial-gradient(circle,rgba(0,0,0,.1) 1px,transparent 1px);
+      background-size: 24px 24px;
+      color: var(--t1);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+      opacity:.06; mix-blend-mode:multiply;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size:180px;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      height: 48px; display: flex; align-items: center;
+      background: rgba(222,222,222,.80);
+      backdrop-filter: blur(14px) saturate(1.4);
+      -webkit-backdrop-filter: blur(14px) saturate(1.4);
+      border-bottom: 1px solid var(--b0);
+    }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; width: 100%; }
+    .nav__logo {
+      font-family: var(--sans); font-size: 15px; font-weight: 900;
+      color: var(--t1); text-decoration: none; letter-spacing: -.03em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav__logo-tag { font-family: var(--mono); font-size: 9px; color: var(--t4); letter-spacing: .06em; font-weight: 400; white-space: nowrap; }
+    .nav__right { display: flex; align-items: center; gap: 4px; }
+    .nav__pill {
+      font-family: var(--mono); font-size: 9px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 2px; cursor: pointer;
+      text-decoration: none; color: var(--t3);
+      background: transparent; border: none;
+      transition: color .18s, background .18s;
+    }
+    .nav__pill:hover { color: var(--t1); background: rgba(0,0,0,.06); }
+    .nav__pill--cta { color: var(--teal); border: 1px solid rgba(20,184,166,.3); }
+    .nav__pill--cta:hover { background: rgba(20,184,166,.08); color: var(--teal); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-top: 48px;
+      padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--b0);
+    }
+    .back-link {
+      font-family: var(--mono); font-size: 10px; color: var(--t4);
+      text-decoration: none; letter-spacing: .06em;
+      display: inline-block; margin-bottom: 16px;
+    }
+    .back-link:hover { color: var(--t2); }
+    .page-header__label {
+      font-family: var(--mono); font-size: 10px; color: var(--teal);
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .page-header__title {
+      font-size: clamp(28px, 4vw, 48px); font-weight: 900;
+      letter-spacing: -.03em; line-height: 1.1; margin-bottom: 12px;
+    }
+    .page-header__meta {
+      font-family: var(--mono); font-size: 11px; color: var(--t3);
+    }
+
+    /* ── TOC ── */
+    .toc {
+      max-width: 860px; margin: 32px auto 0; padding: 0 24px;
+    }
+    .toc__title {
+      font-family: var(--mono); font-size: 10px; color: var(--t4);
+      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .toc__list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+    .toc__list li a {
+      font-family: var(--mono); font-size: 10px; color: var(--t3);
+      text-decoration: none; padding: 4px 10px;
+      border: 1px solid var(--b1); border-radius: 2px;
+      transition: color .15s, border-color .15s;
+    }
+    .toc__list li a:hover { color: var(--t1); border-color: rgba(0,0,0,.4); }
+
+    /* ── PROSE ── */
+    .prose {
+      max-width: 860px; margin: 40px auto 80px; padding: 0 24px;
+    }
+    .prose h2 {
+      font-size: 22px; font-weight: 900; letter-spacing: -.02em;
+      margin: 56px 0 20px; padding-top: 56px; border-top: 1px solid var(--b1);
+    }
+    .prose h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .prose h3 {
+      font-size: 14px; font-weight: 700; letter-spacing: -.01em;
+      margin: 28px 0 10px; color: var(--t2);
+    }
+    .prose p { font-size: 14px; line-height: 1.75; color: var(--t2); margin-bottom: 14px; }
+    .prose ul { margin: 10px 0 14px 20px; }
+    .prose ul li { font-size: 14px; line-height: 1.75; color: var(--t2); margin-bottom: 6px; }
+    .prose a { color: var(--teal); text-decoration: none; }
+    .prose a:hover { text-decoration: underline; }
+    .prose strong { color: var(--t1); font-weight: 700; }
+
+    .highlight-box {
+      background: rgba(0,0,0,.05); border-left: 3px solid var(--teal);
+      padding: 16px 20px; border-radius: 0 4px 4px 0;
+      margin: 16px 0;
+    }
+    .highlight-box p { margin: 0; font-size: 13px; }
+    .highlight-box--amber { border-left-color: var(--amber); }
+    .highlight-box--cherry { border-left-color: var(--cherry); }
+
+    /* ── TABLES ── */
+    .prose table {
+      width: 100%; border-collapse: collapse;
+      margin: 16px 0 24px; font-size: 13px;
+    }
+    .prose th {
+      font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--t4); font-weight: 700;
+      padding: 8px 12px; text-align: left;
+      border-bottom: 1px solid var(--b1);
+    }
+    .prose td {
+      padding: 10px 12px; color: var(--t2); line-height: 1.6;
+      border-bottom: 1px solid var(--b0); vertical-align: top;
+    }
+    .prose td small { font-size: 11px; color: var(--t4); }
+    .prose tr:last-child td { border-bottom: none; }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--b1);
+      padding: 40px 24px 32px;
+      background: rgba(0,0,0,.03);
+    }
+    .footer-grid {
+      max-width: 860px; margin: 0 auto 32px;
+      display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 32px;
+    }
+    .lcol__title {
+      font-family: var(--mono); font-size: 9px; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--t4); margin-bottom: 12px;
+    }
+    .lcol__links { list-style: none; }
+    .lcol__links li { margin-bottom: 8px; }
+    .lcol__links a, .lcol__links span {
+      font-size: 12px; color: var(--t3); text-decoration: none;
+    }
+    .lcol__links a:hover { color: var(--t1); }
+    .footer-bottom {
+      max-width: 860px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      padding-top: 24px; border-top: 1px solid var(--b0);
+    }
+    .footer-logo {
+      font-family: var(--sans); font-size: 15px; font-weight: 900;
+      letter-spacing: -.03em; color: var(--t1); text-decoration: none;
+    }
+    .footer-copy { font-family: var(--mono); font-size: 9px; color: var(--t4); letter-spacing: .04em; }
+    .footer-links { display: flex; gap: 16px; }
+    .footer-links a { font-family: var(--mono); font-size: 9px; color: var(--t4); text-decoration: none; letter-spacing: .04em; }
+    .footer-links a:hover { color: var(--t2); }
+
+    @media (max-width: 640px) {
+      .nav__right .nav__pill:not(.nav__pill--cta) { display: none; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="/" class="nav__logo">
+      BIBON
+      <span class="nav__logo-tag">/ Commerce indépendant</span>
+    </a>
+    <div class="nav__right">
+      <a href="/#" class="nav__pill">[ 01 ] PROBLÉMATIQUE</a>
+      <a href="/#" class="nav__pill">[ 02 ] MÉTHODE</a>
+      <a href="/#" class="nav__pill">[ 03 ] SOLUTION</a>
+      <a href="mailto:hello@bibon.app" class="nav__pill nav__pill--cta">→ Rejoindre</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ PAGE HEADER ══ -->
+<div class="page-header">
+  <a href="/" class="back-link">← Retour à l'accueil</a>
+  <p class="page-header__label">Légal</p>
+  <h1 class="page-header__title">Mentions légales &amp; CGU</h1>
+  <p class="page-header__meta">Dernière mise à jour : <strong>Mars 2026</strong></p>
+</div>
+
+<!-- ══ TOC ══ -->
+<div class="toc">
+  <div class="toc__title">Sommaire</div>
+  <ul class="toc__list">
+    <li><a href="#mentions">Mentions légales</a></li>
+    <li><a href="#cgu">CGU utilisateurs</a></li>
+    <li><a href="#cgv-pro">CGV commerçants</a></li>
+  </ul>
+</div>
+
+<!-- ══ PROSE ══ -->
+<div class="prose">
+
+  <!-- ═══════════════════════════════════
+       PARTIE 1 — MENTIONS LÉGALES
+       ═══════════════════════════════════ -->
+
+  <h2 id="mentions">Partie 1 — Mentions légales</h2>
+
+  <h3>Éditeur de l'application et du site</h3>
+  <p>
+    <strong>Raison sociale :</strong> BIBON<br>
+    <strong>Forme juridique :</strong> Entreprise individuelle<br>
+    <strong>SIRET :</strong> 853 801 488 00026<br>
+    <strong>Adresse du siège social :</strong> 35 Cours Sablon, 63000 Clermont-Ferrand<br>
+    <strong>Email :</strong> <a href="mailto:hello@bibon.app">hello@bibon.app</a><br>
+    <strong>Directeur de la publication :</strong> Hadrien Lonjaret
+  </p>
+
+  <h3>Hébergeur du site web (bibon.app)</h3>
+  <p>
+    <strong>Hostinger International Ltd</strong><br>
+    61 Lordou Vironos Street, 6023 Larnaca, Chypre<br>
+    <a href="https://www.hostinger.fr" target="_blank" rel="noopener">www.hostinger.fr</a>
+  </p>
+
+  <h3>Hébergeur de l'infrastructure applicative</h3>
+  <p>
+    <strong>Supabase, Inc.</strong> (base de données et authentification)<br>
+    Hébergé sur AWS eu-central-1 (Frankfurt, Allemagne)<br>
+    <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a>
+  </p>
+
+  <h3>Propriété intellectuelle</h3>
+  <p>
+    Le nom « BIBON », le logo, le design de l'application et l'ensemble du contenu
+    de ce site (textes, visuels, code) sont la propriété exclusive de BIBON et sont
+    protégés par le droit de la propriété intellectuelle.
+  </p>
+  <p>
+    Toute reproduction, représentation, modification ou exploitation non autorisée de
+    tout ou partie du contenu est strictement interdite et constitue une contrefaçon.
+  </p>
+
+  <h3>Limitation de responsabilité</h3>
+  <p>
+    BIBON s'efforce d'assurer la disponibilité et l'exactitude des informations publiées
+    sur ce site et dans l'application. Toutefois, BIBON ne peut garantir l'absence
+    d'interruption ou d'erreur, et décline toute responsabilité pour les dommages
+    résultant de l'utilisation ou de l'impossibilité d'utiliser l'application.
+  </p>
+
+
+  <!-- ═══════════════════════════════════
+       PARTIE 2 — CGU
+       ═══════════════════════════════════ -->
+
+  <h2 id="cgu">Partie 2 — Conditions générales d'utilisation</h2>
+
+  <div class="highlight-box">
+    <p>
+      En téléchargeant et en utilisant l'application BIBON Local, tu acceptes les présentes
+      conditions générales d'utilisation dans leur intégralité.
+    </p>
+  </div>
+
+  <h3>Article 1 — Objet</h3>
+  <p>
+    Les présentes Conditions Générales d'Utilisation (CGU) ont pour objet de définir les
+    modalités et conditions d'utilisation de l'application mobile BIBON Local (ci-après
+    « l'Application ») disponible sur iOS et Android, ainsi que les droits et obligations
+    des parties.
+  </p>
+  <p>
+    L'Application est un service gratuit de cartes à gratter virtuelles permettant aux
+    utilisateurs de gagner des lots à utiliser chez des commerces indépendants partenaires.
+  </p>
+
+  <h3>Article 2 — Accès au service et éligibilité</h3>
+  <p>
+    L'utilisation de BIBON Local est réservée aux personnes réunissant <strong>toutes</strong>
+    les conditions suivantes :
+  </p>
+  <ul>
+    <li>Être âgé(e) d'au moins <strong>13 ans</strong> (voir article 4.5 pour les lots soumis à restriction d'âge)</li>
+    <li>Être domicilié(e) dans une ville couverte par le service (actuellement : Clermont-Ferrand)</li>
+    <li>Résider sur le territoire français métropolitain</li>
+    <li>Utiliser l'Application depuis un appareil mobile physique (les émulateurs sont interdits)</li>
+    <li>Ne pas utiliser de VPN lors de l'inscription</li>
+  </ul>
+  <p>BIBON se réserve le droit de modifier la liste des villes couvertes à tout moment.</p>
+
+  <h3>Article 3 — Création de compte</h3>
+  <p>
+    L'accès aux fonctionnalités de l'Application nécessite la création d'un compte
+    utilisateur. Les règles suivantes s'appliquent :
+  </p>
+  <ul>
+    <li><strong>Un seul compte par appareil physique.</strong> BIBON utilise une empreinte
+      technique de l'appareil pour détecter et empêcher les créations multiples.</li>
+    <li><strong>Un seul compte par identité OAuth.</strong> Un même compte Apple ou Google
+      ne peut pas être lié à plusieurs profils.</li>
+    <li>L'utilisateur est responsable de la confidentialité de son accès à l'Application.</li>
+    <li>Toute tentative de contournement des restrictions de compte (multi-comptes,
+      émulateurs, VPN) entraîne la suspension immédiate du ou des comptes concernés,
+      sans préavis ni remboursement.</li>
+  </ul>
+
+  <h3>Article 4 — Description du service</h3>
+
+  <p><strong>4.1 Tirages (cartes à gratter)</strong></p>
+  <p>
+    Les cartes à gratter sont mises à disposition des utilisateurs par les commerces
+    partenaires ou par BIBON dans le cadre d'opérations promotionnelles. Chaque tirage
+    est effectué côté serveur, de manière aléatoire et sécurisée. BIBON ne garantit
+    aucun résultat minimal.
+  </p>
+  <p>
+    La probabilité de perte est fixée à <strong>20 %</strong> sur chaque tirage.
+    Ce taux est susceptible d'être modifié sans préavis.
+  </p>
+
+  <p><strong>4.2 Lots</strong></p>
+  <ul>
+    <li>Les lots sont obtenus suite à un tirage gagnant.</li>
+    <li>Les lots <strong>n'ont pas de date d'expiration</strong> et peuvent être accumulés sans limite.</li>
+    <li>Les lots sont <strong>strictement personnels</strong> : ils ne peuvent pas être vendus, cédés, échangés ou transférés à un tiers.</li>
+    <li>Les lots sont à utiliser uniquement dans le commerce partenaire désigné, sur présentation du QR code dans l'Application.</li>
+    <li>La valeur monétaire des lots ne peut pas être convertie en espèces.</li>
+  </ul>
+
+  <p><strong>4.3 Gamble Up (option risque)</strong></p>
+  <p>
+    La fonctionnalité « Gamble Up » permet à l'utilisateur de tenter de faire monter
+    son lot d'un palier. En cas d'échec, l'utilisateur perd <strong>l'ensemble des lots
+    du palier inférieur au palier tenté</strong>. Le recours à cette fonctionnalité est
+    entièrement volontaire et irréversible.
+  </p>
+
+  <p><strong>4.4 QR codes de validation</strong></p>
+  <p>
+    Les QR codes générés dans le Wallet de l'Application ont une durée de validité de
+    <strong>30 minutes</strong> à compter de leur génération. Passé ce délai, un nouveau
+    QR code doit être généré. Les QR codes sont liés à l'appareil et ne peuvent pas être
+    utilisés depuis un autre appareil.
+  </p>
+
+  <p><strong>4.5 Lots soumis à restriction d'âge (alcool et produits réglementés)</strong></p>
+  <p>
+    Certains lots proposés par des établissements partenaires (bars, restaurants, caves…)
+    peuvent concerner des boissons alcoolisées ou d'autres produits dont la vente est
+    légalement réservée aux personnes majeures (<strong>18 ans ou plus</strong>).
+    Ces lots sont identifiés par un badge <strong>« 18+ »</strong> dans l'Application.
+  </p>
+  <p>
+    Avant d'afficher le QR code d'un lot 18+, l'Application demande à l'utilisateur de
+    confirmer sa majorité. <strong>Cette confirmation en application n'a aucune valeur
+    juridique</strong> : BIBON ne dispose d'aucun moyen technique de vérifier l'âge réel
+    de l'utilisateur.
+  </p>
+  <div class="highlight-box highlight-box--amber">
+    <p>
+      <strong>Responsabilité du commerçant :</strong> Conformément aux articles L. 3342-1
+      et suivants du Code de la santé publique, il appartient exclusivement au commerçant
+      de vérifier l'âge de l'utilisateur au moment de la remise du lot. BIBON ne saurait
+      être tenu responsable de la remise de boissons alcoolisées à un mineur par un
+      commerçant partenaire.
+    </p>
+  </div>
+  <p>
+    Si l'utilisateur a moins de 18 ans et qu'il gagne un lot 18+, ce lot sera refusé par
+    le commerçant lors du scan. <strong>Aucun lot de remplacement ne sera proposé</strong>
+    dans ce cas. L'utilisateur en est informé avant d'ouvrir le QR code.
+  </p>
+
+  <h3>Article 5 — Restrictions d'utilisation</h3>
+  <p>Il est expressément interdit à l'utilisateur de :</p>
+  <ul>
+    <li>Tenter de contourner les mécanismes de sécurité ou d'anti-fraude de l'Application</li>
+    <li>Créer ou utiliser plusieurs comptes (multi-comptes)</li>
+    <li>Utiliser des émulateurs, des machines virtuelles ou des appareils rootés/jailbreakés</li>
+    <li>Utiliser un VPN lors de l'inscription ou de l'utilisation de lots</li>
+    <li>Reproduire, modifier, distribuer ou exploiter l'Application ou ses contenus sans autorisation</li>
+    <li>Utiliser des bots, scripts ou systèmes automatisés pour interagir avec l'Application</li>
+    <li>Usurper l'identité d'un tiers ou fournir des informations mensongères</li>
+    <li>Tenter de capturer, enregistrer ou partager un QR code de validation</li>
+    <li>Utiliser l'Application à des fins commerciales sans autorisation écrite de BIBON</li>
+  </ul>
+
+  <h3>Article 6 — Suspension et résiliation de compte</h3>
+  <p>
+    BIBON se réserve le droit de suspendre ou de supprimer un compte, <strong>avec ou sans
+    préavis</strong>, dans les cas suivants :
+  </p>
+  <ul>
+    <li>Violation des présentes CGU</li>
+    <li>Comportement frauduleux avéré ou suspecté</li>
+    <li>Tentative de contournement des systèmes de sécurité</li>
+    <li>Inactivité prolongée (plus de 24 mois sans connexion)</li>
+    <li>Demande de l'utilisateur</li>
+  </ul>
+  <p>
+    En cas de suspension pour fraude, les lots contenus dans le Wallet sont définitivement
+    perdus, sans droit à indemnisation.
+  </p>
+  <p>
+    L'utilisateur peut demander la suppression de son compte à tout moment en contactant
+    <a href="mailto:hello@bibon.app">hello@bibon.app</a>. La suppression est effective
+    sous 30 jours.
+  </p>
+
+  <h3>Article 7 — Ville et géolocalisation</h3>
+  <p>
+    La ville choisie lors de l'inscription est <strong>définitive</strong>. Un changement
+    de ville ne peut être effectué que sur demande auprès de l'équipe BIBON, sous réserve
+    de justification (déménagement) et de validation manuelle.
+  </p>
+  <p>
+    L'Application utilise la géolocalisation de l'appareil lors de l'inscription (pour
+    valider la ville) et lors du scan d'un lot chez un commerçant (pour valider la
+    proximité physique). Ces données GPS ne sont pas stockées (voir
+    <a href="privacy.html">Politique de confidentialité</a>).
+  </p>
+
+  <h3>Article 8 — Propriété des lots et absence de valeur monétaire</h3>
+  <p>
+    Les lots obtenus via BIBON Local ne constituent pas une monnaie, un bon d'achat
+    ou un instrument financier. Ils ne peuvent pas être convertis en argent, ni vendus,
+    ni transférés. BIBON se réserve le droit de modifier ou supprimer des types de lots
+    sans préavis.
+  </p>
+  <p>
+    Les lots ne sont pas couverts par la réglementation sur les jeux d'argent et de hasard.
+    BIBON Local est un service de fidélisation à composante ludique, et non un jeu d'argent.
+  </p>
+
+  <h3>Article 9 — Disponibilité du service</h3>
+  <p>
+    BIBON s'efforce d'assurer une disponibilité maximale de l'Application, mais ne peut
+    garantir une disponibilité ininterrompue. Des maintenances, mises à jour ou incidents
+    techniques peuvent entraîner des interruptions temporaires. BIBON ne saurait être tenu
+    responsable des conséquences d'une indisponibilité temporaire.
+  </p>
+
+  <h3>Article 10 — Modifications du service et des CGU</h3>
+  <p>
+    BIBON se réserve le droit de modifier à tout moment les présentes CGU, le service,
+    ses fonctionnalités, les probabilités de tirage ou la liste des villes couvertes.
+  </p>
+  <p>
+    En cas de modification substantielle des CGU, les utilisateurs seront informés via
+    l'Application. La poursuite de l'utilisation de l'Application vaut acceptation des
+    CGU modifiées.
+  </p>
+
+  <h3>Article 11 — Droit applicable et juridiction</h3>
+  <p>
+    Les présentes CGU sont soumises au droit français. En cas de litige, les parties
+    s'engagent à rechercher une solution amiable avant tout recours judiciaire.
+    À défaut d'accord amiable, tout litige sera soumis aux tribunaux compétents du
+    ressort du siège social de BIBON.
+  </p>
+  <p>Pour toute réclamation : <a href="mailto:hello@bibon.app">hello@bibon.app</a></p>
+
+
+  <!-- ═══════════════════════════════════
+       PARTIE 3 — CGV COMMERÇANTS
+       ═══════════════════════════════════ -->
+
+  <h2 id="cgv-pro">Partie 3 — Conditions Générales de Vente — Commerçants Partenaires</h2>
+
+  <div class="highlight-box highlight-box--amber">
+    <p>
+      Ces conditions s'appliquent exclusivement aux commerçants partenaires disposant d'un
+      compte PRO BIBON. L'activation du compte vaut acceptation des présentes conditions.
+    </p>
+  </div>
+
+  <h3>Article 1 — Objet du partenariat</h3>
+  <p>
+    Le présent contrat régit les conditions d'accès et d'utilisation du service BIBON
+    dans sa version Commerçant Partenaire (ci-après « Service PRO ») par toute entreprise
+    ou personne physique exerçant une activité commerciale (ci-après « le Commerçant »).
+  </p>
+  <p>
+    Le Service PRO comprend : un accès à un tableau de bord numérique, un scanner de
+    validation de lots, des outils de gestion de l'offre promotionnelle et des statistiques
+    d'utilisation agrégées.
+  </p>
+
+  <h3>Article 2 — Accès au Service PRO</h3>
+  <p>
+    L'accès au Service PRO est réservé aux commerçants sélectionnés et activés par
+    l'équipe BIBON. Les identifiants de connexion sont fournis par BIBON lors de
+    l'activation du compte.
+  </p>
+  <p>
+    Le compte est strictement personnel, non cessible et lié à un établissement. Toute
+    utilisation par un tiers non autorisé relève de la responsabilité exclusive du Commerçant.
+  </p>
+
+  <h3>Article 3 — Obligations du Commerçant</h3>
+  <p>Le Commerçant s'engage à :</p>
+  <ul>
+    <li>Honorer l'ensemble des lots validés par l'Application, sans discrimination ni
+      condition supplémentaire non prévue lors de l'inscription</li>
+    <li>Vérifier l'identité et l'âge de l'utilisateur pour les lots soumis à restriction
+      d'âge (boissons alcoolisées, produits réglementés), conformément aux articles
+      L.3342-1 et suivants du Code de la santé publique</li>
+    <li>Utiliser le scanner BIBON uniquement depuis l'établissement géolocalisé</li>
+    <li>Ne pas valider de lots en dehors de l'établissement déclaré</li>
+    <li>Ne pas inciter les utilisateurs à créer plusieurs comptes ou à contourner les
+      mécanismes de l'Application</li>
+    <li>Informer BIBON de toute modification de l'établissement (fermeture, déménagement,
+      changement d'activité) dans un délai de 30 jours</li>
+  </ul>
+
+  <h3>Article 3 quinquies — Échange adapté hors des locaux</h3>
+  <p>
+    Le Commerçant conserve la maîtrise des conditions d'accueil dans son établissement,
+    conformément au droit de refus de service reconnu en droit français, dans les limites
+    fixées par les articles L.225-1 et suivants du Code pénal.
+  </p>
+  <p>
+    Lorsqu'un utilisateur ne peut être accueilli à l'intérieur de l'établissement —
+    notamment en cas d'état manifeste d'ivresse (art. L.3341-1 CSP), de comportement
+    incompatible avec le règlement intérieur, ou de toute autre situation rendant l'accès
+    aux locaux inadapté — le Commerçant peut proposer l'échange du lot sous forme de
+    prestation <strong>à emporter (« takeaway »)</strong>, dans la mesure où la nature du
+    lot le permet.
+  </p>
+  <div class="highlight-box">
+    <p>
+      Cette alternative ne constitue pas une obligation contractuelle, mais une démarche
+      volontaire <strong>encouragée par BIBON</strong> dans un esprit de solidarité et
+      d'inclusivité. Elle ne modifie pas la valeur du lot ni les droits de l'utilisateur,
+      et doit être exercée dans le respect de la dignité de la personne concernée.
+    </p>
+  </div>
+  <p>
+    BIBON ne saurait être tenu responsable des décisions prises par les Commerçants dans
+    ce cadre, lesquelles relèvent de leur responsabilité exclusive.
+  </p>
+
+  <h3>Article 4 — Tarifs et facturation</h3>
+  <p>
+    Les frais d'abonnement au Service PRO sont communiqués au Commerçant lors de
+    l'activation de son compte. La TVA applicable est de 20 % (récupérable si le
+    Commerçant est assujetti à TVA).
+  </p>
+  <div class="highlight-box highlight-box--amber">
+    <p>
+      <strong>Déductibilité fiscale :</strong> Les frais d'abonnement BIBON constituent
+      des <strong>charges de communication déductibles</strong> (poste comptable 623 — BIC).
+      Les lots offerts aux utilisateurs constituent des <strong>charges commerciales
+      déductibles</strong> (poste 6231). Les factures sont émises HT + TVA et font foi
+      pour la comptabilité.
+    </p>
+  </div>
+  <p>
+    La facturation est mensuelle, à terme échu. Le paiement est dû sous 15 jours à
+    compter de la date de facture. En cas de non-paiement sous 15 jours, BIBON se
+    réserve le droit de suspendre l'accès au Service PRO sans préavis.
+  </p>
+
+  <h3>Article 5 — Durée et renouvellement</h3>
+  <p>
+    Le présent contrat est conclu <strong>sans engagement de durée minimale</strong>.
+    Il prend effet à la date d'activation du compte PRO et se renouvelle automatiquement
+    de mois en mois. Aucune pénalité n'est applicable en cas de résiliation.
+  </p>
+
+  <h3>Article 6 — Résiliation</h3>
+  <p><strong>6.1 Résiliation à l'initiative du Commerçant</strong></p>
+  <p>
+    Le Commerçant peut résilier le présent contrat à tout moment, <strong>sans frais</strong>,
+    par simple envoi d'un email à <a href="mailto:hello@bibon.app">hello@bibon.app</a>.
+    Un préavis de <strong>30 jours calendaires</strong> s'applique à compter de la
+    réception de la demande par BIBON. Durant ce préavis, le Service PRO reste actif
+    et facturé normalement.
+  </p>
+  <p><strong>6.2 Résiliation à l'initiative de BIBON</strong></p>
+  <p>
+    BIBON peut résilier le contrat avec un préavis de 30 jours en cas de modification
+    de son modèle commercial, de cessation d'activité ou d'évolution structurelle du service.
+  </p>
+  <p>
+    BIBON peut procéder à une <strong>résiliation immédiate, sans préavis ni indemnité</strong>,
+    dans les cas suivants :
+  </p>
+  <ul>
+    <li>Refus de valider des lots légitimes présentés par des utilisateurs</li>
+    <li>Fraude avérée ou suspectée (faux scans, manipulation des statistiques)</li>
+    <li>Non-paiement persistant au-delà de 30 jours</li>
+    <li>Fermeture définitive de l'établissement</li>
+    <li>Violation grave des présentes conditions</li>
+  </ul>
+
+  <h3>Article 7 — Effets de la résiliation</h3>
+  <p>À l'issue du préavis (ou immédiatement en cas de résiliation pour faute) :</p>
+  <ul>
+    <li>Le compte PRO est désactivé et les identifiants deviennent inopérants</li>
+    <li>Le Commerçant reste tenu d'honorer les lots déjà gagnés par les utilisateurs
+      avant la désactivation, pendant une période de <strong>90 jours</strong> suivant
+      cette date</li>
+    <li>Les frais du mois en cours à la date d'effet restent intégralement dus, sans prorata</li>
+    <li>Les données statistiques agrégées et anonymisées sont conservées par BIBON</li>
+    <li>Les données personnelles du compte PRO sont supprimées dans un délai de 30 jours
+      suivant la désactivation</li>
+  </ul>
+
+  <h3>Article 8 — Responsabilités et garanties</h3>
+  <p>BIBON ne garantit pas :</p>
+  <ul>
+    <li>De résultats commerciaux (chiffre d'affaires, fréquentation, nombre de clients)</li>
+    <li>Une disponibilité ininterrompue du service</li>
+    <li>L'absence de bugs ou d'interruptions de maintenance</li>
+  </ul>
+  <p>
+    La responsabilité de BIBON est expressément <strong>limitée au montant du dernier
+    mois facturé</strong> au Commerçant. BIBON ne saurait être tenu responsable des
+    dommages indirects, pertes d'exploitation ou manques à gagner.
+  </p>
+  <p>
+    Le Commerçant est seul responsable de la vérification de l'âge pour les lots soumis
+    à restriction légale, de la conformité de son établissement aux réglementations
+    applicables, et de la formation de son personnel à l'utilisation du scanner.
+  </p>
+
+  <h3>Article 9 — Données personnelles</h3>
+  <p>
+    Dans le cadre du Service PRO, BIBON traite les données suivantes relatives au
+    Commerçant : email professionnel, identifiants de connexion (mot de passe haché),
+    coordonnées de géolocalisation de l'établissement (fixes, non personnelles),
+    statistiques d'utilisation agrégées.
+  </p>
+  <p>
+    Le Commerçant accède aux données de scan uniquement sous forme agrégée (nombre
+    de scans, tiers validés). <strong>Aucune donnée nominative des utilisateurs
+    n'est transmise au Commerçant.</strong>
+  </p>
+
+  <h3>Article 10 — Propriété intellectuelle</h3>
+  <p>
+    Le nom « BIBON », le logo et tous les éléments graphiques mis à disposition restent
+    la propriété exclusive de BIBON. Le Commerçant est autorisé à utiliser les visuels
+    et badges « Partenaire BIBON » fournis par BIBON dans le cadre de sa communication
+    locale, dans le respect des règles d'usage communiquées. Toute autre exploitation
+    est soumise à autorisation écrite préalable.
+  </p>
+
+  <h3>Article 11 — Modification des conditions et des tarifs</h3>
+  <p>
+    BIBON se réserve le droit de modifier les présentes conditions et/ou les tarifs.
+    Le Commerçant en sera informé par email avec un <strong>préavis de 30 jours</strong>.
+    En cas de refus des nouvelles conditions, le Commerçant peut résilier sans frais
+    pendant ce délai de préavis.
+  </p>
+
+  <h3>Article 12 — Droit applicable</h3>
+  <p>
+    Le présent contrat est soumis au droit français. En cas de litige, les parties
+    s'engagent à rechercher une solution amiable avant tout recours judiciaire.
+    À défaut d'accord amiable, tout litige sera soumis à la compétence exclusive des
+    tribunaux du ressort du siège social de BIBON (Clermont-Ferrand).
+  </p>
+  <p>Contact partenaires : <a href="mailto:hello@bibon.app">hello@bibon.app</a></p>
+
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="lcol">
+      <div class="lcol__title">Légal</div>
+      <ul class="lcol__links">
+        <li><a href="legal.html">Mentions légales</a></li>
+        <li><a href="legal.html">CGU utilisateurs</a></li>
+        <li><a href="legal.html#cgv-pro">CGV commerçants</a></li>
+      </ul>
+    </div>
+    <div class="lcol">
+      <div class="lcol__title">Données</div>
+      <ul class="lcol__links">
+        <li><a href="privacy.html">Politique de confidentialité</a></li>
+        <li><a href="privacy.html">Vos droits RGPD</a></li>
+        <li><a href="mailto:hello@bibon.app">hello@bibon.app</a></li>
+      </ul>
+    </div>
+    <div class="lcol">
+      <div class="lcol__title">Contact</div>
+      <ul class="lcol__links">
+        <li><a href="mailto:hello@bibon.app">hello@bibon.app</a></li>
+        <li><a href="mailto:hello@bibon.app">hello@bibon.app</a></li>
+        <li><span>SIRET 853 801 488 00026</span></li>
+      </ul>
+    </div>
+    <div class="lcol">
+      <div class="lcol__title">Infrastructure</div>
+      <ul class="lcol__links">
+        <li><span>Supabase Inc. — EU Frankfurt</span></li>
+        <li><span>Hostinger International</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <a href="/" class="footer-logo">BIBON</a>
+    <div class="footer-copy">© 2026 BIBON · Hadrien Lonjaret · 35 Cours Sablon, 63000 Clermont-Ferrand</div>
+    <div class="footer-links">
+      <a href="legal.html">CGU</a>
+      <a href="privacy.html">Confidentialité</a>
+      <a href="mailto:hello@bibon.app">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
